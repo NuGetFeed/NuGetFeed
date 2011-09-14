@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Caching;
 using System.Web.Mvc;
 using System.Xml;
+using System.Xml.Linq;
 using NuGetFeed.NuGetService;
 
 namespace NuGetFeed.Controllers
@@ -32,21 +33,31 @@ namespace NuGetFeed.Controllers
             return new RssActionResult { Feed = feed };
         }
 
-        private IList<SyndicationItem> CreateListOfItems(string packageId)
+        private IEnumerable<SyndicationItem> CreateListOfItems(string packageId)
         {
-            //if (HttpContext.Cache[packageId.ToLower()] != null)
-            //{
-            //    return HttpContext.Cache[packageId.ToLower()] as List<SyndicationItem>;
-            //}
-
             var context = new GalleryFeedContext(new Uri("http://packages.nuget.org/v1/FeedService.svc/"));
             var packages = from p in context.Packages
                            where p.Id == packageId
-                           orderby p.LastUpdated descending 
-                           select new SyndicationItem(p.Title + " " + p.Version, p.Title + " " + p.Version, new Uri(p.GalleryDetailsUrl), p.Id + p.Version, p.LastUpdated);
+                           orderby p.LastUpdated descending
+                           select p; // new SyndicationItem(p.Title + " " + p.Version, p.Title + " " + p.Version, new Uri(p.GalleryDetailsUrl), p.Id + p.Version, p.LastUpdated).ElementExtensions.Add(new XElement("image", p.IconUrl));
 
-            //HttpContext.Cache.Add(packageId.ToLower(), packages.ToList(), null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
-            return packages.Take(5).ToList();
+            foreach (var p in packages.Take(5))
+            {
+                var item = new SyndicationItem(p.Title + " " + p.Version, p.Title + " " + p.Version, new Uri(p.GalleryDetailsUrl), p.Id + p.Version, p.LastUpdated);
+                if(p.IconUrl != null)
+                {
+                    var imageElement = new XElement("image");
+                    imageElement.Add(new XElement("title", p.Title));
+                    imageElement.Add(new XElement("link", p.GalleryDetailsUrl));
+                    imageElement.Add(new XElement("url", p.IconUrl));
+                    imageElement.Add(new XElement("height", "50"));
+                    imageElement.Add(new XElement("width", "50"));
+
+                    item.ElementExtensions.Add(imageElement);
+                }
+
+                yield return item;
+            }
         }
 
         private static SyndicationFeed CreateFeed(string title, string description, string id)
