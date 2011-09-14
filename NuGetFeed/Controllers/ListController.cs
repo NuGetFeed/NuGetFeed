@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Caching;
 using System.Web.Mvc;
 using System.Xml;
+using NuGetFeed.NuGetService;
 
 namespace NuGetFeed.Controllers
 {
@@ -33,54 +34,18 @@ namespace NuGetFeed.Controllers
 
         private IList<SyndicationItem> CreateListOfItems(string packageId)
         {
-            if (HttpContext.Cache[packageId.ToLower()] != null)
-            {
-                return HttpContext.Cache[packageId.ToLower()] as List<SyndicationItem>;
-            }
+            //if (HttpContext.Cache[packageId.ToLower()] != null)
+            //{
+            //    return HttpContext.Cache[packageId.ToLower()] as List<SyndicationItem>;
+            //}
 
-            var html = new WebClient();
-            string downloadString = html.DownloadString("http://nuget.org/List/Packages/" + packageId);
+            var context = new GalleryFeedContext(new Uri("http://packages.nuget.org/v1/FeedService.svc/"));
+            var packages = from p in context.Packages
+                           where p.Id == packageId
+                           select new SyndicationItem(p.Title + " " + p.Version, p.Title + " " + p.Version, new Uri(p.GalleryDetailsUrl), p.Id + p.Version, p.LastUpdated);
 
-            var list = new List<SyndicationItem>();
-
-            int begin = 0;
-
-            while (downloadString.IndexOf("<td class=\"version\">", begin) != -1)
-            {
-                // Version
-                int start = downloadString.IndexOf("<td class=\"version\">", begin) + 20;
-                int end = downloadString.IndexOf("</td>", start);
-                var version = downloadString.Substring(start, end - start);
-                version = Regex.Replace(version, @"<[^>]*>", string.Empty).Trim();
-
-                // Date
-                int dateStart = downloadString.IndexOf("<td class=\"lastUpdated\">", end) + 24;
-                int dateEnd = downloadString.IndexOf("</td>", dateStart);
-                string updatedDate = downloadString.Substring(dateStart, dateEnd - dateStart).Trim();
-
-                DateTime date;
-                if (updatedDate.Length == 11)
-                {
-                    date = DateTime.ParseExact(updatedDate, "dd MMM yyyy", CultureInfo.InvariantCulture);
-                }
-                else
-                {
-                    date = DateTime.ParseExact(updatedDate, "d MMM yyyy", CultureInfo.InvariantCulture);
-                }
-
-                list.Add(CreateFeedItem(version, version, "http://nuget.org/List/Packages/" + packageId + "/" + version.Substring(version.LastIndexOf(' ') + 1), packageId + version, date));
-
-                begin = end;
-            }
-
-            HttpContext.Cache.Add(packageId.ToLower(), list, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
-            return list;
-        }
-
-        private static SyndicationItem CreateFeedItem(string title, string text, string url, string id, DateTime created)
-        {
-            var item = new SyndicationItem(title, text, new Uri(url), id, created);
-            return item;
+            //HttpContext.Cache.Add(packageId.ToLower(), packages.ToList(), null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
+            return packages.ToList();
         }
 
         private static SyndicationFeed CreateFeed(string title, string description, string id)
