@@ -1,4 +1,4 @@
-﻿/// <reference path="jquery-1.5.1.js" />
+﻿/// <reference path="jquery-1.6.3.js" />
 
 /*!
 ** Unobtrusive Ajax support library for jQuery

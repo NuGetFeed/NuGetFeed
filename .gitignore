@@ -32,3 +32,4 @@ App_Data
 *.orig
 NuGetFeedChromeExtension.crx
 NuGetFeedChromeExtension.pem
+*.dotCover
