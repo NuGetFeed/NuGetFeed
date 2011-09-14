@@ -1,0 +1,21 @@
+{
+  "name": "NuGetFeed",
+  "version" : "1.0.0",
+  "description" : "Write a description here",
+  "content_scripts": [
+    {
+      "matches": ["http://nuget.org/List/Packages/*","http://www.nuget.org/List/Packages/*"],
+      "js": ["NuGetFeed.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions" : [
+    "http://*/*"
+   ],
+  "minimum_chrome_version" : "6.0.0.0",
+  "icons" : {
+    "16" : "NuGetFeed-16.ico",
+    "48" : "NuGetFeed-48.ico",
+    "128" : "NuGetFeed-128.ico"
+  }
+}
