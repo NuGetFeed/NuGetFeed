@@ -66,7 +66,7 @@
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListController.cs" />
-    <Compile Include="Controllers\PackageController.cs" />
+    <Compile Include="Controllers\PackagesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -76,6 +76,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.datasvcmap</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\PackageSearchViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Css\bootstrap-1.3.0.min.css" />
@@ -116,6 +117,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Packages\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

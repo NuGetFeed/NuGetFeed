@@ -42,10 +42,11 @@ namespace NuGetFeed.Controllers
             var context = new GalleryFeedContext(new Uri("http://packages.nuget.org/v1/FeedService.svc/"));
             var packages = from p in context.Packages
                            where p.Id == packageId
+                           orderby p.LastUpdated descending 
                            select new SyndicationItem(p.Title + " " + p.Version, p.Title + " " + p.Version, new Uri(p.GalleryDetailsUrl), p.Id + p.Version, p.LastUpdated);
 
             //HttpContext.Cache.Add(packageId.ToLower(), packages.ToList(), null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
-            return packages.ToList();
+            return packages.Take(5).ToList();
         }
 
         private static SyndicationFeed CreateFeed(string title, string description, string id)
