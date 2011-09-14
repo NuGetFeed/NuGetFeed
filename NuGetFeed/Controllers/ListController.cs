@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.ServiceModel.Syndication;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.Caching;
 using System.Web.Mvc;
 using System.Xml;
 
@@ -31,6 +33,11 @@ namespace NuGetFeed.Controllers
 
         private IList<SyndicationItem> CreateListOfItems(string packageId)
         {
+            if (HttpContext.Cache[packageId.ToLower()] != null)
+            {
+                return HttpContext.Cache[packageId.ToLower()] as List<SyndicationItem>;
+            }
+
             var html = new WebClient();
             string downloadString = html.DownloadString("http://nuget.org/List/Packages/" + packageId);
 
@@ -54,11 +61,11 @@ namespace NuGetFeed.Controllers
                 DateTime date;
                 if (updatedDate.Length == 11)
                 {
-                    date = DateTime.ParseExact(updatedDate, "dd MMM yyyy", null);
+                    date = DateTime.ParseExact(updatedDate, "dd MMM yyyy", CultureInfo.InvariantCulture);
                 }
                 else
                 {
-                    date = DateTime.ParseExact(updatedDate, "d MMM yyyy", null);
+                    date = DateTime.ParseExact(updatedDate, "d MMM yyyy", CultureInfo.InvariantCulture);
                 }
 
                 list.Add(CreateFeedItem(version, version, "http://nuget.org/List/Packages/" + packageId + "/" + version.Substring(version.LastIndexOf(' ') + 1), packageId + version, date));
@@ -66,6 +73,7 @@ namespace NuGetFeed.Controllers
                 begin = end;
             }
 
+            HttpContext.Cache.Add(packageId.ToLower(), list, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
             return list;
         }
 
