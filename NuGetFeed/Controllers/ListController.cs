@@ -14,8 +14,25 @@ namespace NuGetFeed.Controllers
     {
         public ActionResult Packages(string id)
         {
+            var allItems = new List<SyndicationItem>();
+            var packages = id.Split(',');
+            foreach (string package in packages)
+            {
+                allItems.AddRange(CreateListOfItems(package.Trim()));
+            }
+
+            allItems = allItems.OrderByDescending(x => x.LastUpdatedTime).ToList();
+            
+            var feed = CreateFeed("Recent releases of " + id, "Recent NuGet package releases of " + id, id);
+            feed.Items = allItems;
+
+            return new RssActionResult { Feed = feed };
+        }
+
+        private IList<SyndicationItem> CreateListOfItems(string packageId)
+        {
             var html = new WebClient();
-            string downloadString = html.DownloadString("http://nuget.org/List/Packages/" + id);
+            string downloadString = html.DownloadString("http://nuget.org/List/Packages/" + packageId);
 
             var list = new List<SyndicationItem>();
 
@@ -33,18 +50,23 @@ namespace NuGetFeed.Controllers
                 int dateStart = downloadString.IndexOf("<td class=\"lastUpdated\">", end) + 24;
                 int dateEnd = downloadString.IndexOf("</td>", dateStart);
                 string updatedDate = downloadString.Substring(dateStart, dateEnd - dateStart).Trim();
-                var date = DateTime.ParseExact(updatedDate, "dd MMM yyyy", null);
 
-                list.Add(CreateFeedItem(version, version, "http://nuget.org/List/Packages/" + id + "/" + version.Substring(version.LastIndexOf(' ') + 1), id + version, date));
+                DateTime date;
+                if (updatedDate.Length == 11)
+                {
+                    date = DateTime.ParseExact(updatedDate, "dd MMM yyyy", null);
+                }
+                else
+                {
+                    date = DateTime.ParseExact(updatedDate, "d MMM yyyy", null);
+                }
+
+                list.Add(CreateFeedItem(version, version, "http://nuget.org/List/Packages/" + packageId + "/" + version.Substring(version.LastIndexOf(' ') + 1), packageId + version, date));
 
                 begin = end;
             }
 
-
-            var feed = CreateFeed("Recent releases of " + id, "Recent NuGet package releases of " + id, id);
-            feed.Items = list;
-
-            return new RssActionResult { Feed = feed };
+            return list;
         }
 
         private static SyndicationItem CreateFeedItem(string title, string text, string url, string id, DateTime created)
