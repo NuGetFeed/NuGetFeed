@@ -30,6 +30,10 @@
             @foreach (var package in Model.Packages)
             {
                 <div class="actions">
+                    @if (package.IconUrl != null)
+                    {
+                        <img src="@(package.IconUrl.StartsWith("http:") ? package.IconUrl : "http://nuget.org" + package.IconUrl)" class="package-image"/>
+                    }
                     <h2><a href="@Url.Action("Packages", "List")/@package.Id">@package.Title</a></h2>
                     <p>@package.Description</p>
                     <p>
@@ -37,7 +41,7 @@
                         @if (package.Tags != null)
                         {
                             @:| Tags:
-                            foreach (var tag in @package.Tags.Split(' '))
+                            foreach (var tag in @package.Tags.Trim().Split(' '))
                             {
                                 <a href="@Url.Action("Index", "Packages")?searchTerm=@tag">@tag</a>
                             }
