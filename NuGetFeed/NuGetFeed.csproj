@@ -82,6 +82,7 @@
     <Content Include="Content\Css\bootstrap-1.3.0.min.css" />
     <Content Include="Content\Images\logo-background.png" />
     <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\Images\logo_10x10.png" />
     <Content Include="Content\Images\logo_128_128.png" />
     <Content Include="Content\Images\logo_16x16.png" />
     <Content Include="Content\Images\logo_32x32.png" />
