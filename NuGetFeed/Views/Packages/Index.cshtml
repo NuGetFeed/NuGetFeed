@@ -1,0 +1,60 @@
+﻿@using System.Linq
+@using NuGetFeed.ViewModels
+
+@model PackageSearchViewModel
+
+@{
+    ViewBag.Title = "Packages - NuGet feed";
+}
+
+<div class="row">
+    <div class="span12 columns offset2">
+        @using (Html.BeginForm("Index", "Packages", FormMethod.Get))
+        {
+            <input class="input-xxlarge input-frontpage-search" id="searchbox" name="searchTerm" placeholder="Search Packages" type="search" value="@(Model.SearchTerm ?? string.Empty)" />
+        }
+    </div>
+</div>
+
+@if (Model.Packages != null)
+{
+    if (Model.Packages.Count == 0)
+    {
+        <div class="container">
+            <h2>No packages found</h2>
+        </div>
+    }
+    else
+    {
+        <div class="container">
+            @foreach (var package in Model.Packages)
+            {
+                <div class="actions">
+                    @if (package.IconUrl != null)
+                    {
+                        <img src="@(package.IconUrl.StartsWith("http:") ? package.IconUrl : "http://nuget.org" + package.IconUrl)" class="package-image"/>
+                    }
+                    <h2><a href="@Url.Action("Packages", "List")/@package.Id">@package.Title</a></h2>
+                    <p>@package.Description</p>
+                    <p>
+                        @package.DownloadCount Downloads 
+                        @if (package.Tags != null)
+                        {
+                            @:| Tags:
+                            foreach (var tag in @package.Tags.Trim().Split(' '))
+                            {
+                                <a href="@Url.Action("Index", "Packages")?searchTerm=@tag">@tag</a>
+                            }
+                        }
+                    </p>
+                </div>
+            }
+        </div>
+    }
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#nav-packages').addClass('active');
+    });
+</script>

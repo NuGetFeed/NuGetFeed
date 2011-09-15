@@ -1,4 +1,4 @@
-﻿/// <reference path="jquery-1.6.3.js" />
+﻿/// <reference path="jquery-1.5.1.js" />
 /// <reference path="jquery.validate.js" />
 
 /*!
@@ -25,6 +25,11 @@
         return value.replace(/^\s+|\s+$/g, "").split(/\s*,\s*/g);
     }
 
+    function escapeAttributeValue(value) {
+        // As mentioned on http://api.jquery.com/category/selectors/
+        return value.replace(/([!"#$%&'()*+,./:;<=>?@\[\\\]^`{|}~])/g, "\\$1");
+    }
+
     function getModelPrefix(fieldName) {
         return fieldName.substr(0, fieldName.lastIndexOf(".") + 1);
     }
@@ -37,7 +42,7 @@
     }
 
     function onError(error, inputElement) {  // 'this' is the form element
-        var container = $(this).find("[data-valmsg-for='" + inputElement[0].name + "']"),
+        var container = $(this).find("[data-valmsg-for='" + escapeAttributeValue(inputElement[0].name) + "']"),
             replace = $.parseJSON(container.attr("data-valmsg-replace")) !== false;
 
         container.removeClass("field-validation-valid").addClass("field-validation-error");
@@ -285,7 +290,7 @@
         var prefix = getModelPrefix(options.element.name),
             other = options.params.other,
             fullOtherName = appendModelPrefix(other, prefix),
-            element = $(options.form).find(":input[name=" + fullOtherName + "]")[0];
+            element = $(options.form).find(":input[name=" + escapeAttributeValue(fullOtherName) + "]")[0];
 
         setValidationValues(options, "equalTo", element);
     });
@@ -306,7 +311,7 @@
         $.each(splitAndTrim(options.params.additionalfields || options.element.name), function (i, fieldName) {
             var paramName = appendModelPrefix(fieldName, prefix);
             value.data[paramName] = function () {
-                return $(options.form).find(":input[name='" + paramName + "']").val();
+                return $(options.form).find(":input[name='" + escapeAttributeValue(paramName) + "']").val();
             };
         });
 
@@ -316,4 +321,4 @@
     $(function () {
         $jQval.unobtrusive.parse(document);
     });
-}(jQuery));
+} (jQuery));

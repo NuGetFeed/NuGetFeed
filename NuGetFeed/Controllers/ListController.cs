@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Net;
 using System.ServiceModel.Syndication;
-using System.Text.RegularExpressions;
-using System.Web;
-using System.Web.Caching;
 using System.Web.Mvc;
 using System.Xml;
+using NuGetFeed.NuGetService;
 
 namespace NuGetFeed.Controllers
 {
@@ -25,65 +21,33 @@ namespace NuGetFeed.Controllers
 
             allItems = allItems.OrderByDescending(x => x.LastUpdatedTime).ToList();
             
-            var feed = CreateFeed("Recent releases of " + id, "Recent NuGet package releases of " + id, id);
+            var feed = CreateFeed("Recent NuGet package releases of " + id, id);
             feed.Items = allItems;
 
             return new RssActionResult { Feed = feed };
         }
 
-        private IList<SyndicationItem> CreateListOfItems(string packageId)
+        private IEnumerable<SyndicationItem> CreateListOfItems(string packageId)
         {
-            if (HttpContext.Cache[packageId.ToLower()] != null)
+            var context = new GalleryFeedContext(new Uri("http://packages.nuget.org/v1/FeedService.svc/"));
+            var packages = (from p in context.Packages
+                           where p.Id == packageId
+                           orderby p.LastUpdated descending
+                           select p).Take(5);
+
+            foreach (var p in packages)
             {
-                return HttpContext.Cache[packageId.ToLower()] as List<SyndicationItem>;
+                var item = new SyndicationItem(p.Title + " " + p.Version, string.Empty, new Uri(p.GalleryDetailsUrl), p.Id + p.Version, p.LastUpdated)
+                               {
+                                   Content = new TextSyndicationContent(p.Title + " version " + p.Version + " released."),
+                                   PublishDate = p.LastUpdated
+                               };
+
+                yield return item;
             }
-
-            var html = new WebClient();
-            string downloadString = html.DownloadString("http://nuget.org/List/Packages/" + packageId);
-
-            var list = new List<SyndicationItem>();
-
-            int begin = 0;
-
-            while (downloadString.IndexOf("<td class=\"version\">", begin) != -1)
-            {
-                // Version
-                int start = downloadString.IndexOf("<td class=\"version\">", begin) + 20;
-                int end = downloadString.IndexOf("</td>", start);
-                var version = downloadString.Substring(start, end - start);
-                version = Regex.Replace(version, @"<[^>]*>", string.Empty).Trim();
-
-                // Date
-                int dateStart = downloadString.IndexOf("<td class=\"lastUpdated\">", end) + 24;
-                int dateEnd = downloadString.IndexOf("</td>", dateStart);
-                string updatedDate = downloadString.Substring(dateStart, dateEnd - dateStart).Trim();
-
-                DateTime date;
-                if (updatedDate.Length == 11)
-                {
-                    date = DateTime.ParseExact(updatedDate, "dd MMM yyyy", CultureInfo.InvariantCulture);
-                }
-                else
-                {
-                    date = DateTime.ParseExact(updatedDate, "d MMM yyyy", CultureInfo.InvariantCulture);
-                }
-
-                list.Add(CreateFeedItem(version, version, "http://nuget.org/List/Packages/" + packageId + "/" + version.Substring(version.LastIndexOf(' ') + 1), packageId + version, date));
-
-                begin = end;
-            }
-
-            HttpContext.Cache.Add(packageId.ToLower(), list, null, DateTime.Now.AddMinutes(5), Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
-            return list;
         }
 
-        private static SyndicationItem CreateFeedItem(string title, string text, string url, string id, DateTime created)
-        {
-            var item = new SyndicationItem(title, text, new Uri(url), id, created);
-            return item;
-        }
-
-        private static SyndicationFeed CreateFeed(string title, string description, string id)
+        private static SyndicationFeed CreateFeed(string description, string id)
         {
             var feed = new SyndicationFeed(string.Format("nugetfeed.org - {0}", id), description, new Uri("http://nugetfeed.org"), id, DateTime.Now)
             {
