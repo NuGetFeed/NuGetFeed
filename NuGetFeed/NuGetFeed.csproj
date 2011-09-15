@@ -88,14 +88,16 @@
     <Content Include="Content\Scripts\jquery-1.6.3-vsdoc.js" />
     <Content Include="Content\Scripts\jquery-1.6.3.js" />
     <Content Include="Content\Scripts\jquery-1.6.3.min.js" />
-    <Content Include="Content\Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Content\Scripts\jquery.validate.js" />
-    <Content Include="Content\Scripts\jquery.validate.min.js" />
     <Content Include="Content\Scripts\modernizr-2.0.6-development-only.js" />
     <None Include="Service References\NuGetService\Reference.datasvcmap">
       <Generator>DataServiceClientGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Content\Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Content\Scripts\jquery.validate.js" />
+    <Content Include="Content\Scripts\jquery.validate.min.js" />
+    <Content Include="Content\Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Content\Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -105,8 +107,6 @@
     </Content>
     <Content Include="Content\Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Content\Scripts\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="Content\Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Content\Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Content\Scripts\MicrosoftAjax.js" />
     <Content Include="Content\Scripts\MicrosoftAjax.debug.js" />
     <Content Include="Content\Scripts\MicrosoftMvcAjax.js" />
