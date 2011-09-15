@@ -7,13 +7,13 @@
     ViewBag.Title = "Packages - NuGet feed";
 }
 
-<div class="container">
-    @using (Html.BeginForm("Index", "Packages", FormMethod.Get)) 
-    {
-        <div class="input">
-            <input name="searchTerm" value="@(Model.SearchTerm ?? string.Empty)" class="input-xxlarge" type="text" placeholder="Search packages">
-        </div>
-    }
+<div class="row">
+    <div class="span12 columns offset2">
+        @using (Html.BeginForm("Index", "Packages", FormMethod.Get))
+        {
+            <input class="input-xxlarge input-frontpage-search" id="searchbox" name="searchTerm" placeholder="Search Packages" type="search" value="@(Model.SearchTerm ?? string.Empty)" />
+        }
+    </div>
 </div>
 
 @if (Model.Packages != null)

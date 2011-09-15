@@ -7,6 +7,16 @@
     <h2>Keep your dependencies fresh</h2>
 </div>
 
+<div class="row">
+    <div class="span12 columns offset2">
+        @using (Html.BeginForm("Index", "Packages", FormMethod.Get))
+        {
+            <input class="input-xxlarge input-frontpage-search" id="searchbox" name="searchTerm" placeholder="Search Packages" type="search" />
+        }
+    </div>
+</div>
+
+
 <script type="text/javascript">
     $(document).ready(function () {
         $('#nav-home').addClass('active');
