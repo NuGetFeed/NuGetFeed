@@ -5,7 +5,7 @@
   "content_scripts": [
     {
       "matches": ["http://nuget.org/List/Packages/*","http://www.nuget.org/List/Packages/*"],
-      "js": ["NuGetFeed.js"],
+      "js": ["jquery-1.6.3.min.js", "NuGetFeed.js"],
       "run_at": "document_end"
     }
   ],
