@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Net;
 using System.ServiceModel.Syndication;
-using System.Text.RegularExpressions;
-using System.Web;
-using System.Web.Caching;
 using System.Web.Mvc;
 using System.Xml;
-using System.Xml.Linq;
 using NuGetFeed.NuGetService;
 
 namespace NuGetFeed.Controllers
@@ -27,7 +21,7 @@ namespace NuGetFeed.Controllers
 
             allItems = allItems.OrderByDescending(x => x.LastUpdatedTime).ToList();
             
-            var feed = CreateFeed("Recent releases of " + id, "Recent NuGet package releases of " + id, id);
+            var feed = CreateFeed("Recent NuGet package releases of " + id, id);
             feed.Items = allItems;
 
             return new RssActionResult { Feed = feed };
@@ -36,31 +30,24 @@ namespace NuGetFeed.Controllers
         private IEnumerable<SyndicationItem> CreateListOfItems(string packageId)
         {
             var context = new GalleryFeedContext(new Uri("http://packages.nuget.org/v1/FeedService.svc/"));
-            var packages = from p in context.Packages
+            var packages = (from p in context.Packages
                            where p.Id == packageId
                            orderby p.LastUpdated descending
-                           select p; // new SyndicationItem(p.Title + " " + p.Version, p.Title + " " + p.Version, new Uri(p.GalleryDetailsUrl), p.Id + p.Version, p.LastUpdated).ElementExtensions.Add(new XElement("image", p.IconUrl));
+                           select p).Take(5);
 
-            foreach (var p in packages.Take(5))
+            foreach (var p in packages)
             {
-                var item = new SyndicationItem(p.Title + " " + p.Version, p.Title + " " + p.Version, new Uri(p.GalleryDetailsUrl), p.Id + p.Version, p.LastUpdated);
-                if(p.IconUrl != null)
-                {
-                    var imageElement = new XElement("image");
-                    imageElement.Add(new XElement("title", p.Title));
-                    imageElement.Add(new XElement("link", p.GalleryDetailsUrl));
-                    imageElement.Add(new XElement("url", p.IconUrl));
-                    imageElement.Add(new XElement("height", "50"));
-                    imageElement.Add(new XElement("width", "50"));
-
-                    item.ElementExtensions.Add(imageElement);
-                }
+                var item = new SyndicationItem(p.Title + " " + p.Version, string.Empty, new Uri(p.GalleryDetailsUrl), p.Id + p.Version, p.LastUpdated)
+                               {
+                                   Content = new TextSyndicationContent(p.Title + " version " + p.Version + " released."),
+                                   PublishDate = p.LastUpdated
+                               };
 
                 yield return item;
             }
         }
 
-        private static SyndicationFeed CreateFeed(string title, string description, string id)
+        private static SyndicationFeed CreateFeed(string description, string id)
         {
             var feed = new SyndicationFeed(string.Format("nugetfeed.org - {0}", id), description, new Uri("http://nugetfeed.org"), id, DateTime.Now)
             {
