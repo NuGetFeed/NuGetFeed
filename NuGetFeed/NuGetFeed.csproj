@@ -36,6 +36,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetOpenAuth">
+      <HintPath>..\packages\DotNetOpenAuth.3.4.7.11121\lib\DotNetOpenAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.2.2.1.4\lib\net40-Full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc">
+      <HintPath>..\packages\Ninject.MVC3.2.2.2.0\lib\net40-Full\Ninject.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Norm">
+      <HintPath>..\packages\NoRM.0.9.8\lib\Norm.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Runtime.Serialization" />
@@ -62,14 +78,22 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebActivator">
+      <HintPath>..\packages\WebActivator.1.4.3\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\NinjectMVC3.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListController.cs" />
     <Compile Include="Controllers\PackagesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\DotNetOpenAuth\InMemoryTokenManager.cs" />
+    <Compile Include="Infrastructure\DotNetOpenAuth\TwitterConsumer.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\NuGetService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -79,7 +103,7 @@
     <Compile Include="ViewModels\PackageSearchViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Css\bootstrap-1.3.0.min.css" />
+    <Content Include="Content\Css\bootstrap.css" />
     <Content Include="Content\Images\logo-background.png" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\logo_10x10.png" />
@@ -88,6 +112,8 @@
     <Content Include="Content\Images\logo_32x32.png" />
     <Content Include="Content\Images\logo_48x48.png" />
     <Content Include="Content\Images\logo_64x64.png" />
+    <Content Include="Content\Images\openid_sprite.png" />
+    <Content Include="Content\Scripts\bootstrap-modal.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Css\Site.css" />
@@ -126,9 +152,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Packages\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>
