@@ -2,6 +2,15 @@
     ViewBag.Title = "NuGet Feed";
 }
 
+<div class="row">
+    <div class="span12 columns offset2">
+        @using (Html.BeginForm("Index", "Packages", FormMethod.Get))
+        {
+            <input class="input-xxlarge input-frontpage-search" id="searchbox" name="searchTerm" placeholder="Search Packages" type="search" />
+        }
+    </div>
+</div>
+
 <div class="hero-unit">
     <h1>Welcome to NuGet Feed</h1>
     <h2>Keep your dependencies fresh</h2>
@@ -9,11 +18,26 @@
 </div>
 
 <div class="row">
-    <div class="span12 columns offset2">
-        @using (Html.BeginForm("Index", "Packages", FormMethod.Get))
-        {
-            <input class="input-xxlarge input-frontpage-search" id="searchbox" name="searchTerm" placeholder="Search Packages" type="search" />
-        }
+    <div class="span16">
+        <h2 style="text-align: center;">Features</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span1"><img src="http://c4.ac-images.myspacecdn.com/images02/50/l_338e3cb7ffd24e8a98e8b78462c72aa7.png" width="40" height="40" /></div>
+    <div class="span4">
+        <h3>Search NuGet packages</h3>
+        <p>On NuGetFeed.org you can search NuGet package feeds directly. You will be able to see all the info from the official NuGet site, without ever leaving NuGetFeed.org.</p>
+    </div>
+    <div class="span1"><img src="http://www.fogcreek.com/images/FogBugz//extras/VisualStudioLogo.png" width="40" height="40" /></div>
+    <div class="span4">
+        <h3>Visual Studio Add-in</h3>
+        <p>With NuGet Feed for Visual Studio you will be able to export all your references NuGet packages to NuGetFeed.org. Simply right-click the References folder and export directly to NuGetFeed.org.</p>
+    </div>
+    <div class="span1"><img src="http://www.mobilenetswitch.com/Images/GoogleChrome.gif" width="40" height="40" /></div>
+    <div class="span4">
+        <h3>Google Chrome Extension</h3>
+        <p>Install the NuGet Feed extension in Google Chrome to add RSS links on NuGet.org. The NuGet Feed Chrome Extension also works with your favorite Chrome feed extension, by adding an alternate URL to all package pages on NuGet.org.</p>
     </div>
 </div>
 
