@@ -47,6 +47,12 @@
                             }
                         }
                     </p>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <p>
+                            <a href="/Feed/AddToMyFeed/@package.Id">Add to My Feed</a>
+                        </p>
+                    }
                 </div>
             }
         </div>
