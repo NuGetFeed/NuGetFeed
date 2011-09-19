@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+  <Extern href="msobtnid.h"/>
+
+  <Commands package="guidPowerConsolePkg">
+
+    <Buttons>
+      <Button guid="guidDialogCmdSet" id="cmdidAddPackages" priority="0x0100" type="Button">
+          <Parent guid="guidReferenceContext" id="cmdAddReferenceGroup" />
+          <Icon guid="guidToolbarImages" id="bmpAddNuGetPackage" />
+          <CommandFlag>DefaultInvisible</CommandFlag>
+          <CommandFlag>DynamicVisibility</CommandFlag>
+          <Strings>
+              <CommandName>cmdidAddPackages</CommandName>
+              <ButtonText>&amp;Export to NuGet Feed...</ButtonText>
+          </Strings>
+      </Button>
+    </Buttons>
+
+    <Bitmaps>
+      <Bitmap guid="guidToolbarImages" href="Resources\logo_16x16.png"/>
+    </Bitmaps>
+  </Commands>
+
+  <VisibilityConstraints>
+    <VisibilityItem guid="guidDialogCmdSet" id="cmdidAddPackages" context="UICONTEXT_SolutionExistsAndNotBuildingAndNotDebugging" />
+  </VisibilityConstraints>
+
+  <CommandPlacements>      
+
+      <CommandPlacement guid="guidDialogCmdSet" id="cmdidAddPackages" priority="0xF100">
+          <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_REFROOT_ADD"/>
+      </CommandPlacement><!-- References -->
+    
+  </CommandPlacements>
+
+  <Symbols>
+    <GuidSymbol name="guidPowerConsolePkg" value="{F7D0E7A3-C60B-422A-BFAE-CEED36ADE7D2}" />    
+    <GuidSymbol name="guidToolbarImages" value="{C96A41A9-81D8-4F67-A344-E4BED01FBAEC}" >
+      <IDSymbol name="bmpAddNuGetPackage" value="1" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidDialogCmdSet" value="{25fd982b-8cae-4cbd-a440-e03ffccde106}">
+        <IDSymbol name="cmdidAddPackages" value="0x0100" />
+    </GuidSymbol>
+    <GuidSymbol name="guidReferenceContext" value="{D309F791-903F-11D0-9EFC-00A0C911004F}">
+      <IdSymbol name="cmdAddReferenceGroup" value="0x450" />
+    </GuidSymbol>
+    <GuidSymbol name="UICONTEXT_SolutionExistsAndNotBuildingAndNotDebugging" value="{D0E4DEEC-1B53-4CDA-8559-D454583AD23B}" />
+  </Symbols>
+
+</CommandTable>

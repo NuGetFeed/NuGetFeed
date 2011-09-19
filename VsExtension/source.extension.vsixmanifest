@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
+  <Identifier Id="NuGetFeedVsix.NuGetFeed.FEC2745C-E05A-11E0-944E-EA404824019B">
+    <Name>NuGet Feed for Visual Studio</Name>
+    <Author>NuGetFeed.org</Author>
+    <Version>1.0.0.0</Version>
+    <Description xml:space="preserve">With NuGet Feed for Visual Studio, you can right click your references and export all NuGet packages to NuGetFeed.org.</Description>
+    <Locale>1033</Locale>
+    <MoreInfoUrl>http://nugetfeed.org</MoreInfoUrl>
+    <Icon>Resources\Package.ico</Icon>
+    <SupportedProducts>
+      <VisualStudio Version="10.0">
+        <Edition>Pro</Edition>
+      </VisualStudio>
+    </SupportedProducts>
+    <SupportedFrameworkRuntimeEdition MinVersion="4.0" MaxVersion="4.0" />
+    <AllUsers>false</AllUsers>
+  </Identifier>
+  <References />
+  <Content>
+    <VsPackage>|%CurrentProject%;PkgdefProjectOutputGroup|</VsPackage>
+  </Content>
+</Vsix>
