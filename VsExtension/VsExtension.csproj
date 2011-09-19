@@ -15,7 +15,6 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
-    <AdditionalSettingsImport Condition=" $(AdditionalSettingsImport) == '' ">$(NuGetRoot)\Extended.Settings.targets</AdditionalSettingsImport>
   </PropertyGroup>
   <!-- Common settings for Debug and Coverage builds -->
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'Coverage'">
