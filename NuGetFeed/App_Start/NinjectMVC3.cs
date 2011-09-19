@@ -54,7 +54,7 @@ namespace NuGetFeed.App_Start
             // Register Mongo
             var mongoUrl = ConfigurationManager.AppSettings["MONGOHQ_URL"];
             kernel.Bind<IMongo>()
-                .ToMethod(context => Mongo.Create(mongoUrl))
+                .ToMethod(context => Mongo.Create(mongoUrl, "strict=false")) // strict=false makes null ref exceptions on deserialization go away...
                 .InRequestScope();
         }        
     }
