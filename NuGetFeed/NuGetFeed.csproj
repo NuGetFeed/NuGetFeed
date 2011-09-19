@@ -96,8 +96,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\DotNetOpenAuth\InMemoryTokenManager.cs" />
-    <Compile Include="Infrastructure\DotNetOpenAuth\TwitterConsumer.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\NuGetService\Reference.cs">
