@@ -1,6 +1,8 @@
 namespace NuGetFeed.VSExtension {
     using System;
     using System.ComponentModel.Design;
+    using System.Diagnostics;
+    using System.Linq;
     using System.Runtime.InteropServices;
     using System.Collections.Generic;
     using System.Text;
@@ -22,7 +24,7 @@ namespace NuGetFeed.VSExtension {
     {
         // This product version will be updated by the build script to match the daily build version.
         // It is displayed in the Help - About box of Visual Studio
-        public const string ProductVersion = "1.2.0.0";
+        public const string ProductVersion = "1.0.0.0";
 
         /// <summary>
         /// Initialization of the package; this method is called right after the package is sited, so this is the place
@@ -65,16 +67,23 @@ namespace NuGetFeed.VSExtension {
                 {
                     projItem = projItems.Item(i);
                     prop = projItem.Properties.Item("FileName");
-                    if (!prop.Value.ToString().ToLower().Equals("packages.config")) continue;
-
-                    XDocument xml = XDocument.Load(projItem.Properties.Item("FullPath").Value);
-                    var packages = new List<string>();
-                    foreach (var descendant in xml.Descendants("package"))
+                    if (prop == null || prop.Value == null)
                     {
-                        packages.Add(descendant.Attribute("id").Value);
+                        continue;
                     }
 
-                    if (packages.Count < 1) continue;
+                    if (!prop.Value.ToString().ToLower().Equals("packages.config"))
+                    {
+                        continue;
+                    }
+
+                    XDocument xml = XDocument.Load(projItem.Properties.Item("FullPath").Value);
+                    var packages = xml.Descendants("package").Select(descendant => descendant.Attribute("id").Value).ToList();
+
+                    if (packages.Count < 1)
+                    {
+                        continue;
+                    }
 
                     var sb = new StringBuilder();
                     foreach (var s in packages)
@@ -86,8 +95,15 @@ namespace NuGetFeed.VSExtension {
                     System.Diagnostics.Process.Start("http://nugetfeed.org/List/Packages/" + param);
                 }
             }
-            catch
+            catch (Exception e)
             {
+                var eventSource = "NuGetFeed";
+                if (!EventLog.SourceExists(eventSource))
+                {
+                    EventLog.CreateEventSource(eventSource, "Application");
+                }
+
+                EventLog.WriteEntry(eventSource, e.ToString());
             }
         }
 
