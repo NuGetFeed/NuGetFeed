@@ -14,8 +14,5 @@ using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]
 
-#if !FIXED_ASSEMBLY_VERSION
 [assembly: AssemblyVersion("1.0.0.0")]
-#endif
-
 [assembly: NeutralResourcesLanguage("en-US")]
