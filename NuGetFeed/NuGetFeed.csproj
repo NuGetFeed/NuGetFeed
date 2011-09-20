@@ -106,6 +106,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.datasvcmap</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\MyFeedViewModel.cs" />
     <Compile Include="ViewModels\PackageSearchViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

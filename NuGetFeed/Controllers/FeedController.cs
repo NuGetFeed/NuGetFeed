@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Norm;
 using NuGetFeed.Infrastructure.ActionResults;
 using NuGetFeed.Models;
+using NuGetFeed.NuGetService;
+using NuGetFeed.ViewModels;
 
 namespace NuGetFeed.Controllers
 {
@@ -25,11 +27,28 @@ namespace NuGetFeed.Controllers
         {
             var users = _mongo.GetCollection<User>();
             var feeds = _mongo.GetCollection<Feed>();
+            var context = new GalleryFeedContext(new Uri("http://packages.nuget.org/v1/FeedService.svc/"));
 
             var currentUser = users.AsQueryable().Single(u => u.Username == User.Identity.Name);
             var feed = feeds.AsQueryable().SingleOrDefault(f => f.User == currentUser.Id);
 
-            return View(feed);
+            var packages = new List<PublishedPackage>();
+            foreach (var package in feed.Packages)
+            {
+                var result = context.Packages.Where(p => p.Id == package && p.IsLatestVersion).SingleOrDefault();
+                if(result != null)
+                {
+                    packages.Add(result);
+                }
+            }
+            
+            var viewModel = new MyFeedViewModel
+                                {
+                                    FeedId = feed.Id.ToString(),
+                                    Packages = packages.OrderBy(x => x.Title).ToList()
+                                };
+
+            return View(viewModel);
         }
 
         public ActionResult Rss(string id)
@@ -40,6 +59,22 @@ namespace NuGetFeed.Controllers
             var feedString = string.Join(",", feed.Packages);
 
             return _listController.Packages(feedString);
+        }
+
+        public ActionResult RemovePackage(string id)
+        {
+            var users = _mongo.GetCollection<User>();
+            var feeds = _mongo.GetCollection<Feed>();
+
+            var currentUser = users.AsQueryable().Single(u => u.Username == User.Identity.Name);
+            var feed = feeds.AsQueryable().SingleOrDefault(f => f.User == currentUser.Id);
+            if (feed != null)
+            {
+                feed.Packages.Remove(id.ToLowerInvariant());
+                feeds.Save(feed);
+            }
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult AddToMyFeed(string id)
