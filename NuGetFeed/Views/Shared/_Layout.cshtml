@@ -42,7 +42,7 @@
                         <!--li id="nav-documentation"><a href="">Documentation</a></li-->
                     </ul>
                     <form class="pull-left" action="@Url.Action("Index", "Packages")" method="GET">
-                        <input type="search" placeholder="Search Packages" name="searchTerm" />
+                        <input type="search" placeholder="Search Packages" name="query" />
                     </form>
                     <ul class="secondary-nav">
                         @if (Request.IsAuthenticated)

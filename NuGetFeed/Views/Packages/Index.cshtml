@@ -38,7 +38,7 @@
                             @:| Tags:
                             foreach (var tag in @package.Tags.Trim().Split(' '))
                             {
-                                <a href="@Url.Action("Index", "Packages")?searchTerm=@tag">@tag</a>
+                                <a href="@Url.Action("Index", "Packages")?query=@tag">@tag</a>
                             }
                         }
                     </p>

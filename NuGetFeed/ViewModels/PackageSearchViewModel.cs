@@ -5,7 +5,7 @@ namespace NuGetFeed.ViewModels
 {
     public class PackageSearchViewModel
     {
-        public string SearchTerm { get; set; }
+        public string Query { get; set; }
 
         public IList<PublishedPackage> Packages { get; set; }
     }

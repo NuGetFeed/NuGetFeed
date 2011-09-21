@@ -10,20 +10,20 @@ namespace NuGetFeed.Controllers
 {
     public class PackagesController : Controller
     {
-        public ActionResult Index(string searchTerm)
+        public ActionResult Index(string query)
         {
             var model = new PackageSearchViewModel();
 
-            if (!string.IsNullOrWhiteSpace(searchTerm))
+            if (!string.IsNullOrWhiteSpace(query))
             {
-                model.SearchTerm = searchTerm;
+                model.Query = query;
 
                 var context = new GalleryFeedContext(new Uri("http://packages.nuget.org/v1/FeedService.svc/"));
                 var packages = from p in context.Packages
-                               where (p.Id.Contains(searchTerm)
-                                     || p.Description.Contains(searchTerm)
-                                     || p.Tags.Contains(searchTerm)
-                                     || p.Title.Contains(searchTerm))
+                               where (p.Id.Contains(query)
+                                     || p.Description.Contains(query)
+                                     || p.Tags.Contains(query)
+                                     || p.Title.Contains(query))
                                      && p.IsLatestVersion
                                orderby p.DownloadCount descending
                                select p;
