@@ -45,7 +45,7 @@
                     @if (Request.IsAuthenticated)
                     {
                         <p>
-                            <a href="/Feed/AddToMyFeed/@package.Id">Add to My Feed</a>
+                            <a href="@Url.Action("AddToMyFeed", "Feed")/@package.Id">Add to My Feed</a>
                         </p>
                     }
                 </div>
