@@ -106,10 +106,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.datasvcmap</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\MyFeedViewModel.cs" />
     <Compile Include="ViewModels\PackageSearchViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Css\bootstrap.css" />
+    <Content Include="Content\Images\curved-arrow.png" />
     <Content Include="Content\Images\logo-background.png" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\logo_10x10.png" />
