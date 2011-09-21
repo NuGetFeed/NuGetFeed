@@ -80,7 +80,7 @@ namespace NuGetFeed.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult AddToMyFeed(string id)
+        public string AddToMyFeed(string id)
         {
             var users = _mongo.GetCollection<User>();
             var feeds = _mongo.GetCollection<Feed>();
@@ -102,8 +102,8 @@ namespace NuGetFeed.Controllers
             }
 
             feeds.Save(feed);
-            
-            return RedirectToAction("Index");
+
+            return "<span class=\"label notice\">Added</span>";
         }
     }
 }

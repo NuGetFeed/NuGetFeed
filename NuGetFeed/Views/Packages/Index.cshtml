@@ -44,8 +44,8 @@
                     </p>
                     @if (Request.IsAuthenticated)
                     {
-                        <p>
-                            <a href="@Url.Action("AddToMyFeed", "Feed")/@package.Id">Add to My Feed</a>
+                        <p id="add@(package.Id.Replace(".", string.Empty))">
+                            @Ajax.ActionLink("Add to My Feed", "AddToMyFeed", "Feed", new { id = package.Id }, new AjaxOptions() { HttpMethod = "get", UpdateTargetId = "add" + package.Id.Replace(".", string.Empty) })
                         </p>
                     }
                 </div>
