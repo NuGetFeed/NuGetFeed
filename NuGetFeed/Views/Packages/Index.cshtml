@@ -50,6 +50,40 @@
                     }
                 </div>
             }
+    
+            <div class="row" style="padding-bottom: 50px;">
+                <div class="span16 columns">
+                    <div class="pagination">
+                        <ul>
+                            <li class="@(Model.CurrentPage == 1 ? "disabled" : "")"><a href="?query=@Model.Query&page=@(Model.CurrentPage > 1 ? Model.CurrentPage - 1 : 1)">&laquo; Previous</a></li>
+
+                            @{
+                                int startFrom = 1;
+                                if (Model.CurrentPage >= 7 && Model.TotalPages > 11)
+                                {
+                                    startFrom = Model.CurrentPage - 5;
+
+                                    if (startFrom + 11 > Model.TotalPages)
+                                    {
+                                        startFrom = Model.TotalPages - 10;
+                                    }
+                                }
+                                
+                                for (int x = 0; x < 11; x++)
+                                {
+                                    if (startFrom + x > Model.TotalPages)
+                                    {
+                                        break;
+                                    }
+                                    <li class="@(startFrom + x == Model.CurrentPage ? "active" : "")"><a href="?query=@Model.Query&page=@(startFrom + x)">@(startFrom + x)</a></li>
+                                }
+                            }
+
+                            <li class="next @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")"><a href="?query=@Model.Query&page=@(Model.CurrentPage < Model.TotalPages ? Model.CurrentPage + 1 : Model.TotalPages)">Next &raquo;</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     }
 }

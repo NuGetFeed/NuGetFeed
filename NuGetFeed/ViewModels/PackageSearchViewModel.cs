@@ -7,6 +7,10 @@ namespace NuGetFeed.ViewModels
     {
         public string Query { get; set; }
 
+        public int CurrentPage { get; set; }
+
+        public int TotalPages { get; set; }
+
         public IList<PublishedPackage> Packages { get; set; }
     }
 }
