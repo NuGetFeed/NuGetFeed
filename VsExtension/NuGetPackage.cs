@@ -11,6 +11,7 @@ namespace NuGetFeed.VSExtension {
     using EnvDTE;
 
     using Microsoft.VisualStudio.Shell;
+    using Microsoft.VisualStudio.Shell.Interop;
 
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
@@ -61,7 +62,13 @@ namespace NuGetFeed.VSExtension {
                 ProjectItems projItems;
                 ProjectItem projItem;
                 Property prop;
-                project = dte.Solution.Projects.Item(1);
+                if (dte.SelectedItems.Count != 1)
+                {
+                    return;
+                }
+
+                var selectedItem = dte.SelectedItems.Item(1);
+                project = selectedItem.Project;
                 projItems = project.ProjectItems;
                 for(int i = 1 ; i <= projItems.Count; i++ )
                 {
