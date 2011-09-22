@@ -40,7 +40,7 @@ namespace NuGetFeed.Controllers
             {
                 var item = new SyndicationItem(p.Title + " " + p.Version, string.Empty, new Uri(p.GalleryDetailsUrl), p.Id + p.Version, p.LastUpdated)
                                {
-                                   Content = new TextSyndicationContent(p.Title + " version " + p.Version + " released. Release notes: " + p.ReleaseNotes),
+                                   Content = new TextSyndicationContent("Release notes: " + p.ReleaseNotes),
                                    PublishDate = p.LastUpdated
                                };
 
