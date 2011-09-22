@@ -63,7 +63,7 @@ namespace NuGetFeed.Controllers
         }
 
         [Authorize]
-        public ActionResult RemovePackage(string id)
+        public void RemovePackage(string id)
         {
             var currentUser = _userRepository.GetByUsername(User.Identity.Name);
             var feed = _feedRepository.GetByUser(currentUser);
@@ -72,8 +72,6 @@ namespace NuGetFeed.Controllers
                 feed.Packages.Remove(id.ToLowerInvariant());
                 _feedRepository.Save(feed);
             }
-
-            return RedirectToAction("Index");
         }
 
         [Authorize]

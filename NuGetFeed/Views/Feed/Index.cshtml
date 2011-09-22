@@ -46,4 +46,14 @@ else
     $(document).ready(function () {
         $('#nav-myfeed').addClass('active');
     });
+
+    $(document).ready(function () {
+        $('.close').click(function () {
+            var removable = $(this).parent();
+            $.post(this.href, {}, function (result) {
+                removable.fadeOut();
+            });
+            return false;
+        });
+    });
 </script>
