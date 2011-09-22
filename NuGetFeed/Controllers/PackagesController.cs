@@ -10,25 +10,26 @@ namespace NuGetFeed.Controllers
 {
     public class PackagesController : Controller
     {
-        public ActionResult Index(string searchTerm)
+        public ActionResult Index(string query, int? page)
         {
             var model = new PackageSearchViewModel();
 
-            if (!string.IsNullOrWhiteSpace(searchTerm))
+            if (!string.IsNullOrWhiteSpace(query))
             {
-                model.SearchTerm = searchTerm;
+                var startFrom = page.HasValue && page.Value > 0 ? (page.Value - 1)*10 : 0;
 
                 var context = new GalleryFeedContext(new Uri("http://packages.nuget.org/v1/FeedService.svc/"));
-                var packages = from p in context.Packages
-                               where (p.Id.Contains(searchTerm)
-                                     || p.Description.Contains(searchTerm)
-                                     || p.Tags.Contains(searchTerm)
-                                     || p.Title.Contains(searchTerm))
-                                     && p.IsLatestVersion
-                               orderby p.DownloadCount descending
-                               select p;
+                var packages = context.Packages.Where(p => (p.Id.Contains(query)
+                                                            || p.Description.Contains(query)
+                                                            || p.Tags.Contains(query)
+                                                            || p.Title.Contains(query))
+                                                           && p.IsLatestVersion);
 
-                model.Packages = packages.ToList();
+                var packageCount = packages.Count();
+                model.Query = query;
+                model.CurrentPage = page.HasValue && page.Value > 0 ? page.Value : 1;
+                model.TotalPages = (packageCount / 10) + (packageCount % 10 > 0 ? 1 : 0);
+                model.Packages = packages.OrderByDescending(x => x.DownloadCount).Skip(startFrom).Take(10).ToList();
             }
 
             return View(model);

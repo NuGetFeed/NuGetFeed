@@ -6,10 +6,11 @@
     
     <link href="@Url.Content("~/Content/Css/bootstrap.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/Css/Site.css")" rel="stylesheet" type="text/css" />
-    
+
     <script src="@Url.Content("~/Content/Scripts/jquery-1.6.3.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Content/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Content/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Content/Scripts/bootstrap-modal.js")" type="text/javascript"></script>
 
     <script src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e72e9371502bc94" type="text/javascript"></script>
@@ -41,8 +42,8 @@
                         }
                         <!--li id="nav-documentation"><a href="">Documentation</a></li-->
                     </ul>
-                    <form class="pull-left" action="@Url.Action("Index", "Packages")" method="POST">
-                        <input type="search" placeholder="Search Packages" name="searchTerm"/>
+                    <form class="pull-left" action="@Url.Action("Index", "Packages")" method="GET">
+                        <input type="search" placeholder="Search Packages" name="query" />
                     </form>
                     <ul class="secondary-nav">
                         @if (Request.IsAuthenticated)

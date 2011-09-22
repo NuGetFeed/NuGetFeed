@@ -33,18 +33,21 @@ namespace NuGetFeed.Controllers
             var feed = feeds.AsQueryable().SingleOrDefault(f => f.User == currentUser.Id);
 
             var packages = new List<PublishedPackage>();
-            foreach (var package in feed.Packages)
+            if (feed != null)
             {
-                var result = context.Packages.Where(p => p.Id == package && p.IsLatestVersion).SingleOrDefault();
-                if(result != null)
+                foreach (var package in feed.Packages)
                 {
-                    packages.Add(result);
+                    var result = context.Packages.Where(p => p.Id == package && p.IsLatestVersion).SingleOrDefault();
+                    if (result != null)
+                    {
+                        packages.Add(result);
+                    }
                 }
             }
-            
+
             var viewModel = new MyFeedViewModel
                                 {
-                                    FeedId = feed.Id.ToString(),
+                                    FeedId = (feed != null ? feed.Id.ToString() : ""),
                                     Packages = packages.OrderBy(x => x.Title).ToList()
                                 };
 
@@ -77,7 +80,7 @@ namespace NuGetFeed.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult AddToMyFeed(string id)
+        public string AddToMyFeed(string id)
         {
             var users = _mongo.GetCollection<User>();
             var feeds = _mongo.GetCollection<Feed>();
@@ -99,8 +102,8 @@ namespace NuGetFeed.Controllers
             }
 
             feeds.Save(feed);
-            
-            return RedirectToAction("Index");
+
+            return "<span class=\"label notice\">Added</span>";
         }
     }
 }

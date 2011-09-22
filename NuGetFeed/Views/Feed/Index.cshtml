@@ -8,7 +8,7 @@
 <div class="page-header">
 <h1>
     Packages in my feed
-    @if (Model != null)
+    @if (Model.Packages.Count > 0)
     {
         <small>
             <img src="/Content/Images/logo_16x16.png"/> <a href="@Url.Action("Rss")/@Model.FeedId">Subscribe to feed</a>
