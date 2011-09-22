@@ -1,6 +1,8 @@
 using System.Configuration;
 using System.Web.Hosting;
 using Norm;
+using NuGetFeed.Infrastructure.Repositories;
+using NuGetFeed.Models;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(NuGetFeed.App_Start.NinjectMVC3), "Start")]
 [assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(NuGetFeed.App_Start.NinjectMVC3), "Stop")]
@@ -56,6 +58,10 @@ namespace NuGetFeed.App_Start
             kernel.Bind<IMongo>()
                 .ToMethod(context => Mongo.Create(mongoUrl, "strict=false")) // strict=false makes null ref exceptions on deserialization go away...
                 .InRequestScope();
+
+            // Register Mongo repositories
+            kernel.Bind<IRepository<User>>().To<UserRepository>().InRequestScope();
+            kernel.Bind<IRepository<Feed>>().To<FeedRepository>().InRequestScope();
         }        
     }
 }

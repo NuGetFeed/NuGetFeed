@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Norm;
-using NuGetFeed.Infrastructure.ActionResults;
+using NuGetFeed.Infrastructure.Repositories;
 using NuGetFeed.Models;
 using NuGetFeed.NuGetService;
 using NuGetFeed.ViewModels;
@@ -13,24 +12,24 @@ namespace NuGetFeed.Controllers
 {
     public class FeedController : Controller
     {
-        private readonly IMongo _mongo;
+        private readonly UserRepository _userRepository;
+        private readonly FeedRepository _feedRepository;
         private readonly ListController _listController;
 
-        public FeedController(IMongo mongo, ListController listController)
+        public FeedController(UserRepository userRepository, FeedRepository feedRepository, ListController listController)
         {
-            _mongo = mongo;
+            _userRepository = userRepository;
+            _feedRepository = feedRepository;
             _listController = listController;
         }
 
         [Authorize]
         public ActionResult Index()
         {
-            var users = _mongo.GetCollection<User>();
-            var feeds = _mongo.GetCollection<Feed>();
             var context = new GalleryFeedContext(new Uri("http://packages.nuget.org/v1/FeedService.svc/"));
 
-            var currentUser = users.AsQueryable().Single(u => u.Username == User.Identity.Name);
-            var feed = feeds.AsQueryable().SingleOrDefault(f => f.User == currentUser.Id);
+            var currentUser = _userRepository.GetByUsername(User.Identity.Name);
+            var feed = _feedRepository.GetByUser(currentUser);
 
             var packages = new List<PublishedPackage>();
             if (feed != null)
@@ -56,8 +55,7 @@ namespace NuGetFeed.Controllers
 
         public ActionResult Rss(string id)
         {
-            var feeds = _mongo.GetCollection<Feed>();
-            var feed = feeds.AsQueryable().Single(f => f.Id == new ObjectId(id));
+            var feed = _feedRepository.GetById(new ObjectId(id));
 
             var feedString = string.Join(",", feed.Packages);
 
@@ -67,15 +65,12 @@ namespace NuGetFeed.Controllers
         [Authorize]
         public ActionResult RemovePackage(string id)
         {
-            var users = _mongo.GetCollection<User>();
-            var feeds = _mongo.GetCollection<Feed>();
-
-            var currentUser = users.AsQueryable().Single(u => u.Username == User.Identity.Name);
-            var feed = feeds.AsQueryable().SingleOrDefault(f => f.User == currentUser.Id);
+            var currentUser = _userRepository.GetByUsername(User.Identity.Name);
+            var feed = _feedRepository.GetByUser(currentUser);
             if (feed != null)
             {
                 feed.Packages.Remove(id.ToLowerInvariant());
-                feeds.Save(feed);
+                _feedRepository.Save(feed);
             }
 
             return RedirectToAction("Index");
@@ -84,12 +79,9 @@ namespace NuGetFeed.Controllers
         [Authorize]
         public string AddToMyFeed(string id)
         {
-            var users = _mongo.GetCollection<User>();
-            var feeds = _mongo.GetCollection<Feed>();
+            var currentUser = _userRepository.GetByUsername(User.Identity.Name);
 
-            var currentUser = users.AsQueryable().Single(u => u.Username == User.Identity.Name);
-
-            var feed = feeds.AsQueryable().SingleOrDefault(f => f.User == currentUser.Id);
+            var feed = _feedRepository.GetByUser(currentUser);
             if (feed == null)
             {
                 feed = new Feed
@@ -102,8 +94,8 @@ namespace NuGetFeed.Controllers
             {
                 feed.Packages.Add(id.ToLowerInvariant());
             }
-
-            feeds.Save(feed);
+            
+            _feedRepository.Save(feed);
 
             return "<span class=\"label notice\">Added</span>";
         }

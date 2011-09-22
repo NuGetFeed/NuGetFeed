@@ -1,25 +1,22 @@
-﻿using System;
-using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Security;
 using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OpenId;
 using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using DotNetOpenAuth.OpenId.RelyingParty;
-using Norm;
+using NuGetFeed.Infrastructure.Repositories;
 using NuGetFeed.Models;
 
 namespace NuGetFeed.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly UserRepository _userRepository;
         private static readonly OpenIdRelyingParty OpenIdRelyingParty = new OpenIdRelyingParty();
 
-        private readonly IMongo _mongo;
-
-        public AccountController(IMongo mongo)
+        public AccountController(UserRepository userRepository)
         {
-            _mongo = mongo;
+            _userRepository = userRepository;
         }
 
         public ActionResult OpenId(string openIdUrl)
@@ -70,9 +67,7 @@ namespace NuGetFeed.Controllers
 
         private ActionResult CreateUser(string userName, string firstName, string lastName, string email)
         {
-            var users = _mongo.GetCollection<User>();
-
-            User user = users.AsQueryable().SingleOrDefault(u => u.Username == userName);
+            var user = _userRepository.GetByUsername(userName);
             if (user == null)
             {
                 user = new User
@@ -82,7 +77,7 @@ namespace NuGetFeed.Controllers
                                LastName = lastName,
                                Email = email
                            };
-                users.Insert(user);
+                _userRepository.Insert(user);
             }
 
             FormsAuthentication.SetAuthCookie(userName, true);
