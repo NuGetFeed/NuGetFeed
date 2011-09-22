@@ -24,30 +24,32 @@
         <div class="container">
             @foreach (var package in Model.Packages)
             {
-                <div class="actions">
+                <div class="well">
                     @if (package.IconUrl != null)
                     {
                         <img src="@(package.IconUrl.StartsWith("http:") ? package.IconUrl : "http://nuget.org" + package.IconUrl)" class="package-image"/>
                     }
-                    <h2><a href="@Url.Action("Packages", "List")/@package.Id">@package.Title</a></h2>
-                    <p>@package.Description</p>
-                    <p>
-                        @package.DownloadCount Downloads 
-                        @if (package.Tags != null)
-                        {
-                            @:| Tags:
-                            foreach (var tag in @package.Tags.Trim().Split(' '))
+                    <div class="package-info">
+                        <h2><a href="@Url.Action("Packages", "List")/@package.Id">@package.Title</a></h2>
+                        <p>@package.Description</p>
+                        <p>
+                            @package.DownloadCount Downloads 
+                            @if (package.Tags != null)
                             {
-                                <a href="@Url.Action("Index", "Packages")?query=@tag">@tag</a>
+                                @:| Tags:
+                                foreach (var tag in @package.Tags.Trim().Split(' '))
+                                {
+                                    <a href="@Url.Action("Index", "Packages")?query=@tag">@tag</a>
+                                }
                             }
-                        }
-                    </p>
-                    @if (Request.IsAuthenticated)
-                    {
-                        <p id="add@(package.Id.Replace(".", string.Empty))">
-                            @Ajax.ActionLink("Add to My Feed", "AddToMyFeed", "Feed", new { id = package.Id }, new AjaxOptions() { HttpMethod = "get", UpdateTargetId = "add" + package.Id.Replace(".", string.Empty) })
                         </p>
-                    }
+                        @if (Request.IsAuthenticated)
+                        {
+                            <p id="add@(package.Id.Replace(".", string.Empty))">
+                                @Ajax.ActionLink("Add to My Feed", "AddToMyFeed", "Feed", new { id = package.Id }, new AjaxOptions() { HttpMethod = "get", UpdateTargetId = "add" + package.Id.Replace(".", string.Empty) })
+                            </p>
+                        }
+                    </div>
                 </div>
             }
     
