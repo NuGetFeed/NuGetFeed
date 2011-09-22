@@ -11,7 +11,6 @@ using NuGetFeed.ViewModels;
 
 namespace NuGetFeed.Controllers
 {
-    [Authorize]
     public class FeedController : Controller
     {
         private readonly IMongo _mongo;
@@ -23,6 +22,7 @@ namespace NuGetFeed.Controllers
             _listController = listController;
         }
 
+        [Authorize]
         public ActionResult Index()
         {
             var users = _mongo.GetCollection<User>();
@@ -64,6 +64,7 @@ namespace NuGetFeed.Controllers
             return _listController.Packages(feedString);
         }
 
+        [Authorize]
         public ActionResult RemovePackage(string id)
         {
             var users = _mongo.GetCollection<User>();
@@ -80,6 +81,7 @@ namespace NuGetFeed.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public string AddToMyFeed(string id)
         {
             var users = _mongo.GetCollection<User>();
