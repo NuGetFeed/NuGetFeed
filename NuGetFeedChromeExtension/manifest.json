@@ -1,5 +1,5 @@
 {
-  "name": "NuGetFeed",
+  "name": "NuGet Feed",
   "version" : "1.0.4",
   "description" : "Follow your favorite NuGet packages as RSS feeds.",
   "content_scripts": [
