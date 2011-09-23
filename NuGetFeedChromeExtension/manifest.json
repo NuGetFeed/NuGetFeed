@@ -1,6 +1,6 @@
 {
   "name": "NuGetFeed",
-  "version" : "1.0.3",
+  "version" : "1.0.4",
   "description" : "Follow your favorite NuGet packages as RSS feeds.",
   "content_scripts": [
     {
@@ -9,7 +9,7 @@
       "run_at": "document_end"
     },
     {
-      "matches": ["http://nuget.org/List/Packages","http://www.nuget.org/List/Packages","http://nuget.org/List/Packages?*","http://www.nuget.org/List/Packages?*"],
+      "matches": ["http://nuget.org/List/Packages","http://www.nuget.org/List/Packages","http://nuget.org/List/Packages?*","http://www.nuget.org/List/Packages?*","http://nuget.org/List/Search*","http://www.nuget.org/List/Search*"],
       "js": ["jquery-1.6.3.min.js", "NuGetFeedList.js"],
       "run_at": "document_end"
     }
