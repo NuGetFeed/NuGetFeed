@@ -10,6 +10,7 @@ namespace NuGetFeed.VSExtension {
 
     using EnvDTE;
 
+    using Microsoft.VisualStudio;
     using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.Shell.Interop;
 
@@ -67,39 +68,53 @@ namespace NuGetFeed.VSExtension {
                     return;
                 }
 
-                var selectedItem = dte.SelectedItems.Item(1);
-                project = selectedItem.Project;
-                projItems = project.ProjectItems;
-                for(int i = 1 ; i <= projItems.Count; i++ )
+                var vsMonitorSelection = (IVsMonitorSelection)this.GetService(typeof(IVsMonitorSelection));
+                IntPtr ppHier;
+                uint pitemid;
+                IVsMultiItemSelect ppMIS;
+                IntPtr ppSC;
+                vsMonitorSelection.GetCurrentSelection(out ppHier, out pitemid, out ppMIS, out ppSC);
+                var o = (IVsHierarchy)Marshal.GetObjectForIUnknown(ppHier);
+                Marshal.Release(ppHier);
+                object pvar;
+                if (o.GetProperty(VSConstants.VSITEMID_ROOT, (int)__VSHPROPID.VSHPROPID_ExtObject, out pvar) == VSConstants.S_OK)
                 {
-                    projItem = projItems.Item(i);
-                    prop = projItem.Properties.Item("FileName");
-                    if (prop == null || prop.Value == null)
+                    project = pvar as EnvDTE.Project;
+                    if (project != null)
                     {
-                        continue;
+                        projItems = project.ProjectItems;
+                        for (int i = 1; i <= projItems.Count; i++)
+                        {
+                            projItem = projItems.Item(i);
+                            prop = projItem.Properties.Item("FileName");
+                            if (prop == null || prop.Value == null)
+                            {
+                                continue;
+                            }
+
+                            if (!prop.Value.ToString().ToLower().Equals("packages.config"))
+                            {
+                                continue;
+                            }
+
+                            XDocument xml = XDocument.Load(projItem.Properties.Item("FullPath").Value);
+                            var packages = xml.Descendants("package").Select(descendant => descendant.Attribute("id").Value).ToList();
+
+                            if (packages.Count < 1)
+                            {
+                                continue;
+                            }
+
+                            var sb = new StringBuilder();
+                            foreach (var s in packages)
+                            {
+                                sb.Append(s).Append(",");
+                            }
+
+                            var param = sb.ToString().TrimEnd(',');
+                            System.Diagnostics.Process.Start("http://nugetfeed.org/List/Packages/" + param);
+                        }
                     }
-
-                    if (!prop.Value.ToString().ToLower().Equals("packages.config"))
-                    {
-                        continue;
-                    }
-
-                    XDocument xml = XDocument.Load(projItem.Properties.Item("FullPath").Value);
-                    var packages = xml.Descendants("package").Select(descendant => descendant.Attribute("id").Value).ToList();
-
-                    if (packages.Count < 1)
-                    {
-                        continue;
-                    }
-
-                    var sb = new StringBuilder();
-                    foreach (var s in packages)
-                    {
-                        sb.Append(s).Append(",");
-                    }
-
-                    var param = sb.ToString().TrimEnd(',');
-                    System.Diagnostics.Process.Start("http://nugetfeed.org/List/Packages/" + param);
                 }
             }
             catch (Exception e)
@@ -112,6 +127,17 @@ namespace NuGetFeed.VSExtension {
 
                 EventLog.WriteEntry(eventSource, e.ToString());
             }
+        }
+
+        private uint GetItemId(object pvar)
+        {
+            if (pvar == null) return VSConstants.VSITEMID_NIL;
+            if (pvar is int) return (uint)(int)pvar;
+            if (pvar is uint) return (uint)pvar;
+            if (pvar is short) return (uint)(short)pvar;
+            if (pvar is ushort) return (uint)(ushort)pvar;
+            if (pvar is long) return (uint)(long)pvar;
+            return VSConstants.VSITEMID_NIL;
         }
 
         private void BeforeExecute(object sender, EventArgs args)
