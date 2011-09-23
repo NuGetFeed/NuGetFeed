@@ -124,6 +124,10 @@
     <Content Include="Content\Images\logo_48x48.png" />
     <Content Include="Content\Images\logo_64x64.png" />
     <Content Include="Content\Images\openid_sprite.png" />
+    <Content Include="Content\Images\scr_chrome.png" />
+    <Content Include="Content\Images\scr_myfeed.png" />
+    <Content Include="Content\Images\scr_search.png" />
+    <Content Include="Content\Images\scr_studio.png" />
     <Content Include="Content\Scripts\bootstrap-modal.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
