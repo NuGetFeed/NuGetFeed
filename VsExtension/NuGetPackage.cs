@@ -59,7 +59,6 @@ namespace NuGetFeed.VSExtension {
             {
                 // Open a Visual C# or Visual Basic project
                 // before running this add-in.
-                Project project;
                 ProjectItems projItems;
                 ProjectItem projItem;
                 Property prop;
@@ -79,7 +78,7 @@ namespace NuGetFeed.VSExtension {
                 object pvar;
                 if (o.GetProperty(VSConstants.VSITEMID_ROOT, (int)__VSHPROPID.VSHPROPID_ExtObject, out pvar) == VSConstants.S_OK)
                 {
-                    project = pvar as EnvDTE.Project;
+                    Project project = pvar as EnvDTE.Project;
                     if (project != null)
                     {
                         projItems = project.ProjectItems;

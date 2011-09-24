@@ -7,7 +7,7 @@
     <Description xml:space="preserve">With NuGet Feed for Visual Studio, you can right click your references and export all NuGet packages to NuGetFeed.org.</Description>
     <Locale>1033</Locale>
     <MoreInfoUrl>http://nugetfeed.org</MoreInfoUrl>
-    <Icon>Resources\Package.ico</Icon>
+    <Icon>Resources\logo32.ico</Icon>
     <SupportedProducts>
       <VisualStudio Version="10.0">
         <Edition>Pro</Edition>
