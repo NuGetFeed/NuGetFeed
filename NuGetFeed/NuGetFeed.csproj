@@ -114,6 +114,25 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Css\bootstrap.css" />
+    <Content Include="Content\Images\Auth\large\facebook.gif" />
+    <Content Include="Content\Images\Auth\large\google.gif" />
+    <Content Include="Content\Images\Auth\large\myopenid.gif" />
+    <Content Include="Content\Images\Auth\large\openid.gif" />
+    <Content Include="Content\Images\Auth\large\yahoo.gif" />
+    <Content Include="Content\Images\Auth\small\aol.ico.png" />
+    <Content Include="Content\Images\Auth\small\blogger.ico.png" />
+    <Content Include="Content\Images\Auth\small\facebook.ico.png" />
+    <Content Include="Content\Images\Auth\small\flickr.ico.png" />
+    <Content Include="Content\Images\Auth\small\google.ico.png" />
+    <Content Include="Content\Images\Auth\small\google_profile.ico.png" />
+    <Content Include="Content\Images\Auth\small\linkedin.ico.png" />
+    <Content Include="Content\Images\Auth\small\livejournal.ico.png" />
+    <Content Include="Content\Images\Auth\small\myopenid.ico.png" />
+    <Content Include="Content\Images\Auth\small\openid.ico.png" />
+    <Content Include="Content\Images\Auth\small\twitter.ico.png" />
+    <Content Include="Content\Images\Auth\small\winliveid.ico.png" />
+    <Content Include="Content\Images\Auth\small\wordpress.ico.png" />
+    <Content Include="Content\Images\Auth\small\yahoo.ico.png" />
     <Content Include="Content\Images\curved-arrow.png" />
     <Content Include="Content\Images\logo-background.png" />
     <Content Include="Content\Images\logo.png" />
