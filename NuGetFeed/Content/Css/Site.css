@@ -1,19 +1,37 @@
-.topmenu {
+.topmenu
+{
     background: transparent url(/Content/Images/logo-background.png);
     height: 125px;
     border: 0px solid #323232;
     border-top-width: 6px;
 }
 
-.topbar {
+.topbar
+{
     position: relative;
 }
 
-.well .package-image 
+.well .package-image
 {
     float: left;
     width: 50px;
     height: 50px;
+}
+
+.pagination.center, .pagination.center ul
+{
+    float: left;
+    position: relative;
+}
+
+.pagination.center
+{
+    left: 50%;
+}
+
+.pagination.center ul
+{
+    left: -50%;
 }
 
 .well .package-info
@@ -21,7 +39,8 @@
     padding-left: 70px;
 }
 
-.input-frontpage-search {
+.input-frontpage-search
+{
     width: 100%;
     height: 34px;
     font-size: 28px;
