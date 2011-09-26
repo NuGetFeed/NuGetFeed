@@ -19,6 +19,11 @@ namespace NuGetFeed.Controllers
             _userRepository = userRepository;
         }
 
+        public ActionResult LogIn()
+        {
+            return View();
+        }
+
         public ActionResult OpenId(string openIdUrl)
         {
             var response = OpenIdRelyingParty.GetResponse();

@@ -61,7 +61,7 @@
                         }
                         else
                         {
-                            <li><a href="#" data-controls-modal="modal-login" data-backdrop="true" data-keyboard="true">Log in</a></li>
+                            <li><a href="@Url.Action("LogIn", "Account")">Log in</a></li>
                         }
                     </ul>
                 </div>
@@ -72,69 +72,6 @@
     <div class="container" style="padding-top: 20px;">
         @RenderBody()
     </div>
-
-    <div id="modal-login" class="modal hide fade">
-        <div class="modal-header">
-            <h3>Login</h3>
-        </div>
-        <div class="modal-body">
-            <h2>Sign in with any of these sites:</h2>
-            <form id="openid-form" method="POST" action="@Url.Action("OpenId", "Account")">
-                <div id="openid-providers">
-                    <ul class="large">
-                        <li id="google"><img src="/Content/Images/Auth/large/google.gif" /></li>
-                        <li id="yahoo"><img src="/Content/Images/Auth/large/yahoo.gif" /></li>
-                        @*<li id="facebook"><img src="/Content/Images/Auth/large/facebook.gif" /></li>*@
-                        <li id="myopenid"><img src="/Content/Images/Auth/large/myopenid.gif" /></li>
-                    </ul>
-@*                    <ul class="small">
-                        <li id="openid"><img src="/Content/Images/Auth/small/openid.ico.png" /></li>
-                        <li id="twitter"><img src="/Content/Images/Auth/small/twitter.ico.png" /></li>
-                        <li id="linkedin"><img src="/Content/Images/Auth/small/linkedin.ico.png" /></li>
-                        <li id="winliveid"><img src="/Content/Images/Auth/small/winliveid.ico.png" /></li>
-                        <li id="aol"><img src="/Content/Images/Auth/small/aol.ico.png" /></li>
-                        <li id="blogger"><img src="/Content/Images/Auth/small/blogger.ico.png" /></li>
-                    </ul>*@
-                </div>
-                <div id="other">
-                    <h5>Alternatively, you can manually enter your OpendID provider:</h5>
-                    <input name="openIdUrl" id="openIdUrl" type="text" />
-                    <a id="signin">Sign In »</a>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            var items = $('#openid-providers ul li');
-
-            var providers = {
-                myopenid: { action: '@Url.Action("OpenId", "Account")', url: 'http://myopenid.com' },
-                google: { action: '@Url.Action("OpenId", "Account")', url: 'http://www.google.com/accounts/o8/id' },
-                yahoo: { action: '@Url.Action("OpenId", "Account")', url: 'http://yahoo.com' }
-            };
-
-            $("#signin").click(function() {
-                $("#openid-form").submit();
-            });
-
-            $("#openid-providers ul li").click(function () {
-                items.removeClass("openid-highlight");
-                $(this).addClass("openid-highlight");
-                
-                var id = $(this).attr("id");
-                var provider = providers[id];
-                if (provider.action != undefined) {
-                    $("#openid-form").attr("action", provider.action);
-                }
-                if (provider.url != undefined) {
-                    $("#openIdUrl").val(provider.url);
-                }
-                $("#openid-form").submit();
-            });
-        });
-    </script>
 
     <script type="text/javascript">
         var _gaq = _gaq || [];
