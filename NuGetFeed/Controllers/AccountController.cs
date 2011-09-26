@@ -19,8 +19,10 @@ namespace NuGetFeed.Controllers
             _userRepository = userRepository;
         }
 
-        public ActionResult LogIn()
+        public ActionResult LogIn(string ReturnUrl)
         {
+            ViewBag.ReturnUrl = ReturnUrl;
+
             return View();
         }
 
@@ -86,6 +88,12 @@ namespace NuGetFeed.Controllers
             }
 
             FormsAuthentication.SetAuthCookie(userName, true);
+
+            if(Request.QueryString["ReturnUrl"] != null)
+            {
+                return Redirect(Request.QueryString["ReturnUrl"]);
+            }
+
             return RedirectToAction("Index", "Home");
         }
     }

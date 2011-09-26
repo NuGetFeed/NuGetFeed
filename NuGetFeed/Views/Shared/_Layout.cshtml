@@ -45,10 +45,7 @@
                     <ul class="nav">
                         <li id="nav-home"><a href="@Url.Action("Index", "Home")">Home</a></li>
                         @*<li id="nav-packages"><a href="@Url.Action("Index", "Packages")">Packages</a></li>*@
-                        @if (Request.IsAuthenticated)
-                        {
-                            <li id="nav-myfeed"><a href="@Url.Action("Index", "Feed")">My Feed</a></li>
-                        }
+                        <li id="nav-myfeed"><a href="@Url.Action("Index", "Feed")">My Feed</a></li>
                         <!--li id="nav-documentation"><a href="">Documentation</a></li-->
                     </ul>
                     <form class="pull-left" action="@Url.Action("Index", "Packages")" method="GET">

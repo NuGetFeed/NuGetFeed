@@ -44,9 +44,9 @@
         var items = $('#openid-providers ul li');
 
         var providers = {
-            myopenid: { action: '@Url.Action("OpenId", "Account")', url: 'http://myopenid.com' },
-            google: { action: '@Url.Action("OpenId", "Account")', url: 'http://www.google.com/accounts/o8/id' },
-            yahoo: { action: '@Url.Action("OpenId", "Account")', url: 'http://yahoo.com' }
+            myopenid: { action: '@Url.Action("OpenId", "Account")@(ViewBag.ReturnUrl != null ? "?returnurl=" + ViewBag.ReturnUrl : string.Empty)', url: 'http://myopenid.com' },
+            google: { action: '@Url.Action("OpenId", "Account")@(ViewBag.ReturnUrl != null ? "?returnurl=" + ViewBag.ReturnUrl : string.Empty)', url: 'http://www.google.com/accounts/o8/id' },
+            yahoo: { action: '@Url.Action("OpenId", "Account")@(ViewBag.ReturnUrl != null ? "?returnurl=" + ViewBag.ReturnUrl : string.Empty)', url: 'http://yahoo.com' }
         };
 
         $("#signin").click(function () {
