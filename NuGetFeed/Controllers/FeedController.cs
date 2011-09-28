@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Xml.Linq;
@@ -11,8 +12,6 @@ using NuGetFeed.ViewModels;
 
 namespace NuGetFeed.Controllers
 {
-    using System.IO;
-    using System.Xml;
     public class FeedController : Controller
     {
         private readonly UserRepository _userRepository;
@@ -89,23 +88,7 @@ namespace NuGetFeed.Controllers
         public string AddToMyFeed(string id)
         {
             var currentUser = _userRepository.GetByUsername(User.Identity.Name);
-
-            var feed = _feedRepository.GetByUser(currentUser);
-            if (feed == null)
-            {
-                feed = new Feed
-                           {
-                               User = currentUser.Id
-                           };
-            }
-
-            if(!feed.Packages.Contains(id.ToLowerInvariant()))
-            {
-                feed.Packages.Add(id.ToLowerInvariant());
-            }
-            
-            _feedRepository.Save(feed);
-
+            _feedRepository.InsertPackagesIntoFeed(currentUser, id);
             return "<span class=\"label notice\">Added</span>";
         }
 
@@ -128,10 +111,8 @@ namespace NuGetFeed.Controllers
                 return RedirectToAction("Index");
             }
 
-            foreach (var packageId in uploadPackagesRequest.Packages)
-            {
-                this.AddToMyFeed(packageId);
-            }
+            var currentUser = _userRepository.GetByUsername(User.Identity.Name);
+            _feedRepository.InsertPackagesIntoFeed(currentUser, uploadPackagesRequest.Packages);
 
             TempData["Message"] = string.Format(
                 "{0} package{1} successfully added",

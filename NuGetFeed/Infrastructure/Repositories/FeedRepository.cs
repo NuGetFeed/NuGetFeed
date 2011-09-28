@@ -21,6 +21,28 @@ namespace NuGetFeed.Infrastructure.Repositories
             _feeds.Insert(obj);
         }
 
+        public void InsertPackagesIntoFeed(User currentUser, params string[] packageIds)
+        {
+            var feed = GetByUser(currentUser);
+            if (feed == null)
+            {
+                feed = new Feed
+                {
+                    User = currentUser.Id
+                };
+            }
+
+            foreach (var packageId in packageIds)
+            {
+                if (!feed.Packages.Contains(packageId.ToLowerInvariant()))
+                {
+                    feed.Packages.Add(packageId.ToLowerInvariant());
+                }
+            }
+
+            Save(feed);
+        }
+
         public void Save(Feed obj)
         {
             _feeds.Save(obj);
