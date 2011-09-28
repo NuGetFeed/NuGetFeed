@@ -101,8 +101,10 @@
     <Compile Include="Infrastructure\ModelBinders\XmlModelBinder.cs" />
     <Compile Include="Infrastructure\Repositories\FeedRepository.cs" />
     <Compile Include="Infrastructure\Repositories\IRepository.cs" />
+    <Compile Include="Infrastructure\Repositories\UploadPackagesRequestRepository.cs" />
     <Compile Include="Infrastructure\Repositories\UserRepository.cs" />
     <Compile Include="Models\Feed.cs" />
+    <Compile Include="Models\UploadPackagesRequest.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\NuGetService\Reference.cs">
