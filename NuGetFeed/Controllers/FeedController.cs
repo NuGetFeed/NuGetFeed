@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Syndication;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using Norm;
+using NuGetFeed.Infrastructure.ActionResults;
 using NuGetFeed.Infrastructure.ModelBinders;
 using NuGetFeed.Infrastructure.PackageSources;
 using NuGetFeed.Infrastructure.Repositories;
@@ -71,6 +73,37 @@ namespace NuGetFeed.Controllers
             var feedString = string.Join(",", feed.Packages);
 
             return _listController.Packages(feedString);
+        }
+
+        public ActionResult PublicFeeds()
+        {
+            return View();
+        }
+
+        public ActionResult PublicRssRecentReleases()
+        {
+            var packages = _nuGetOrgFeed.GetAllByDescendingPublishDate();
+
+            var feed = new SyndicationFeed("NuGetFeed.org - Recent Releases", "Most recent package releases from NuGet",
+                                           new Uri("http://nugetfeed.org"), "nugetfeedorgmostrecent", DateTime.Now)
+                           {
+                               Language = "EN",
+                               Copyright = new TextSyndicationContent("Copyright " + DateTime.Today.Year + ", nugetfeed.org")
+                           };
+
+            var items = new List<SyndicationItem>();
+            foreach (var p in packages)
+            {
+                var item = new SyndicationItem(p.Title + " " + p.Version, string.Empty, new Uri(p.GalleryDetailsUrl), p.Id + p.Version, p.LastUpdated)
+                {
+                    Content = SyndicationContent.CreateHtmlContent("<p><strong>Description</strong></p><p>" + p.Description + "</p><p><strong>Release notes</strong></p><p>" + p.ReleaseNotes + "</p>"),
+                    PublishDate = p.LastUpdated
+                };
+                items.Add(item);
+            }
+            feed.Items = items;
+
+            return new RssActionResult {Feed = feed};
         }
 
         [Authorize]

@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Public Feeds - NuGet Feed";
+}
+
+<div class="page-header">
+    <h1>
+        Public Feeds
+        <small>- feeds for everyone</small>
+    </h1>
+</div>
+
+<div class="well">
+    <h3><a href="@Url.Action("PublicRssRecentReleases", "Feed")">Recent Releases</a> <img src="/Content/Images/logo_16x16.png"/></h3>
+    <p>All packages from NuGet.org ordered by descending release date. If you ever find yourself browsing NuGet.org sorted by "Recent", this is the feed for you!</p>
+    <p>Great for discovering new packages or keeping up-to-date.</p>
+</div>

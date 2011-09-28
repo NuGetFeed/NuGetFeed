@@ -193,6 +193,7 @@
     <Content Include="Views\Packages\Index.cshtml" />
     <Content Include="Views\Feed\Index.cshtml" />
     <Content Include="Views\Account\LogIn.cshtml" />
+    <Content Include="Views\Feed\PublicFeeds.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

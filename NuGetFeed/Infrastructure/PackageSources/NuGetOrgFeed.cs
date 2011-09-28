@@ -39,5 +39,13 @@ namespace NuGetFeed.Infrastructure.PackageSources
             numberOfResults = packages.Count();
             return packages.OrderByDescending(x => x.DownloadCount).Skip(startFrom).Take(pageSize);
         }
+
+        public IEnumerable<PublishedPackage> GetAllByDescendingPublishDate()
+        {
+            var packages = _context.Packages
+                .Where(p => p.Id != "SymbolSource.TestPackage")
+                .OrderByDescending(p => p.Published);
+            return packages;
+        }
     }
 }
