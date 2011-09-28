@@ -187,6 +187,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Packages\Index.cshtml" />
     <Content Include="Views\Feed\Index.cshtml" />
+    <Content Include="Views\Account\LogIn.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

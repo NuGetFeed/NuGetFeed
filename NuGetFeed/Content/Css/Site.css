@@ -1,19 +1,37 @@
-.topmenu {
+.topmenu
+{
     background: transparent url(/Content/Images/logo-background.png);
     height: 125px;
     border: 0px solid #323232;
     border-top-width: 6px;
 }
 
-.topbar {
+.topbar
+{
     position: relative;
 }
 
-.well .package-image 
+.well .package-image
 {
     float: left;
     width: 50px;
     height: 50px;
+}
+
+.pagination.center, .pagination.center ul
+{
+    float: left;
+    position: relative;
+}
+
+.pagination.center
+{
+    left: 50%;
+}
+
+.pagination.center ul
+{
+    left: -50%;
 }
 
 .well .package-info
@@ -21,7 +39,8 @@
     padding-left: 70px;
 }
 
-.input-frontpage-search {
+.input-frontpage-search
+{
     width: 100%;
     height: 34px;
     font-size: 28px;
@@ -33,15 +52,26 @@
 {
     display: inline-block;
     list-style: none;
+    margin-left: 0px;
 }
 
 #openid-providers ul li
 {
-    margin: 10px;
+    margin-right: 20px;
     padding: 0;
     float: left;
     text-align: center;
     cursor: pointer;
+    background-color: white;
+    border: 2px solid #CCC;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+#openid-providers ul li:hover
+{
+    border: 2px solid #888;
 }
 
 #openid-providers ul.large li
@@ -61,11 +91,4 @@
 #openid-providers li img
 {
     vertical-align: middle;
-}
-
-.openid-highlight
-{
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    background-color: #FFFCC9;
 }

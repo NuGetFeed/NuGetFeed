@@ -19,6 +19,13 @@ namespace NuGetFeed.Controllers
             _userRepository = userRepository;
         }
 
+        public ActionResult LogIn(string ReturnUrl)
+        {
+            ViewBag.ReturnUrl = ReturnUrl;
+
+            return View();
+        }
+
         public ActionResult OpenId(string openIdUrl)
         {
             var response = OpenIdRelyingParty.GetResponse();
@@ -81,6 +88,12 @@ namespace NuGetFeed.Controllers
             }
 
             FormsAuthentication.SetAuthCookie(userName, true);
+
+            if(Request.QueryString["ReturnUrl"] != null)
+            {
+                return Redirect(Request.QueryString["ReturnUrl"]);
+            }
+
             return RedirectToAction("Index", "Home");
         }
     }

@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Log In - NuGet Feed";
+}
+
+<div class="page-header">
+    <h1>Log In</h1>
+</div>
+
+<div class="well">
+    <h4>Sign in with any of these sites</h4>
+    <p>Select your preferred OpenID provider:</p>
+    <p>
+        <form id="openid-form" method="POST" action="@Url.Action("OpenId", "Account")">
+            <div id="openid-providers">
+                <ul class="large">
+                    <li id="google"><img src="/Content/Images/Auth/large/google.gif" /></li>
+                    <li id="yahoo"><img src="/Content/Images/Auth/large/yahoo.gif" /></li>
+                    @*<li id="facebook"><img src="/Content/Images/Auth/large/facebook.gif" /></li>*@
+                    <li id="myopenid"><img src="/Content/Images/Auth/large/myopenid.gif" /></li>
+                </ul>
+            @*                    <ul class="small">
+                    <li id="openid"><img src="/Content/Images/Auth/small/openid.ico.png" /></li>
+                    <li id="twitter"><img src="/Content/Images/Auth/small/twitter.ico.png" /></li>
+                    <li id="linkedin"><img src="/Content/Images/Auth/small/linkedin.ico.png" /></li>
+                    <li id="winliveid"><img src="/Content/Images/Auth/small/winliveid.ico.png" /></li>
+                    <li id="aol"><img src="/Content/Images/Auth/small/aol.ico.png" /></li>
+                    <li id="blogger"><img src="/Content/Images/Auth/small/blogger.ico.png" /></li>
+                </ul>*@
+            </div>
+            <div id="other">
+                <p>Alternatively, you can manually enter your OpenID provider:</p>
+                <input name="openIdUrl" id="openIdUrl" class="xlarge" type="text" />
+                <a id="signin" class="btn primary">Log in »</a>
+            </div>
+        </form>
+    </p>
+
+    <h4>Create new account</h4>
+    <p>Just sign in with one of the above sites, and we will create an account for you.</p>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var items = $('#openid-providers ul li');
+
+        var providers = {
+            myopenid: { action: '@Url.Action("OpenId", "Account")@(ViewBag.ReturnUrl != null ? "?returnurl=" + ViewBag.ReturnUrl : string.Empty)', url: 'http://myopenid.com' },
+            google: { action: '@Url.Action("OpenId", "Account")@(ViewBag.ReturnUrl != null ? "?returnurl=" + ViewBag.ReturnUrl : string.Empty)', url: 'http://www.google.com/accounts/o8/id' },
+            yahoo: { action: '@Url.Action("OpenId", "Account")@(ViewBag.ReturnUrl != null ? "?returnurl=" + ViewBag.ReturnUrl : string.Empty)', url: 'http://yahoo.com' }
+        };
+
+        $("#signin").click(function () {
+            $("#openid-form").submit();
+        });
+
+        $("#openid-providers ul li").click(function () {
+            var id = $(this).attr("id");
+            var provider = providers[id];
+            if (provider.action != undefined) {
+                $("#openid-form").attr("action", provider.action);
+            }
+            if (provider.url != undefined) {
+                $("#openIdUrl").val(provider.url);
+            }
+            $("#openid-form").submit();
+        });
+    });
+</script>
