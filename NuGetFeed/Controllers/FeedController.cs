@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Xml.Linq;
 using Norm;
+using NuGetFeed.Infrastructure.ModelBinders;
 using NuGetFeed.Infrastructure.Repositories;
 using NuGetFeed.Models;
 using NuGetFeed.NuGetService;
@@ -10,21 +11,19 @@ using NuGetFeed.ViewModels;
 
 namespace NuGetFeed.Controllers
 {
-    using System.Xml.Linq;
-
-    using NuGetFeed.Infrastructure.ModelBinders;
-
     public class FeedController : Controller
     {
         private readonly UserRepository _userRepository;
         private readonly FeedRepository _feedRepository;
         private readonly ListController _listController;
+        private readonly GalleryFeedContext _feed;
 
-        public FeedController(UserRepository userRepository, FeedRepository feedRepository, ListController listController)
+        public FeedController(UserRepository userRepository, FeedRepository feedRepository, ListController listController, GalleryFeedContext feed)
         {
             _userRepository = userRepository;
             _feedRepository = feedRepository;
             _listController = listController;
+            _feed = feed;
         }
 
         [Authorize]
@@ -36,8 +35,6 @@ namespace NuGetFeed.Controllers
                 ViewBag.Message = TempData["Message"];
             }
 
-            var context = new GalleryFeedContext(new Uri("http://packages.nuget.org/v1/FeedService.svc/"));
-
             var currentUser = _userRepository.GetByUsername(User.Identity.Name);
             var feed = _feedRepository.GetByUser(currentUser);
 
@@ -46,7 +43,7 @@ namespace NuGetFeed.Controllers
             {
                 foreach (var package in feed.Packages)
                 {
-                    var result = context.Packages.Where(p => p.Id == package && p.IsLatestVersion).SingleOrDefault();
+                    var result = _feed.Packages.Where(p => p.Id == package && p.IsLatestVersion).SingleOrDefault();
                     if (result != null)
                     {
                         packages.Add(result);

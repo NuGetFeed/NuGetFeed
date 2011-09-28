@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Web.Mvc;
-using System.Xml;
 using NuGetFeed.Infrastructure.ActionResults;
 using NuGetFeed.NuGetService;
 
@@ -11,6 +10,13 @@ namespace NuGetFeed.Controllers
 {
     public class ListController : Controller
     {
+        private readonly GalleryFeedContext _feed;
+
+        public ListController(GalleryFeedContext feed)
+        {
+            _feed = feed;
+        }
+
         public ActionResult Packages(string id)
         {
             var allItems = new List<SyndicationItem>();
@@ -30,8 +36,7 @@ namespace NuGetFeed.Controllers
 
         private IEnumerable<SyndicationItem> CreateListOfItems(string packageId)
         {
-            var context = new GalleryFeedContext(new Uri("http://packages.nuget.org/v1/FeedService.svc/"));
-            var packages = (from p in context.Packages
+            var packages = (from p in _feed.Packages
                            where p.Id == packageId
                            orderby p.LastUpdated descending
                            select p).Take(5);

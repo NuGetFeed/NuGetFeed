@@ -1,8 +1,10 @@
+using System;
 using System.Configuration;
 using System.Web.Hosting;
 using Norm;
 using NuGetFeed.Infrastructure.Repositories;
 using NuGetFeed.Models;
+using NuGetFeed.NuGetService;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(NuGetFeed.App_Start.NinjectMVC3), "Start")]
 [assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(NuGetFeed.App_Start.NinjectMVC3), "Stop")]
@@ -62,6 +64,11 @@ namespace NuGetFeed.App_Start
             // Register Mongo repositories
             kernel.Bind<IRepository<User>>().To<UserRepository>().InRequestScope();
             kernel.Bind<IRepository<Feed>>().To<FeedRepository>().InRequestScope();
-        }        
+
+            // Register OData feed from NuGet.org
+            kernel.Bind<GalleryFeedContext>()
+                .ToMethod(context => new GalleryFeedContext(new Uri("http://packages.nuget.org/v1/FeedService.svc/")))
+                .InTransientScope();
+        }
     }
 }

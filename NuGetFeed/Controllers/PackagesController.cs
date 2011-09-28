@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using NuGetFeed.NuGetService;
 using NuGetFeed.ViewModels;
@@ -10,6 +7,13 @@ namespace NuGetFeed.Controllers
 {
     public class PackagesController : Controller
     {
+        private readonly GalleryFeedContext _feed;
+
+        public PackagesController(GalleryFeedContext feed)
+        {
+            _feed = feed;
+        }
+
         public ActionResult Index(string query, int? page)
         {
             var model = new PackageSearchViewModel();
@@ -18,12 +22,11 @@ namespace NuGetFeed.Controllers
             {
                 var startFrom = page.HasValue && page.Value > 0 ? (page.Value - 1)*10 : 0;
 
-                var context = new GalleryFeedContext(new Uri("http://packages.nuget.org/v1/FeedService.svc/"));
-                var packages = context.Packages.Where(p => (p.Id.Contains(query)
-                                                            || p.Description.Contains(query)
-                                                            || p.Tags.Contains(query)
-                                                            || p.Title.Contains(query))
-                                                           && p.IsLatestVersion);
+                var packages = _feed.Packages.Where(p => (p.Id.Contains(query)
+                                                          || p.Description.Contains(query)
+                                                          || p.Tags.Contains(query)
+                                                          || p.Title.Contains(query))
+                                                         && p.IsLatestVersion);
 
                 var packageCount = packages.Count();
                 model.Query = query;
