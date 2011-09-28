@@ -3,6 +3,8 @@ using System.Xml.Linq;
 
 namespace NuGetFeed.Infrastructure.ModelBinders
 {
+    using System.IO;
+
     public class XmlModelBinder : IModelBinder
     {
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)

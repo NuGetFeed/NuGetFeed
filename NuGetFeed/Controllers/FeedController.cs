@@ -10,6 +10,8 @@ using NuGetFeed.ViewModels;
 
 namespace NuGetFeed.Controllers
 {
+    using System.IO;
+    using System.Xml;
     using System.Xml.Linq;
 
     using NuGetFeed.Infrastructure.ModelBinders;
@@ -20,11 +22,14 @@ namespace NuGetFeed.Controllers
         private readonly FeedRepository _feedRepository;
         private readonly ListController _listController;
 
-        public FeedController(UserRepository userRepository, FeedRepository feedRepository, ListController listController)
+        private readonly UploadPackagesRequestRepository _uploadPackagesRequestRepository;
+
+        public FeedController(UserRepository userRepository, FeedRepository feedRepository, ListController listController, UploadPackagesRequestRepository uploadPackagesRequestRepository)
         {
             _userRepository = userRepository;
             _feedRepository = feedRepository;
             _listController = listController;
+            _uploadPackagesRequestRepository = uploadPackagesRequestRepository;
         }
 
         [Authorize]
@@ -61,50 +66,6 @@ namespace NuGetFeed.Controllers
                                 };
 
             return View(viewModel);
-        }
-
-        [HttpPost]
-        [Authorize]
-        public ActionResult Index([ModelBinder(typeof(XmlModelBinder))] XDocument packagesConfig)
-        {
-            if (packagesConfig == null)
-            {
-                TempData["Message"] = "packages.config could not be found";
-                TempData["MessageType"] = "error";
-                return RedirectToAction("Index");
-            }
-
-            List<string> packages;
-            try
-            {
-                packages = packagesConfig
-                    .Descendants("package")
-                    .Select(descendant => descendant.Attribute("id").Value)
-                    .ToList();
-            }
-            catch
-            {
-                TempData["Message"] = "Error during parsing packages.config occurred";
-                TempData["MessageType"] = "error";
-                return RedirectToAction("Index");
-            }
-
-            if (packages.Count < 1)
-            {
-                TempData["Message"] = "packages.config does not contain any packages";
-                TempData["MessageType"] = "warning";
-                return RedirectToAction("Index");
-            }
-
-            foreach (var id in packages)
-            {
-                this.AddToMyFeed(id);
-            }
-
-            TempData["Message"] = string.Format(
-                "{0} package{1} successfully added", packages.Count, packages.Count == 1 ? string.Empty : "s");
-
-            return RedirectToAction("Index");
         }
 
         public ActionResult Rss(string id)
@@ -150,6 +111,66 @@ namespace NuGetFeed.Controllers
             _feedRepository.Save(feed);
 
             return "<span class=\"label notice\">Added</span>";
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult AddPackagesToMyFeed(Guid id)
+        {
+            var uploadPackagesRequest = this._uploadPackagesRequestRepository.GetByToken(id);
+            if (uploadPackagesRequest == null)
+            {
+                TempData["Message"] = "packages.config not found";
+                TempData["MessageType"] = "error";
+                return RedirectToAction("Index");
+            }
+
+            if (uploadPackagesRequest.Packages.Length < 1)
+            {
+                TempData["Message"] = "No packages found in packages.config";
+                TempData["MessageType"] = "warning";
+                return RedirectToAction("Index");
+            }
+
+            foreach (var packageId in uploadPackagesRequest.Packages)
+            {
+                this.AddToMyFeed(packageId);
+            }
+
+            TempData["Message"] = string.Format(
+                "{0} package{1} successfully added",
+                uploadPackagesRequest.Packages.Length,
+                uploadPackagesRequest.Packages.Length == 1 ? string.Empty : "s");
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult AddPackagesToMyFeed([ModelBinder(typeof(XmlModelBinder))] XDocument packagesConfig)
+        {
+            if (packagesConfig == null)
+            {
+                return new HttpStatusCodeResult(400);
+            }
+
+            string[] packages;
+            try
+            {
+                packages = packagesConfig
+                    .Descendants("package")
+                    .Select(descendant => descendant.Attribute("id").Value)
+                    .ToArray();
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(400);
+            }
+
+            var token = Guid.NewGuid();
+            var request = new UploadPackagesRequest { Packages = packages, Token = token };
+            _uploadPackagesRequestRepository.Insert(request);
+
+            return new ContentResult { Content = token.ToString() };
         }
     }
 }
