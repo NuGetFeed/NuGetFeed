@@ -6,6 +6,13 @@
 }
 
 <div class="page-header">
+@if (ViewBag.Message != null)
+{
+    <div class="alert-message @ViewBag.MessageType">
+        <p>@ViewBag.Message</p>
+    </div>
+}
+
 <h1>
     Packages in my feed
     @if (Model.Packages.Count > 0)
