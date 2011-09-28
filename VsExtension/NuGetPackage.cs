@@ -2,11 +2,10 @@ namespace NuGetFeed.VSExtension {
     using System;
     using System.ComponentModel.Design;
     using System.Diagnostics;
-    using System.Linq;
+    using System.IO;
+    using System.Net;
     using System.Runtime.InteropServices;
-    using System.Collections.Generic;
     using System.Text;
-    using System.Xml.Linq;
 
     using EnvDTE;
 
@@ -96,22 +95,33 @@ namespace NuGetFeed.VSExtension {
                                 continue;
                             }
 
-                            XDocument xml = XDocument.Load(projItem.Properties.Item("FullPath").Value);
-                            var packages = xml.Descendants("package").Select(descendant => descendant.Attribute("id").Value).ToList();
+                            byte[] bytes = Encoding.Default.GetBytes(File.ReadAllText(projItem.Properties.Item("FullPath").Value));
 
-                            if (packages.Count < 1)
+                            var request = HttpWebRequest.Create("http://nugetfeed.org/Feed/AddPackagesToMyFeed");
+                            request.Method = "POST";
+                            request.ContentLength = bytes.Length;
+                            request.ContentType = "application/x-www-form-urlencoded";
+                            var requestStream = request.GetRequestStream();
+                            requestStream.Write(bytes, 0, bytes.Length);
+                            requestStream.Close();
+
+                            var webResponse = (HttpWebResponse)request.GetResponse();
+                            if (webResponse.StatusCode == HttpStatusCode.OK)
                             {
-                                continue;
+                                var responseStream = webResponse.GetResponseStream();
+                                if (responseStream != null)
+                                {
+                                    using (var reader = new StreamReader(responseStream))
+                                    {
+                                        var response = reader.ReadToEnd();
+                                        Guid token;
+                                        if (Guid.TryParse(response, out token))
+                                        {
+                                            System.Diagnostics.Process.Start("http://nugetfeed.org/Feed/AddPackagesToMyFeed/" + token.ToString());
+                                        }
+                                    }
+                                }
                             }
-
-                            var sb = new StringBuilder();
-                            foreach (var s in packages)
-                            {
-                                sb.Append(s).Append(",");
-                            }
-
-                            var param = sb.ToString().TrimEnd(',');
-                            System.Diagnostics.Process.Start("http://nugetfeed.org/List/Packages/" + param);
                         }
                     }
                 }

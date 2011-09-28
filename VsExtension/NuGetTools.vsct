@@ -14,7 +14,7 @@
           <CommandFlag>DynamicVisibility</CommandFlag>
           <Strings>
               <CommandName>cmdidAddPackages</CommandName>
-              <ButtonText>&amp;Export to NuGet Feed...</ButtonText>
+              <ButtonText>&amp;Add to MyFeed...</ButtonText>
           </Strings>
       </Button>
     </Buttons>
