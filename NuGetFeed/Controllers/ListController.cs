@@ -4,17 +4,17 @@ using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Web.Mvc;
 using NuGetFeed.Infrastructure.ActionResults;
-using NuGetFeed.NuGetService;
+using NuGetFeed.Infrastructure.PackageSources;
 
 namespace NuGetFeed.Controllers
 {
     public class ListController : Controller
     {
-        private readonly GalleryFeedContext _feed;
+        private readonly NuGetOrgFeed _nuGetOrgFeed;
 
-        public ListController(GalleryFeedContext feed)
+        public ListController(NuGetOrgFeed nuGetOrgFeed)
         {
-            _feed = feed;
+            _nuGetOrgFeed = nuGetOrgFeed;
         }
 
         public ActionResult Packages(string id)
@@ -36,10 +36,7 @@ namespace NuGetFeed.Controllers
 
         private IEnumerable<SyndicationItem> CreateListOfItems(string packageId)
         {
-            var packages = (from p in _feed.Packages
-                           where p.Id == packageId
-                           orderby p.LastUpdated descending
-                           select p).Take(5);
+            var packages = _nuGetOrgFeed.GetListOfPackageVersions(packageId, 5);
 
             foreach (var p in packages)
             {

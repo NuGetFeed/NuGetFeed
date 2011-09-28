@@ -2,6 +2,7 @@ using System;
 using System.Configuration;
 using System.Web.Hosting;
 using Norm;
+using NuGetFeed.Infrastructure.PackageSources;
 using NuGetFeed.Infrastructure.Repositories;
 using NuGetFeed.Models;
 using NuGetFeed.NuGetService;
@@ -65,10 +66,8 @@ namespace NuGetFeed.App_Start
             kernel.Bind<IRepository<User>>().To<UserRepository>().InRequestScope();
             kernel.Bind<IRepository<Feed>>().To<FeedRepository>().InRequestScope();
 
-            // Register OData feed from NuGet.org
-            kernel.Bind<GalleryFeedContext>()
-                .ToMethod(context => new GalleryFeedContext(new Uri("http://packages.nuget.org/v1/FeedService.svc/")))
-                .InTransientScope();
+            // Register OData feeds
+            kernel.Bind<NuGetOrgFeed>().ToSelf().InRequestScope();
         }
     }
 }

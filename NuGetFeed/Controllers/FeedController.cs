@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using System.Xml.Linq;
 using Norm;
 using NuGetFeed.Infrastructure.ModelBinders;
+using NuGetFeed.Infrastructure.PackageSources;
 using NuGetFeed.Infrastructure.Repositories;
 using NuGetFeed.Models;
 using NuGetFeed.NuGetService;
@@ -17,16 +18,16 @@ namespace NuGetFeed.Controllers
         private readonly UserRepository _userRepository;
         private readonly FeedRepository _feedRepository;
         private readonly ListController _listController;
-        private readonly GalleryFeedContext _feed;
         private readonly UploadPackagesRequestRepository _uploadPackagesRequestRepository;
+        private readonly NuGetOrgFeed _nuGetOrgFeed;
 
-        public FeedController(UserRepository userRepository, FeedRepository feedRepository, ListController listController, UploadPackagesRequestRepository uploadPackagesRequestRepository, GalleryFeedContext feed)
+        public FeedController(UserRepository userRepository, FeedRepository feedRepository, ListController listController, UploadPackagesRequestRepository uploadPackagesRequestRepository, NuGetOrgFeed nuGetOrgFeed)
         {
             _userRepository = userRepository;
             _feedRepository = feedRepository;
             _listController = listController;
             _uploadPackagesRequestRepository = uploadPackagesRequestRepository;
-            _feed = feed;
+            _nuGetOrgFeed = nuGetOrgFeed;
         }
 
         [Authorize]
@@ -46,7 +47,7 @@ namespace NuGetFeed.Controllers
             {
                 foreach (var package in feed.Packages)
                 {
-                    var result = _feed.Packages.Where(p => p.Id == package && p.IsLatestVersion).SingleOrDefault();
+                    var result = _nuGetOrgFeed.GetLatestVersion(package);
                     if (result != null)
                     {
                         packages.Add(result);

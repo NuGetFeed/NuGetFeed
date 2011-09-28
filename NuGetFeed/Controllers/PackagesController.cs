@@ -1,17 +1,17 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
-using NuGetFeed.NuGetService;
+using NuGetFeed.Infrastructure.PackageSources;
 using NuGetFeed.ViewModels;
 
 namespace NuGetFeed.Controllers
 {
     public class PackagesController : Controller
     {
-        private readonly GalleryFeedContext _feed;
+        private readonly NuGetOrgFeed _nuGetOrgFeed;
 
-        public PackagesController(GalleryFeedContext feed)
+        public PackagesController(NuGetOrgFeed nuGetOrgFeed)
         {
-            _feed = feed;
+            _nuGetOrgFeed = nuGetOrgFeed;
         }
 
         public ActionResult Index(string query, int? page)
@@ -20,19 +20,14 @@ namespace NuGetFeed.Controllers
 
             if (!string.IsNullOrWhiteSpace(query))
             {
-                var startFrom = page.HasValue && page.Value > 0 ? (page.Value - 1)*10 : 0;
+                var startFrom = page.HasValue && page.Value > 0 ? (page.Value - 1) * 10 : 0;
+                int packageCount;
+                var packages = _nuGetOrgFeed.Search(query, startFrom, 10, out packageCount);
 
-                var packages = _feed.Packages.Where(p => (p.Id.Contains(query)
-                                                          || p.Description.Contains(query)
-                                                          || p.Tags.Contains(query)
-                                                          || p.Title.Contains(query))
-                                                         && p.IsLatestVersion);
-
-                var packageCount = packages.Count();
                 model.Query = query;
                 model.CurrentPage = page.HasValue && page.Value > 0 ? page.Value : 1;
                 model.TotalPages = (packageCount / 10) + (packageCount % 10 > 0 ? 1 : 0);
-                model.Packages = packages.OrderByDescending(x => x.DownloadCount).Skip(startFrom).Take(10).ToList();
+                model.Packages = packages.ToList();
             }
 
             return View(model);
