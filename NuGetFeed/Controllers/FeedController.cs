@@ -119,11 +119,19 @@ namespace NuGetFeed.Controllers
         }
 
         [Authorize]
-        public string AddToMyFeed(string id)
+        public ActionResult AddToMyFeed(string id)
         {
             var currentUser = _userRepository.GetByUsername(User.Identity.Name);
             _feedRepository.InsertPackagesIntoFeed(currentUser, id);
-            return "<span class=\"label notice\">Added</span>";
+            if (Request.IsAjaxRequest())
+            {
+                return Content("<span class=\"label notice\">Added</span>");
+            }
+            else
+            {
+                TempData["Message"] = id + " successfully added";
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpGet]
