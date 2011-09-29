@@ -14,7 +14,7 @@
           <CommandFlag>DynamicVisibility</CommandFlag>
           <Strings>
               <CommandName>cmdidAddPackages</CommandName>
-              <ButtonText>&amp;Add to MyFeed...</ButtonText>
+              <ButtonText>&amp;Add to My Feed...</ButtonText>
           </Strings>
       </Button>
     </Buttons>
