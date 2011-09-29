@@ -5,4 +5,9 @@ link.setAttribute("title", "Recent releases of " + document.location.href);
 link.setAttribute("href", document.location.href.replace('nuget.org', 'nugetfeed.org'));
 document.getElementsByTagName('head')[0].appendChild(link);
 
-$('ul.links').append('<li><img src="http://nugetfeed.org/Content/Images/logo_10x10.png"> <a href="' + document.location.href.replace('nuget.org', 'nugetfeed.org') + '">NuGet Feed</a></li>');
+var href = $('ul.links').find('a').filter(':contains("Contact Owners")').attr('href');
+var id = href.substring(1 + href.lastIndexOf('/'));
+
+$('ul.links').append($('<li>')
+        .append('<a href="' + document.location.href.replace('nuget.org', 'nugetfeed.org') + '" target="_blank" title="NuGet Feed"><img src="http://nugetfeed.org/Content/Images/logo_16x16.png"/></a>')
+        .append('<a href="http://nugetfeed.org/feed/addtomyfeed/' + id + '" target="_blank" title="Add to My Feed"><img src="http://nugetfeed.org/Content/Images/star.png"/></a>'));
