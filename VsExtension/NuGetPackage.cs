@@ -25,7 +25,7 @@ namespace NuGetFeed.VSExtension {
     {
         // This product version will be updated by the build script to match the daily build version.
         // It is displayed in the Help - About box of Visual Studio
-        public const string ProductVersion = "1.0.0.0";
+        public const string ProductVersion = "1.1.0.0";
 
         /// <summary>
         /// Initialization of the package; this method is called right after the package is sited, so this is the place
