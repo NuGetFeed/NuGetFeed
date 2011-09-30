@@ -149,6 +149,7 @@
     <Content Include="Content\Images\openid_sprite.png" />
     <Content Include="Content\Images\scr_chrome.png" />
     <Content Include="Content\Images\scr_myfeed.png" />
+    <Content Include="Content\Images\scr_public.png" />
     <Content Include="Content\Images\scr_search.png" />
     <Content Include="Content\Images\scr_studio.png" />
     <Content Include="Content\Images\star.png" />
