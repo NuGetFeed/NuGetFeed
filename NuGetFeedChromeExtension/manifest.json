@@ -1,7 +1,7 @@
 {
   "name": "NuGet Feed",
-  "version" : "1.0.4",
-  "description" : "Follow your favorite NuGet packages as RSS feeds.",
+  "version" : "1.0.5",
+  "description" : "Follow your favorite NuGet packages as RSS feeds or add them to your My Feed at NuGet Feed.",
   "content_scripts": [
     {
       "matches": ["http://nuget.org/List/Packages/*","http://www.nuget.org/List/Packages/*"],
