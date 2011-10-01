@@ -80,6 +80,47 @@ namespace NuGetFeed.Controllers
             return View();
         }
 
+        public ActionResult PublicRssRecentReleasesByAuthor(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpNotFoundResult("Author cannot be null or empty");
+            }
+
+            var packages = _nuGetOrgFeed.GetByAuthor(id);
+
+            var feed = new SyndicationFeed(
+                "NuGetFeed.org - Recent Releases by " + id,
+                "Most recent package releases from " + id,
+                new Uri("http://nugetfeed.org"),
+                "nugetfeedby" + id.Replace(" ", string.Empty),
+                DateTime.Now)
+            {
+                Language = "EN",
+                Copyright = new TextSyndicationContent("Copyright " + DateTime.Today.Year + ", nugetfeed.org")
+            };
+
+            var items =
+                packages.Select(
+                    p =>
+                    new SyndicationItem(
+                        p.Title + " " + p.Version,
+                        string.Empty,
+                        new Uri(p.GalleryDetailsUrl),
+                        p.Id + p.Version,
+                        p.LastUpdated)
+                    {
+                        Content =
+                            SyndicationContent.CreateHtmlContent(
+                                "<p><strong>Description</strong></p><p>" + p.Description
+                                + "</p><p><strong>Release notes</strong></p><p>" + p.ReleaseNotes + "</p>"),
+                        PublishDate = p.LastUpdated
+                    }).ToList();
+            feed.Items = items;
+
+            return new RssActionResult { Feed = feed };
+        }
+
         public ActionResult PublicRssRecentReleases()
         {
             var packages = _nuGetOrgFeed.GetAllByDescendingPublishDate();

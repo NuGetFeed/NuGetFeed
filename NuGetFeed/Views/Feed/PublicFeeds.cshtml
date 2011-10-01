@@ -15,8 +15,18 @@
     <p>Great for discovering new packages or keeping up-to-date.</p>
 </div>
 
+<div class="well">
+    <h3><a id="byAuthorLink" href="@Url.Action("PublicRssRecentReleasesByAuthor", "Feed")">Recent Releases by</a> <input type="search" placeholder="Author" id="author" /> <img src="/Content/Images/logo_16x16.png"/></h3>
+    <p>All packages from a specified author ordered by descending release date. If you digg anything published by Microsoft, Ayende or third author, this is the feed for you!</p>
+</div>
+
 <script type="text/javascript">
     $(document).ready(function () {
         $('#nav-publicfeeds').addClass('active');
+        $('#byAuthorLink').click(function () {
+            var existingHref = $(this).attr('href');
+            var newHref = existingHref + '/' + $('#author').val();
+            $(this).attr('href', newHref);
+        });
     });
 </script>

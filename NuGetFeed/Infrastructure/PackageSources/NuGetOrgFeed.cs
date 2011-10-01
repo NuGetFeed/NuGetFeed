@@ -47,5 +47,15 @@ namespace NuGetFeed.Infrastructure.PackageSources
                 .OrderByDescending(p => p.Published);
             return packages;
         }
+
+        public IEnumerable<PublishedPackage> GetByAuthor(string author)
+        {
+            var packages =
+                _context
+                    .Packages
+                    .Where(p => p.Authors.ToLower().Contains(author.ToLower()))
+                    .OrderByDescending(p => p.Published);
+            return packages;
+        }
     }
 }
