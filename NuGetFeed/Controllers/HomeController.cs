@@ -8,6 +8,5 @@ namespace NuGetFeed.Controllers
         {
             return View();
         }
-
     }
 }

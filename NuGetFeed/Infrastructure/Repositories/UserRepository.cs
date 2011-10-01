@@ -7,12 +7,10 @@ namespace NuGetFeed.Infrastructure.Repositories
 {
     public class UserRepository : IRepository<User>
     {
-        private readonly IMongo _mongo;
         private IMongoCollection<User> _users;
 
         public UserRepository(IMongo mongo)
         {
-            _mongo = mongo;
             _users = mongo.GetCollection<User>();
         }
 

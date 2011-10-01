@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Xml.Linq;
-
 using Norm;
 
 namespace NuGetFeed.Models

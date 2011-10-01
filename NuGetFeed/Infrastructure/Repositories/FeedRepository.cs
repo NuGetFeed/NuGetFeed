@@ -7,12 +7,10 @@ namespace NuGetFeed.Infrastructure.Repositories
 {
     public class FeedRepository : IRepository<Feed>
     {
-        private readonly IMongo _mongo;
         private IMongoCollection<Feed> _feeds;
 
         public FeedRepository(IMongo mongo)
         {
-            _mongo = mongo;
             _feeds = mongo.GetCollection<Feed>();
         }
 

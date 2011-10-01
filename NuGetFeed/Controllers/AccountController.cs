@@ -19,9 +19,9 @@ namespace NuGetFeed.Controllers
             _userRepository = userRepository;
         }
 
-        public ActionResult LogIn(string ReturnUrl)
+        public ActionResult LogIn(string returnUrl)
         {
-            ViewBag.ReturnUrl = ReturnUrl;
+            ViewBag.ReturnUrl = returnUrl;
 
             return View();
         }
@@ -59,6 +59,7 @@ namespace NuGetFeed.Controllers
                         lastName = fetch.GetAttributeValue(WellKnownAttributes.Name.Last);
                         email = fetch.GetAttributeValue(WellKnownAttributes.Contact.Email);
                     }
+
                     return CreateUser(response.ClaimedIdentifier, firstName, lastName, email);
                 default:
                     return RedirectToAction("Index", "Home");
@@ -68,7 +69,6 @@ namespace NuGetFeed.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-
             return RedirectToAction("Index", "Home");
         }
 
@@ -89,7 +89,7 @@ namespace NuGetFeed.Controllers
 
             FormsAuthentication.SetAuthCookie(userName, true);
 
-            if(Request.QueryString["ReturnUrl"] != null)
+            if (Request.QueryString["ReturnUrl"] != null)
             {
                 return Redirect(Request.QueryString["ReturnUrl"]);
             }
