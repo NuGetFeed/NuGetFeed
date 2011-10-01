@@ -81,8 +81,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="WebActivator">
-      <HintPath>..\packages\WebActivator.1.4.3\lib\net40\WebActivator.dll</HintPath>
+    <Reference Include="WebActivator, Version=1.4.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WebActivator.1.4.4\lib\net40\WebActivator.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -146,7 +147,6 @@
     <Content Include="Content\Images\logo_32x32.png" />
     <Content Include="Content\Images\logo_48x48.png" />
     <Content Include="Content\Images\logo_64x64.png" />
-    <Content Include="Content\Images\openid_sprite.png" />
     <Content Include="Content\Images\scr_chrome.png" />
     <Content Include="Content\Images\scr_myfeed.png" />
     <Content Include="Content\Images\scr_public.png" />
@@ -158,9 +158,6 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Css\Site.css" />
-    <Content Include="Content\Scripts\jquery-1.6.3-vsdoc.js" />
-    <Content Include="Content\Scripts\jquery-1.6.3.js" />
-    <Content Include="Content\Scripts\jquery-1.6.3.min.js" />
     <Content Include="Content\Scripts\modernizr-2.0.6-development-only.js" />
     <None Include="Service References\NuGetService\Reference.datasvcmap">
       <Generator>DataServiceClientGenerator</Generator>
@@ -172,6 +169,9 @@
     <Content Include="Content\Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Content\Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="google89fa24293f966991.html" />
+    <Content Include="Content\Scripts\jquery-1.6.4-vsdoc.js" />
+    <Content Include="Content\Scripts\jquery-1.6.4.js" />
+    <Content Include="Content\Scripts\jquery-1.6.4.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -196,6 +196,7 @@
     <Content Include="Views\Feed\Index.cshtml" />
     <Content Include="Views\Account\LogIn.cshtml" />
     <Content Include="Views\Feed\PublicFeeds.cshtml" />
+    <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -59,7 +59,7 @@ namespace NuGetFeed.Controllers
 
             var viewModel = new MyFeedViewModel
                                 {
-                                    FeedId = (feed != null ? feed.Id.ToString() : ""),
+                                    FeedId = feed != null ? feed.Id.ToString() : string.Empty,
                                     Packages = packages.OrderBy(x => x.Title).ToList()
                                 };
 
@@ -125,8 +125,12 @@ namespace NuGetFeed.Controllers
         {
             var packages = _nuGetOrgFeed.GetAllByDescendingPublishDate();
 
-            var feed = new SyndicationFeed("NuGetFeed.org - Recent Releases", "Most recent package releases from NuGet",
-                                           new Uri("http://nugetfeed.org"), "nugetfeedorgmostrecent", DateTime.Now)
+            var feed = new SyndicationFeed(
+                "NuGetFeed.org - Recent Releases",
+                "Most recent package releases from NuGet",
+                new Uri("http://nugetfeed.org"),
+                "nugetfeedorgmostrecent",
+                DateTime.Now)
                            {
                                Language = "EN",
                                Copyright = new TextSyndicationContent("Copyright " + DateTime.Today.Year + ", nugetfeed.org")
@@ -142,9 +146,10 @@ namespace NuGetFeed.Controllers
                 };
                 items.Add(item);
             }
+
             feed.Items = items;
 
-            return new RssActionResult {Feed = feed};
+            return new RssActionResult { Feed = feed };
         }
 
         [Authorize]
@@ -168,18 +173,16 @@ namespace NuGetFeed.Controllers
             {
                 return Content("<span class=\"label notice\">Added</span>");
             }
-            else
-            {
-                TempData["Message"] = id + " successfully added";
-                return RedirectToAction("Index");
-            }
+
+            TempData["Message"] = id + " successfully added";
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
         [Authorize]
         public ActionResult AddPackagesToMyFeed(Guid id)
         {
-            var uploadPackagesRequest = this._uploadPackagesRequestRepository.GetByToken(id);
+            var uploadPackagesRequest = _uploadPackagesRequestRepository.GetByToken(id);
             if (uploadPackagesRequest == null)
             {
                 TempData["Message"] = "packages.config not found";

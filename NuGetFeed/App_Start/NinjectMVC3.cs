@@ -1,22 +1,17 @@
-using System;
 using System.Configuration;
-using System.Web.Hosting;
+using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+using Ninject;
+using Ninject.Web.Mvc;
 using Norm;
 using NuGetFeed.Infrastructure.PackageSources;
 using NuGetFeed.Infrastructure.Repositories;
 using NuGetFeed.Models;
-using NuGetFeed.NuGetService;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(NuGetFeed.App_Start.NinjectMVC3), "Start")]
 [assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(NuGetFeed.App_Start.NinjectMVC3), "Stop")]
 
 namespace NuGetFeed.App_Start
 {
-    using System.Reflection;
-    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-    using Ninject;
-    using Ninject.Web.Mvc;
-
     public static class NinjectMVC3 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();

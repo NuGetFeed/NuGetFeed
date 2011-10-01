@@ -32,6 +32,5 @@ namespace NuGetFeed.Controllers
 
             return View(model);
         }
-
     }
 }
