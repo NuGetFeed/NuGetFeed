@@ -1,0 +1,36 @@
+﻿@model IEnumerable<NuGetFeed.Infrastructure.Repositories.PackageCount>
+
+@{
+    ViewBag.Title = "Most Popular Packages - NuGet Feed";
+}
+
+<div class="page-header">
+    <h1>Most Popular Packages</h1>
+</div>
+
+<p>
+    These packages are the most popular packages to follow in My Feed.
+</p>
+
+<table>
+    <tr>
+        <th>
+            Package Id
+        </th>
+        <th>
+            Feed Count
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.value)
+        </td>
+    </tr>
+}
+
+</table>

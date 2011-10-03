@@ -1,16 +1,21 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Norm;
 using Norm.Collections;
+using Norm.Responses;
 using NuGetFeed.Models;
 
 namespace NuGetFeed.Infrastructure.Repositories
 {
     public class FeedRepository : IRepository<Feed>
     {
+        private readonly IMongo _mongo;
         private IMongoCollection<Feed> _feeds;
 
         public FeedRepository(IMongo mongo)
         {
+            _mongo = mongo;
             _feeds = mongo.GetCollection<Feed>();
         }
 
@@ -55,5 +60,55 @@ namespace NuGetFeed.Infrastructure.Repositories
         {
             return _feeds.AsQueryable().SingleOrDefault(f => f.User == user.Id);
         }
+
+        public IEnumerable<PackageCount> MostPopular()
+        {
+            string map = @"function() { 
+                                this.Packages.forEach(
+                                    function(z) {
+                                        emit(z, 1);
+                                    }
+                                );
+                            }";
+
+            string reduce = @"function(key, values) {
+                                var total = 0;
+                                for(var i = 0; i < values.length; i++)
+                                {
+                                    total += values[i];
+                                }
+                                return total;
+                            }";
+
+            MapReduce mr = _mongo.Database.CreateMapReduce();
+            MapReduceOptions options = new MapReduceOptions<Feed>
+                                           {
+                                               Map = map,
+                                               Reduce = reduce,
+                                               OutputCollectionName = "PackageTimesInFeed",
+                                               Permanant = false
+                                           };
+            MapReduceResponse response = null;
+            try
+            {
+                response = mr.Execute(options);
+            }
+            catch (Exception)
+            {
+                // MongoDB 2.0.0 seems to return Reduce field which NoRM can not parse :(
+            }
+
+            var packageCount = _mongo.Database.GetCollection<PackageCount>("PackageTimesInFeed").AsQueryable();
+            return packageCount.OrderByDescending(x => x.value).Take(25);
+        }
+    }
+
+    public class PackageCount
+    {
+        [MongoIdentifier]
+        public string Id { get; set; }
+
+        // This has to be lowercase value or else Mongo/NoRM can not order by this property
+        public int value { get; set; }
     }
 }

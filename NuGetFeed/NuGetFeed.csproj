@@ -198,6 +198,7 @@
     <Content Include="Views\Account\LogIn.cshtml" />
     <Content Include="Views\Feed\PublicFeeds.cshtml" />
     <None Include="Settings.StyleCop" />
+    <Content Include="Views\Home\MostPopular.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
