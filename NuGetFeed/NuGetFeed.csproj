@@ -103,6 +103,7 @@
     <Compile Include="Infrastructure\PackageSources\NuGetOrgFeed.cs" />
     <Compile Include="Infrastructure\Repositories\FeedRepository.cs" />
     <Compile Include="Infrastructure\Repositories\IRepository.cs" />
+    <Compile Include="Models\PackageCount.cs" />
     <Compile Include="Infrastructure\Repositories\UploadPackagesRequestRepository.cs" />
     <Compile Include="Infrastructure\Repositories\UserRepository.cs" />
     <Compile Include="Models\Feed.cs" />
@@ -114,6 +115,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.datasvcmap</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\MostPopularViewModel.cs" />
     <Compile Include="ViewModels\MyFeedViewModel.cs" />
     <Compile Include="ViewModels\PackageSearchViewModel.cs" />
   </ItemGroup>

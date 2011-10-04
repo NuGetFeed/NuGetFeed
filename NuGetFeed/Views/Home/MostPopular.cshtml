@@ -1,4 +1,5 @@
-﻿@model IEnumerable<NuGetFeed.Infrastructure.Repositories.PackageCount>
+﻿@using NuGetFeed.ViewModels
+@model IEnumerable<MostPopularViewModel>
 
 @{
     ViewBag.Title = "Most Popular Packages - NuGet Feed";
@@ -9,28 +10,37 @@
 </div>
 
 <p>
-    These packages are the most popular packages to follow in My Feed.
+    These packages are the most popular packages followed in My Feed.
 </p>
 
-<table>
-    <tr>
-        <th>
-            Package Id
-        </th>
-        <th>
-            Feed Count
-        </th>
-    </tr>
-
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            <th>
+                Package
+            </th>
+            <th>
+                Feeds that include package
+            </th>
+        </tr>
+    </thead>
+    <tbody>
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Id)
+            <a href="@item.Package.GalleryDetailsUrl">@Html.DisplayFor(modelItem => item.Package.Title)</a>
+            <br/>
+            @if (Request.IsAuthenticated)
+            {
+                <span id="add@(item.Package.Id.Replace(".", string.Empty))">
+                    @Ajax.ActionLink("Add to My Feed", "AddToMyFeed", "Feed", new { id = item.Package.Id }, new AjaxOptions() { HttpMethod = "get", UpdateTargetId = "add" + item.Package.Id.Replace(".", string.Empty) })
+                </span>
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.value)
+            @Html.DisplayFor(modelItem => item.IncludedInFeeds)%
         </td>
     </tr>
 }
-
+    </tbody>
 </table>

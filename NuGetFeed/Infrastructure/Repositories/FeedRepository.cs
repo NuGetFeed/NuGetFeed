@@ -61,6 +61,11 @@ namespace NuGetFeed.Infrastructure.Repositories
             return _feeds.AsQueryable().SingleOrDefault(f => f.User == user.Id);
         }
 
+        public long GetNumberOfFeeds()
+        {
+            return _feeds.Count();
+        }
+
         public IEnumerable<PackageCount> MostPopular()
         {
             string map = @"function() { 
@@ -101,14 +106,5 @@ namespace NuGetFeed.Infrastructure.Repositories
             var packageCount = _mongo.Database.GetCollection<PackageCount>("PackageTimesInFeed").AsQueryable();
             return packageCount.OrderByDescending(x => x.value).Take(25);
         }
-    }
-
-    public class PackageCount
-    {
-        [MongoIdentifier]
-        public string Id { get; set; }
-
-        // This has to be lowercase value or else Mongo/NoRM can not order by this property
-        public int value { get; set; }
     }
 }
