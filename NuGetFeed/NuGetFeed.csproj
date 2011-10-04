@@ -143,7 +143,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.datasvcmap</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\MostPopularViewModel.cs" />
+    <Compile Include="ViewModels\MostFollowedViewModel.cs" />
     <Compile Include="ViewModels\MyFeedViewModel.cs" />
     <Compile Include="ViewModels\PackageSearchViewModel.cs" />
     <Compile Include="ViewModels\PackageViewModel.cs" />
@@ -229,7 +229,7 @@
     <Content Include="Views\Account\LogIn.cshtml" />
     <Content Include="Views\Feed\PublicFeeds.cshtml" />
     <None Include="Settings.StyleCop" />
-    <Content Include="Views\Home\MostPopular.cshtml" />
+    <Content Include="Views\Home\MostFollowed.cshtml" />
     <Content Include="Views\Packages\Details.cshtml" />
   </ItemGroup>
   <ItemGroup />

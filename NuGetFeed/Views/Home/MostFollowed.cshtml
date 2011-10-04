@@ -1,0 +1,52 @@
+﻿@using NuGetFeed.ViewModels
+@model IEnumerable<MostFollowedViewModel>
+
+@{
+    ViewBag.Title = "Most Followed Packages - NuGet Feed";
+}
+
+<div class="page-header">
+    <h1>Most Followed Packages</h1>
+</div>
+
+<p>
+    These packages are the 25 most followed packages in My Feed.
+</p>
+
+<table class="zebra-striped">
+    <thead>
+        <tr>
+            <th>
+                Package
+            </th>
+            <th>
+                Feeds that include package
+            </th>
+            @if (Request.IsAuthenticated)
+            {
+                <th>
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <a href="@Url.Action("Details", "Packages", new { id = item.Package.Id })">@Html.DisplayFor(modelItem => item.Package.Title)</a>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IncludedInFeeds)%
+        </td>
+        @if (Request.IsAuthenticated)
+        {
+            <td>
+                <span id="add@(item.Package.Id.Replace(".", string.Empty))">
+                    @Ajax.ActionLink("Add to My Feed", "AddToMyFeed", "Feed", new { id = item.Package.Id }, new AjaxOptions() { HttpMethod = "get", UpdateTargetId = "add" + item.Package.Id.Replace(".", string.Empty) })
+                </span>
+            </td>
+        }
+    </tr>
+}
+    </tbody>
+</table>

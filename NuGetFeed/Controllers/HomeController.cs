@@ -23,15 +23,15 @@ namespace NuGetFeed.Controllers
             return View();
         }
 
-        public ActionResult MostPopular()
+        public ActionResult MostFollowed()
         {
             var totalFeeds = _feedRepository.GetNumberOfFeeds();
-            var popular = _feedRepository.MostPopular().ToList();
+            var popular = _feedRepository.MostFollowed().ToList();
 
-            var listOfPackages = new List<MostPopularViewModel>();
+            var listOfPackages = new List<MostFollowedViewModel>();
             foreach (var package in popular)
             {
-                listOfPackages.Add(new MostPopularViewModel()
+                listOfPackages.Add(new MostFollowedViewModel()
                                        {
                                            Package = _nuGetOrgFeed.GetLatestVersion(package.Id),
                                            IncludedInFeeds = (decimal)package.value / totalFeeds * 100,
