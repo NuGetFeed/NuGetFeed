@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetFeed", "NuGetFeed\NuGetFeed.csproj", "{DA8E6BDD-2344-4B9E-8AEF-E65E4022B4C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsExtension", "VsExtension\VsExtension.csproj", "{D0F9864B-D782-4471-81A2-29555E5DC0D7}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,10 +13,6 @@ Global
 		{DA8E6BDD-2344-4B9E-8AEF-E65E4022B4C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA8E6BDD-2344-4B9E-8AEF-E65E4022B4C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA8E6BDD-2344-4B9E-8AEF-E65E4022B4C1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D0F9864B-D782-4471-81A2-29555E5DC0D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D0F9864B-D782-4471-81A2-29555E5DC0D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D0F9864B-D782-4471-81A2-29555E5DC0D7}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{D0F9864B-D782-4471-81A2-29555E5DC0D7}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
