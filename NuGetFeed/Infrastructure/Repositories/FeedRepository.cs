@@ -66,7 +66,7 @@ namespace NuGetFeed.Infrastructure.Repositories
             return _feeds.Count();
         }
 
-        public IEnumerable<PackageCount> MostPopular()
+        public IEnumerable<PackageCount> MostFollowed()
         {
             string map = @"function() { 
                                 this.Packages.forEach(

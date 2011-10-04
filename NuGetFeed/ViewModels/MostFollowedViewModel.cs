@@ -2,7 +2,7 @@
 
 namespace NuGetFeed.ViewModels
 {
-    public class MostPopularViewModel
+    public class MostFollowedViewModel
     {
         public PublishedPackage Package { get; set; }
 
