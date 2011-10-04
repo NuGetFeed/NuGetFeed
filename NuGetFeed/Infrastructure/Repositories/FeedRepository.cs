@@ -66,7 +66,7 @@ namespace NuGetFeed.Infrastructure.Repositories
             return _feeds.Count();
         }
 
-        public IEnumerable<PackageCount> MostFollowed()
+        public IEnumerable<PackageCount> MostFollowed(int take)
         {
             string map = @"function() { 
                                 this.Packages.forEach(
@@ -104,7 +104,7 @@ namespace NuGetFeed.Infrastructure.Repositories
             }
 
             var packageCount = _mongo.Database.GetCollection<PackageCount>("PackageTimesInFeed").AsQueryable();
-            return packageCount.OrderByDescending(x => x.value).Take(25);
+            return packageCount.OrderByDescending(x => x.value).Take(take);
         }
     }
 }
