@@ -30,7 +30,7 @@
     {
          <div class="well">
             <a class="close" title="Remove from my feed" href="@Url.Action("RemovePackage")/@item.Id">×</a>
-            <h3><a href="@item.GalleryDetailsUrl">@item.Title</a></h3>
+            <h3><a href="@Url.Action("Packages", "List")/@item.Id/Details">@item.Title</a></h3>
             <p>@item.Description</p>
          </div>
     }
