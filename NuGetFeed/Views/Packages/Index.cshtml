@@ -30,7 +30,7 @@
                         <img src="@(package.IconUrl.StartsWith("http:") ? package.IconUrl : "http://nuget.org" + package.IconUrl)" class="package-image"/>
                     }
                     <div class="package-info">
-                        <h2><a href="@Url.Action("Packages", "List")/@package.Id">@package.Title</a></h2>
+                        <h2><a href="@Url.Action("Packages", "List")/@package.Id/Details">@package.Title</a></h2>
                         <p>@package.Description</p>
                         <p>
                             @package.DownloadCount Downloads 
@@ -95,3 +95,7 @@
         $('#nav-packages').addClass('active');
     });
 </script>
+
+@section meta {
+    <meta name="robots" content="noindex, follow" />
+}

@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+
+using NuGetFeed.Infrastructure.AutoMapper;
 using NuGetFeed.Infrastructure.PackageSources;
 using NuGetFeed.ViewModels;
 
@@ -30,6 +32,18 @@ namespace NuGetFeed.Controllers
                 model.Packages = packages.ToList();
             }
 
+            return View(model);
+        }
+
+        public ActionResult Details(string id)
+        {
+            var package = this._nuGetOrgFeed.GetLatestVersion(id);
+            if (package == null)
+            {
+                return HttpNotFound();
+            }
+
+            var model = package.MapToDynamic<PackageViewModel>();
             return View(model);
         }
     }
