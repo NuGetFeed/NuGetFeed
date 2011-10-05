@@ -1,0 +1,14 @@
+﻿@model IEnumerable<NuGetFeed.NuGetService.PublishedPackage>
+
+<h4>5 Recent Releases</h4>
+
+<ol>
+@foreach (var item in Model) {
+    <li>
+        <a href="@Url.Action("Details", "Packages", new { id = item.Id })">@Html.DisplayFor(modelItem => item.Title)</a><br />
+    </li>
+}
+</ol>
+<p>
+    <a href="@Url.Action("PublicFeeds", "Feed")">See more &raquo;</a>
+</p>

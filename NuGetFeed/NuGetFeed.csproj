@@ -232,6 +232,7 @@
     <Content Include="Views\Home\MostFollowed.cshtml" />
     <Content Include="Views\Packages\Details.cshtml" />
     <Content Include="Views\Home\FrontpageMostFollowed.cshtml" />
+    <Content Include="Views\Home\FrontpageNewReleases.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

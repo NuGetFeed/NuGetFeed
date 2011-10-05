@@ -50,5 +50,13 @@ namespace NuGetFeed.Controllers
 
             return PartialView(list);
         }
+
+        [OutputCache(Duration = 3600)]
+        public PartialViewResult FrontpageNewReleases()
+        {
+            var releases = _nuGetOrgFeed.GetAllByDescendingPublishDate().Take(5).ToList();
+
+            return PartialView(releases);
+        }
     }
 }
