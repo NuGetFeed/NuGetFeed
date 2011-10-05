@@ -18,6 +18,12 @@
     height: 50px;
 }
 
+.vip-image
+{
+    width: 100px;
+    height: 100px;
+}
+
 .pagination.center, .pagination.center ul
 {
     float: left;
@@ -46,6 +52,26 @@
     font-size: 28px;
     line-height: 32px;
     padding: 10px;
+}
+
+ul.links
+{
+    margin: 20px 0;
+    list-style: none;
+}
+
+ul.links li:first-child
+{
+    border-left: 0 none;
+    padding-left: 0px;
+}
+
+ul.links li
+{
+    display: inline;
+    border-left: 1px solid #CCC;
+    padding: 1px 10px 2px;
+    border-bottom: none;
 }
 
 #openid-providers ul

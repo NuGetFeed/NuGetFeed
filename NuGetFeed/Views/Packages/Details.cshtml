@@ -2,35 +2,44 @@
 @model PackageViewModel
 
 @{
-    ViewBag.Title = "Package " + Model.Title;
+    ViewBag.Title = Model.Title + " - NuGet Feed";
 }
 
-<section>
-<header>
-    <div>
-        <h2>@Model.Title</h2>
-    </div>
-    <div>
-        <div class="zone zone-authors"><p class="author">By @Model.Authors</p></div>
-    </div>
-</header>
-<p>@Model.Summary</p>
-<ul class="pills">
-  <li><a href="http://nuget.org/List/Packages/@Model.Id" target="_blank" title="Visit the projects NuGet site">NuGet site</a></li>
-  <li><a href="http://nugetfeed.org/List/Packages/@Model.Id" target="_blank" title="NuGet Feed">Subscribe</a></li>
-  @if (Request.IsAuthenticated)
-  {
-    <li id="addLi">@Ajax.ActionLink("Add to My Feed", "AddToMyFeed", "Feed", new { id = Model.Id }, new AjaxOptions { HttpMethod = "get", UpdateTargetId = "addLi" })</li>
-  }
-</ul>
-
 <div class="row">
+    <div class="span2 columns">
+        @if (!string.IsNullOrWhiteSpace(Model.IconUrl))
+        {
+            <img src="@(Model.IconUrl.StartsWith("http:") ? Model.IconUrl : "http://nuget.org" + Model.IconUrl)" class="vip-image" />
+        }
+        else
+        {
+            <img src="http://nuget.org/Themes/OrchardGallery/Content/Images/packagesDefaultIcon.png" class="vip-image" />
+        }
+    </div>
+    <div class="span14 columns">
+        <div class="page-header">
+            <h1>@Model.Title</h1>
+            <p>By @Model.Authors</p>
+        </div>
+        <div>
+            <p>@Model.Description</p>
+            <ul class="links">
+                <li><a href="http://nuget.org/List/Packages/@Model.Id" target="_blank" title="Visit the projects NuGet site">NuGet site</a></li>
+                <li><a href="@Url.Action("Packages", "List", new { id = Model.Id })" target="_blank" title="NuGet Feed">Subscribe</a></li>
+                @if (Request.IsAuthenticated)
+                {
+                    <li id="addLi">@Ajax.ActionLink("Add to My Feed", "AddToMyFeed", "Feed", new { id = Model.Id }, new AjaxOptions { HttpMethod = "get", UpdateTargetId = "addLi" })</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+@*<div class="row">
     <div class="span-one-third"><h3>Similar packages</h3></div>
     <div class="span-one-third"><h3>Popular packages</h3></div>
     <div class="span-one-third"><h3>You might digg</h3></div>
-</div>
-
-</section>
+</div>*@
 
 @section meta {
     <meta name="robots" content="index, follow" />
