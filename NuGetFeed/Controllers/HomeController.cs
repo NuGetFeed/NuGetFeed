@@ -45,7 +45,7 @@ namespace NuGetFeed.Controllers
         [OutputCache(Duration = 43200)]
         public PartialViewResult FrontpageMostFollowed()
         {
-            var popular = _feedRepository.MostFollowed(5).ToList();
+            var popular = _feedRepository.MostFollowed(10).ToList();
             var list = popular.Select(p => _nuGetOrgFeed.GetLatestVersion(p.Id)).ToList();
 
             return PartialView(list);
@@ -54,7 +54,7 @@ namespace NuGetFeed.Controllers
         [OutputCache(Duration = 3600)]
         public PartialViewResult FrontpageNewReleases()
         {
-            var releases = _nuGetOrgFeed.GetAllByDescendingPublishDate().Take(5).ToList();
+            var releases = _nuGetOrgFeed.GetAllByDescendingPublishDate().Take(10).ToList();
 
             return PartialView(releases);
         }
