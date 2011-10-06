@@ -1,4 +1,7 @@
-﻿namespace NuGetFeed.ViewModels
+﻿using System.Collections.ObjectModel;
+using NuGetFeed.NuGetService;
+
+namespace NuGetFeed.ViewModels
 {
     public class PackageViewModel
     {
@@ -15,5 +18,9 @@
         public string Description { get; set; }
 
         public string IconUrl { get; set; }
+
+        public string ProjectUrl { get; set; }
+
+        public Collection<PublishedScreenshot> Screenshots { get; set; }
     }
 }

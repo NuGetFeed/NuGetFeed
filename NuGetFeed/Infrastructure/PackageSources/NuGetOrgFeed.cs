@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using NuGetFeed.NuGetService;
 
@@ -14,9 +15,18 @@ namespace NuGetFeed.Infrastructure.PackageSources
             _context = new GalleryFeedContext(new Uri("http://packages.nuget.org/v1/FeedService.svc/"));
         }
 
-        public PublishedPackage GetLatestVersion(string packageId)
+        public PublishedPackage GetLatestVersion(string packageId, bool includeScreenshots = false)
         {
-            return _context.Packages.Where(p => p.Id == packageId && p.IsLatestVersion).SingleOrDefault();
+            var package = _context.Packages.Where(p => p.Id == packageId && p.IsLatestVersion).SingleOrDefault();
+            if (package != null && includeScreenshots)
+            {
+                var screenshots = _context.Screenshots
+                    .Where(p => p.PublishedPackageId == package.Id && p.PublishedPackageVersion == package.Version)
+                    .ToList();
+                package.Screenshots = new Collection<PublishedScreenshot>(screenshots);
+            }
+
+            return package;
         }
 
         public IEnumerable<PublishedPackage> GetListOfPackageVersions(string packageId, int size)

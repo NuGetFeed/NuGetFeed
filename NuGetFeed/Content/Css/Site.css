@@ -24,6 +24,11 @@
     height: 100px;
 }
 
+.screenshot
+{
+    max-width: 820px;
+}
+
 .pagination.center, .pagination.center ul
 {
     float: left;

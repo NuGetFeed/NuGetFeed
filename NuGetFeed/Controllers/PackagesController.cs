@@ -37,7 +37,7 @@ namespace NuGetFeed.Controllers
 
         public ActionResult Details(string id)
         {
-            var package = this._nuGetOrgFeed.GetLatestVersion(id);
+            var package = this._nuGetOrgFeed.GetLatestVersion(id, includeScreenshots: true);
             if (package == null)
             {
                 return HttpNotFound();

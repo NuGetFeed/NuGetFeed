@@ -24,14 +24,37 @@
         <div>
             <p>@Model.Description</p>
             <ul class="links">
+                @if (!string.IsNullOrWhiteSpace(Model.ProjectUrl))
+                {
+                    <li><a href="@Model.ProjectUrl">Project site</a></li>
+                }
                 <li><a href="http://nuget.org/List/Packages/@Model.Id" target="_blank" title="Visit the projects NuGet site">NuGet site</a></li>
                 <li><a href="@Url.Action("Packages", "List", new { id = Model.Id })" target="_blank" title="NuGet Feed">Subscribe</a></li>
                 @if (Request.IsAuthenticated)
                 {
                     <li id="addLi">@Ajax.ActionLink("Add to My Feed", "AddToMyFeed", "Feed", new { id = Model.Id }, new AjaxOptions { HttpMethod = "get", UpdateTargetId = "addLi" })</li>
                 }
+                else
+                {
+                    <li><a href="@Url.Action("Login", "Account")?returnurl=@Request.Path">Log in to add to My Feed</a></li>
+                }
             </ul>
         </div>
+
+        @if (Model.Screenshots != null && Model.Screenshots.Count > 0)
+        {
+            <div class="page-header">
+                <h2>Screenshots</h2>
+            </div>
+            <div>
+                @foreach (var shot in Model.Screenshots)
+                {
+                    <p>
+                        <img src="@(shot.ScreenshotUri.StartsWith("http") ? shot.ScreenshotUri : "http://nuget.org" + shot.ScreenshotUri)" class="screenshot" />
+                    </p>
+                }
+            </div>
+        }
     </div>
 </div>
 
