@@ -27,7 +27,7 @@
                 <div class="well">
                     @if (package.IconUrl != null)
                     {
-                        <img src="@(package.IconUrl.StartsWith("http:") ? package.IconUrl : "http://nuget.org" + package.IconUrl)" class="package-image"/>
+                        <img src="@(package.IconUrl.StartsWith("http") ? package.IconUrl : "http://nuget.org" + package.IconUrl)" class="package-image"/>
                     }
                     <div class="package-info">
                         <h2><a href="@Url.Action("Packages", "List")/@package.Id/Details">@package.Title</a></h2>
