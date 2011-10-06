@@ -18,7 +18,7 @@
     @if (Model.Packages.Count > 0)
     {
         <small>
-            <img src="/Content/Images/logo_16x16.png"/> <a href="@Url.Action("Rss")/@Model.FeedId">Subscribe to feed</a>
+            <img src="/Content/Images/logo_16x16.png"/> <a href="@Url.Action("Rss", new { id = Model.FeedId })">Subscribe to feed</a>
         </small>
     }
 </h1>
@@ -29,8 +29,8 @@
     foreach (var item in Model.Packages)
     {
          <div class="well">
-            <a class="close" title="Remove from my feed" href="@Url.Action("RemovePackage")/@item.Id">×</a>
-            <h3><a href="@Url.Action("Packages", "List")/@item.Id/Details">@item.Title</a></h3>
+            <a class="close" title="Remove from my feed" href="@Url.Action("RemovePackage", new { id = item.Id })">×</a>
+            <h3><a href="@Url.Action("Details", "Packages", new { id = item.Id })">@item.Title</a></h3>
             <p>@item.Description</p>
          </div>
     }

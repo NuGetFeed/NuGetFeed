@@ -1,5 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using Canonicalize;
+using LowercaseRoutesMVC;
 
 namespace NuGetFeed
 {
@@ -12,14 +14,16 @@ namespace NuGetFeed
 
         public static void RegisterRoutes(RouteCollection routes)
         {
+            routes.Canonicalize().NoWww().Lowercase().NoTrailingSlash();
+
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 "Package details",
                 "List/Packages/{id}/Details",
                 new { controller = "Packages", action = "Details" });
 
-            routes.MapRoute(
+            routes.MapRouteLowercase(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional });

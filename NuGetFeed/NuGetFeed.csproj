@@ -39,18 +39,25 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.2.0.0\lib\net40-client\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="Canonicalize">
+      <HintPath>..\packages\Canonicalize.1.0.4295.36908\lib\net40\Canonicalize.dll</HintPath>
+    </Reference>
     <Reference Include="DotNetOpenAuth">
       <HintPath>..\packages\DotNetOpenAuth.3.4.7.11121\lib\DotNetOpenAuth.dll</HintPath>
     </Reference>
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.corelibrary.1.2\lib\Elmah.dll</HintPath>
     </Reference>
+    <Reference Include="LowercaseRoutesMVC">
+      <HintPath>..\packages\LowercaseRoutesMVC.1.0.1\lib\LowercaseRoutesMVC.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Monads">
-      <HintPath>..\packages\Monads.1.0\lib\net40\Monads.dll</HintPath>
+    <Reference Include="Monads, Version=1.1.0.0, Culture=neutral, PublicKeyToken=c45ad03d718dd7fa, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Monads.1.1.0.0\lib\net40\Monads.dll</HintPath>
     </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.2.2.1.4\lib\net40-Full\Ninject.dll</HintPath>
