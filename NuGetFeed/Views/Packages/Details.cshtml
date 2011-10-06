@@ -9,7 +9,7 @@
     <div class="span2 columns">
         @if (!string.IsNullOrWhiteSpace(Model.IconUrl))
         {
-            <img src="@(Model.IconUrl.StartsWith("http:") ? Model.IconUrl : "http://nuget.org" + Model.IconUrl)" class="vip-image" />
+            <img src="@(Model.IconUrl.StartsWith("http") ? Model.IconUrl : "http://nuget.org" + Model.IconUrl)" class="vip-image" />
         }
         else
         {
