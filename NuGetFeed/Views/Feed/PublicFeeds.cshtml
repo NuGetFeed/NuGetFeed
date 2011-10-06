@@ -28,5 +28,42 @@
             var newHref = existingHref + '/' + $('#author').val();
             $(this).attr('href', newHref);
         });
+
+        function findValue(li) {
+            if (li == null) return alert("No match!");
+
+            // if coming from an AJAX call, let's use the CityId as the value
+            if (!!li.extra) var sValue = li.extra[0];
+
+            // otherwise, let's just display the value in the text box
+            else var sValue = li.selectValue;
+        }
+
+        function selectItem(li) {
+            findValue(li);
+        }
+
+        $("#author").autocomplete(
+            "@(Url.Action("SearchAuthors", "Feed"))",
+            {
+                delay: 10,
+                minChars: 2,
+                matchSubset: 1,
+                matchContains: 1,
+                cacheLength: 10,
+                onItemSelect: selectItem,
+                onFindValue: findValue,
+                autoFill: true,
+                lineSeparator: ','
+            }
+        );
     });
 </script>
+
+@section style {
+    <link href="@Url.Content("~/Content/Css/jquery.autocomplete.css")" rel="stylesheet" type="text/css" />
+}
+
+@section script {
+    <script src="@Url.Content("~/Content/Scripts/jquery.autocomplete.js")" type="text/javascript"></script>
+}

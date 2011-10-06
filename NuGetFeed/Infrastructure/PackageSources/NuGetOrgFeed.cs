@@ -57,5 +57,21 @@ namespace NuGetFeed.Infrastructure.PackageSources
                     .OrderByDescending(p => p.Published);
             return packages;
         }
+
+        public IEnumerable<string> SearchAuthors(string search)
+        {
+            var authors = this._context
+                .Packages
+                .Where(p => p.Authors.ToLower().Contains(search.ToLower()))
+                .OrderByDescending(p => p.Published)
+                .Select(x => new { x.Authors }) // Select(x => x.Authors) doesn't work (?)
+                .ToList() // ToList, cause the following statements wont parse by the odata feed.
+                .SelectMany(x => x.Authors.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries))
+                .Where(x => x.ToLower().Contains(search.ToLower()))
+                .Select(x => x.ToLower().Trim())
+                .Distinct();
+
+            return authors;
+        }
     }
 }

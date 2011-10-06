@@ -235,5 +235,10 @@ namespace NuGetFeed.Controllers
 
             return new ContentResult { Content = token.ToString() };
         }
+
+        public string SearchAuthors(string q)
+        {
+            return string.Join(",", _nuGetOrgFeed.SearchAuthors(q));
+        }
     }
 }

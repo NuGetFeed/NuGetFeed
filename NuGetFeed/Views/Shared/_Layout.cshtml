@@ -10,8 +10,8 @@
     
     <link href="@Url.Content("~/Content/Css/bootstrap.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/Css/Site.css")" rel="stylesheet" type="text/css" />
+    @RenderSection("style", false)
 
-    @RenderSection("script", false)
     <script src="@Url.Content("~/Content/Scripts/jquery-1.6.4.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Content/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Content/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
@@ -26,6 +26,7 @@
 
     <script src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e72e9371502bc94" type="text/javascript"></script>
     <script src="http://widgets.twimg.com/j/2/widget.js"></script>
+    @RenderSection("script", false)
 </head>
 
 <body>

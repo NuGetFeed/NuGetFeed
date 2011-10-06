@@ -150,6 +150,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Css\bootstrap.css" />
+    <Content Include="Content\Css\img\loader.gif" />
+    <Content Include="Content\Css\jquery.autocomplete.css" />
     <Content Include="Content\Images\Auth\large\facebook.gif" />
     <Content Include="Content\Images\Auth\large\google.gif" />
     <Content Include="Content\Images\Auth\large\myopenid.gif" />
@@ -186,6 +188,7 @@
     <Content Include="Content\Images\star.png" />
     <Content Include="Content\Images\twitter.png" />
     <Content Include="Content\Scripts\bootstrap-modal.js" />
+    <Content Include="Content\Scripts\jquery.autocomplete.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Css\Site.css" />
