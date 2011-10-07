@@ -236,9 +236,9 @@ namespace NuGetFeed.Controllers
             return new ContentResult { Content = token.ToString() };
         }
 
-        public string SearchAuthors(string q)
+        public ActionResult SearchAuthors(string term)
         {
-            return string.Join(",", _nuGetOrgFeed.SearchAuthors(q));
+            return Json(_nuGetOrgFeed.SearchAuthors(term).Select(x => new { id = x, label = x, value = x }), JsonRequestBehavior.AllowGet);
         }
     }
 }
