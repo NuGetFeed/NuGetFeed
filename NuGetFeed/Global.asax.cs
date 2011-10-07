@@ -14,7 +14,7 @@ namespace NuGetFeed
 
         public static void RegisterRoutes(RouteCollection routes)
         {
-            routes.Canonicalize().NoWww().Lowercase().NoTrailingSlash();
+            // routes.Canonicalize().NoWww().Lowercase().NoTrailingSlash();
 
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
