@@ -35,6 +35,21 @@ namespace NuGetFeed.Controllers
             return View(model);
         }
 
+        public ActionResult SearchAjax(string term)
+        {
+            if (string.IsNullOrWhiteSpace(term))
+            {
+                return null;
+            }
+
+            int packageCount;
+            return
+                Json(
+                    _nuGetOrgFeed.Search(term, 0, 10, out packageCount).Select(
+                        p => new { id = p.Id, label = p.Title, value = p.Title }),
+                    JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Details(string id)
         {
             var package = this._nuGetOrgFeed.GetLatestVersion(id, includeScreenshots: true);

@@ -43,17 +43,9 @@
             findValue(li);
         }
 
-        $( "#author" ).autocomplete({
+        $("#author").autocomplete({
 			source: "@(Url.Action("SearchAuthors", "Feed"))",
 			minLength: 2
 		});
     });
 </script>
-
-@section style {
-    <link href="@Url.Content("~/Content/Css/ui-lightness/jquery-ui-1.8.16.custom.css")" rel="stylesheet" type="text/css" />
-}
-
-@section script {
-    <script src="@Url.Content("~/Content/Scripts/jquery-ui-1.8.16.custom.min.js")" type="text/javascript"></script>
-}
