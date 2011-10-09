@@ -5,6 +5,7 @@ using Ninject.Web.Mvc;
 using Norm;
 using NuGetFeed.Infrastructure.PackageSources;
 using NuGetFeed.Infrastructure.Repositories;
+using NuGetFeed.Infrastructure.Rss;
 using NuGetFeed.Models;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(NuGetFeed.App_Start.NinjectMVC3), "Start")]
@@ -63,6 +64,9 @@ namespace NuGetFeed.App_Start
 
             // Register OData feeds
             kernel.Bind<NuGetOrgFeed>().ToSelf().InRequestScope();
+
+            // Register helpers
+            kernel.Bind<SyndicationHelper>().ToSelf();
         }
     }
 }

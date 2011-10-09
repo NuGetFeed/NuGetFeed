@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Services.Client;
 using System.Linq;
+using System.Linq.Expressions;
 using NuGetFeed.NuGetService;
 
 namespace NuGetFeed.Infrastructure.PackageSources
@@ -82,6 +84,29 @@ namespace NuGetFeed.Infrastructure.PackageSources
                 .Distinct();
 
             return authors;
+        }
+
+        /// <summary>
+        /// Optimized method for getting all PublishedPackages for a list of id's.
+        /// </summary>
+        public List<PublishedPackage> GetPackagesFromList(List<string> packages)
+        {
+            var query = string.Empty;
+            for (int i = 0; i < packages.Count; i++)
+            {
+                query += "Id eq '" + packages[i] + "'";
+                if (i != packages.Count - 1)
+                {
+                    query += " or ";
+                }
+            }
+
+            var request = _context.Execute<PublishedPackage>(new Uri(
+                                                                 "Packages()?$filter=" + query +
+                                                                 "&$orderby=LastUpdated desc",
+                                                                 UriKind.RelativeOrAbsolute));
+
+            return request.ToList();
         }
     }
 }
