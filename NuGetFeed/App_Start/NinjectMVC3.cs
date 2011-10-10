@@ -13,6 +13,10 @@ using NuGetFeed.Models;
 
 namespace NuGetFeed.App_Start
 {
+    using System;
+
+    using NuGetFeed.NuGetService;
+
     public static class NinjectMVC3 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -63,6 +67,10 @@ namespace NuGetFeed.App_Start
             kernel.Bind<IRepository<Feed>>().To<FeedRepository>().InRequestScope();
 
             // Register OData feeds
+            kernel
+                .Bind<IGalleryFeedContext>()
+                .To<GalleryFeedContext>()
+                .WithConstructorArgument("serviceRoot", new Uri("http://packages.nuget.org/v1/FeedService.svc/"));
             kernel.Bind<NuGetOrgFeed>().ToSelf().InRequestScope();
 
             // Register helpers

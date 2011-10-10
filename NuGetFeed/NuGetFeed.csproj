@@ -135,6 +135,8 @@
     <Compile Include="Infrastructure\ActionResults\RssActionResult.cs" />
     <Compile Include="Infrastructure\AutoMapper\AutoMapperExtensions.cs" />
     <Compile Include="Infrastructure\ModelBinders\XmlModelBinder.cs" />
+    <Compile Include="Infrastructure\PackageSources\GalleryFeedContext.cs" />
+    <Compile Include="Infrastructure\PackageSources\IGalleryFeedContext.cs" />
     <Compile Include="Infrastructure\PackageSources\NuGetOrgFeed.cs" />
     <Compile Include="Infrastructure\Repositories\FeedRepository.cs" />
     <Compile Include="Infrastructure\Repositories\IRepository.cs" />
