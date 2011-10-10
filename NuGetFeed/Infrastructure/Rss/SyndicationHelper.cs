@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel.Syndication;
+using System.Web.Routing;
 using NuGetFeed.NuGetService;
 
 namespace NuGetFeed.Infrastructure.Rss
@@ -10,7 +11,7 @@ namespace NuGetFeed.Infrastructure.Rss
         public SyndicationItem CreateNuGetPackageSyndicationItem(PublishedPackage package)
         {
             var title = package.Title + " " + package.Version;
-            var link = package.GalleryDetailsUrl;
+            var link = "http://nugetfeed.org/list/packages/" + package.Id.ToLower() + "/details?utm_source=ngf&utm_medium=rss&utm_campaign=rss_feeds";
             var id = package.Id + package.Version;
             var updated = package.LastUpdated;
 
