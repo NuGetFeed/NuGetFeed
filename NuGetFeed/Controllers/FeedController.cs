@@ -15,6 +15,8 @@ using NuGetFeed.ViewModels;
 
 namespace NuGetFeed.Controllers
 {
+    using System.Web;
+
     public class FeedController : Controller
     {
         private readonly UserRepository _userRepository;
@@ -200,6 +202,44 @@ namespace NuGetFeed.Controllers
             _uploadPackagesRequestRepository.Insert(request);
 
             return new ContentResult { Content = token.ToString() };
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult AddPackagesToMyFeedPost(HttpPostedFileBase packagesFile)
+        {
+            if (packagesFile == null || (!packagesFile.ContentType.Equals("text/xml") && !packagesFile.ContentType.Equals("application/xml")))
+            {
+                TempData["Message"] = "No file selected or unknown filetype";
+                TempData["MessageType"] = "error";
+                return RedirectToAction("Index", "Feed");
+            }
+
+            var packagesXml = XDocument.Load(packagesFile.InputStream);
+            string[] packages;
+            try
+            {
+                packages = packagesXml
+                    .Descendants("package")
+                    .Select(descendant => descendant.Attribute("id").Value)
+                    .ToArray();
+            }
+            catch
+            {
+                TempData["Message"] = "Error parsing specified packages.config";
+                TempData["MessageType"] = "error";
+                return RedirectToAction("Index", "Feed");
+            }
+
+            var currentUser = _userRepository.GetByUsername(User.Identity.Name);
+            _feedRepository.InsertPackagesIntoFeed(currentUser, packages);
+
+            TempData["Message"] = string.Format(
+                "{0} package{1} successfully added",
+                packages.Length,
+                packages.Length == 1 ? string.Empty : "s");
+
+            return RedirectToAction("Index", "Feed");
         }
 
         public ActionResult SearchAuthors(string term)

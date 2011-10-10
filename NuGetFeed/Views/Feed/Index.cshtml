@@ -20,6 +20,22 @@
         <small>
             <img src="/Content/Images/logo_16x16.png"/> <a href="@Url.Action("Rss", new { id = Model.FeedId })">Subscribe to feed</a>
         </small>
+        <small style="margin-left: 25px;">
+            <div id="modal-from-dom" class="modal hide fade">
+                <div class="modal-header">
+                    <h3>Import packages.config</h3>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("AddPackagesToMyFeedPost", "Feed", FormMethod.Post, new { id = "updatePackagesForm", enctype = "multipart/form-data" })) {
+                        <input type="file" name="packagesFile" id="packagesFile" />
+                    }
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn primary" onclick="$('#updatePackagesForm').submit();">Import</a>
+                </div>
+            </div>
+            <img src="/Content/Images/import_16x16.png"/> <a href="#" data-controls-modal="modal-from-dom" data-backdrop="true" data-keyboard="true">Import packages.config</a>
+        </small>
     }
 </h1>
 </div>

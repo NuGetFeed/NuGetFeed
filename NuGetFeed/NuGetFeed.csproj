@@ -196,6 +196,7 @@
     <Content Include="Content\Images\Auth\small\wordpress.ico.png" />
     <Content Include="Content\Images\Auth\small\yahoo.ico.png" />
     <Content Include="Content\Images\curved-arrow.png" />
+    <Content Include="Content\Images\import_16x16.png" />
     <Content Include="Content\Images\logo-background.png" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\logo_10x10.png" />
