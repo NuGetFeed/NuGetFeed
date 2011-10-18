@@ -25,14 +25,24 @@ namespace NuGetFeed.Controllers
 
         public ActionResult Index(string id)
         {
-            var category = _categoryRepository.GetByName(id);
-            var categoryViewModel = category.MapToDynamic<CategoryViewModel>();
-            foreach (var publishedPackage in category.Packages.Select(package => this._nuGetOrgFeed.GetLatestVersion(package)).Where(publishedPackage => publishedPackage != null))
+            try
             {
-                categoryViewModel.Packages.Add(publishedPackage.MapToDynamic<PackageViewModel>());
-            }
+                var category = _categoryRepository.GetByName(id);
+                var categoryViewModel = category.MapToDynamic<CategoryViewModel>();
+                foreach (
+                    var publishedPackage in
+                        category.Packages.Select(package => this._nuGetOrgFeed.GetLatestVersion(package)).Where(
+                            publishedPackage => publishedPackage != null))
+                {
+                    categoryViewModel.Packages.Add(publishedPackage.MapToDynamic<PackageViewModel>());
+                }
 
-            return View(categoryViewModel);
+                return View(categoryViewModel);
+            }
+            catch (Exception e)
+            {
+                return Content(e.ToString());
+            }
         }
     }
 }
