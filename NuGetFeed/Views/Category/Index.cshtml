@@ -21,7 +21,7 @@
             <h2>Packages</h2>
         </div>
         <div>
-            @foreach (var package in Model.Packages)
+            @foreach (var package in Model.PackageViewModels)
             {
                 <div class="span2"><img src="@(package.IconUrl)"/></div>
                 <div class="span12">

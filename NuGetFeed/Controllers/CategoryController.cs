@@ -34,7 +34,7 @@ namespace NuGetFeed.Controllers
                         category.Packages.Select(package => this._nuGetOrgFeed.GetLatestVersion(package)).Where(
                             publishedPackage => publishedPackage != null))
                 {
-                    categoryViewModel.Packages.Add(publishedPackage.MapToDynamic<PackageViewModel>());
+                    categoryViewModel.PackageViewModels.Add(publishedPackage.MapToDynamic<PackageViewModel>());
                 }
 
                 return View(categoryViewModel);

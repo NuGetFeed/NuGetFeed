@@ -6,7 +6,7 @@
     {
         public CategoryViewModel()
         {
-            Packages = new List<PackageViewModel>();
+            this.PackageViewModels = new List<PackageViewModel>();
         }
 
         public string VisibleName { get; set; }
@@ -17,6 +17,6 @@
 
         public string IconUrl { get; set; }
 
-        public List<PackageViewModel> Packages { get; protected set; }
+        public List<PackageViewModel> PackageViewModels { get; protected set; }
     }
 }
