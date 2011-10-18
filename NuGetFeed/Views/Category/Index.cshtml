@@ -14,19 +14,24 @@
             <h1>@Model.VisibleName</h1>
         </div>
         <div>
-            <p>@Model.Description</p>
+            <p>@Html.Raw(Model.Description)</p>
             <em>From <a href="@Model.SourceUrl" target="_blank" rel="nofollow">@Model.SourceUrl</a></em>
         </div>
         <div class="page-header">
             <h2>Packages</h2>
         </div>
-        <div>
+        <div class="container">
             @foreach (var package in Model.PackageViewModels)
             {
-                <div class="span2"><img src="@(package.IconUrl)"/></div>
-                <div class="span12">
-                    <h3>@package.Title</h3>
-                    <p>@package.Description</p>
+                <div class="well">
+                    @if (package.IconUrl != null)
+                    {
+                        <img src="@(package.IconUrl.StartsWith("http") ? package.IconUrl : "http://nuget.org" + package.IconUrl)" class="package-image"/>
+                    }
+                    <div class="package-info">
+                        <h2><a href="@Url.Action("Details", "Packages", new { id = package.Id })">@package.Title</a></h2>
+                        <p>@package.Description</p>
+                    </div>
                 </div>
             }
         </div>
