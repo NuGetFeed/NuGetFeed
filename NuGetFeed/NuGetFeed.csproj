@@ -125,6 +125,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\ElmahController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListController.cs" />
@@ -138,9 +139,11 @@
     <Compile Include="Infrastructure\PackageSources\GalleryFeedContext.cs" />
     <Compile Include="Infrastructure\PackageSources\IGalleryFeedContext.cs" />
     <Compile Include="Infrastructure\PackageSources\NuGetOrgFeed.cs" />
+    <Compile Include="Infrastructure\Repositories\CategoryRepository.cs" />
     <Compile Include="Infrastructure\Repositories\FeedRepository.cs" />
     <Compile Include="Infrastructure\Repositories\IRepository.cs" />
     <Compile Include="Infrastructure\Rss\SyndicationHelper.cs" />
+    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\PackageCount.cs" />
     <Compile Include="Infrastructure\Repositories\UploadPackagesRequestRepository.cs" />
     <Compile Include="Infrastructure\Repositories\UserRepository.cs" />
@@ -153,6 +156,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.datasvcmap</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\MostFollowedViewModel.cs" />
     <Compile Include="ViewModels\MyFeedViewModel.cs" />
     <Compile Include="ViewModels\PackageSearchViewModel.cs" />
@@ -261,6 +265,7 @@
     <Content Include="Views\Packages\Details.cshtml" />
     <Content Include="Views\Home\FrontpageMostFollowed.cshtml" />
     <Content Include="Views\Home\FrontpageNewReleases.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

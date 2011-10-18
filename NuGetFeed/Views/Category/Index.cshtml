@@ -1,0 +1,39 @@
+﻿@using NuGetFeed.ViewModels
+@model CategoryViewModel
+
+@{
+    ViewBag.Title = "Category - NuGet Feed";
+}
+
+<div class="row">
+    <div class="span2 columns">
+        <img src="@(Model.IconUrl)" class="vip-image" />
+    </div>
+    <div class="span14 columns">
+        <div class="page-header">
+            <h1>@Model.VisibleName</h1>
+        </div>
+        <div>
+            <p>@Model.Description</p>
+            <em>From <a href="@Model.SourceUrl" target="_blank" rel="nofollow">@Model.SourceUrl</a></em>
+        </div>
+        <div class="page-header">
+            <h2>Packages</h2>
+        </div>
+        <div>
+            @foreach (var package in Model.Packages)
+            {
+                <div class="span2"><img src="@(package.IconUrl)"/></div>
+                <div class="span12">
+                    <h3>@package.Title</h3>
+                    <p>@package.Description</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@section meta {
+    <meta name="robots" content="index, follow" />
+}
