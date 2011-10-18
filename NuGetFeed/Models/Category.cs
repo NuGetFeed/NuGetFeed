@@ -17,6 +17,8 @@
 
         public string SourceUrl { get; set; }
 
+        public string IconUrl { get; set; }
+
         public List<string> Packages { get; protected set; }
 
         public Category()
