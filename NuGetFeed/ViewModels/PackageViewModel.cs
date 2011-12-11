@@ -20,7 +20,5 @@ namespace NuGetFeed.ViewModels
         public string IconUrl { get; set; }
 
         public string ProjectUrl { get; set; }
-
-        public Collection<PublishedScreenshot> Screenshots { get; set; }
     }
 }

@@ -69,8 +69,8 @@ namespace NuGetFeed.App_Start
             // Register OData feeds
             kernel
                 .Bind<IGalleryFeedContext>()
-                .To<GalleryFeedContext>()
-                .WithConstructorArgument("serviceRoot", new Uri("http://packages.nuget.org/v1/FeedService.svc/"));
+                .To<FeedContext_x0060_1>()
+                .WithConstructorArgument("serviceRoot", new Uri("http://nuget.org/api/v2/"));
             kernel.Bind<NuGetOrgFeed>().ToSelf().InRequestScope();
 
             // Register helpers

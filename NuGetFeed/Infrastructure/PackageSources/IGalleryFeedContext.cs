@@ -1,6 +1,4 @@
-﻿using System.Data.Services.Client;
-
-using NuGetFeed.NuGetService;
+﻿using NuGetFeed.NuGetService;
 
 namespace NuGetFeed.Infrastructure.PackageSources
 {
@@ -10,9 +8,7 @@ namespace NuGetFeed.Infrastructure.PackageSources
 
     public interface IGalleryFeedContext
     {
-        IQueryable<PublishedPackage> AllPackages { get; }
-
-        IQueryable<PublishedScreenshot> AllScreenshots { get; }
+        IQueryable<V2FeedPackage> AllPackages { get; }
 
         IEnumerable<TElement> Execute<TElement>(Uri requestUri);
     }

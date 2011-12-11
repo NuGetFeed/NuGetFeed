@@ -11,6 +11,6 @@ namespace NuGetFeed.ViewModels
 
         public int TotalPages { get; set; }
 
-        public IList<PublishedPackage> Packages { get; set; }
+        public IList<V2FeedPackage> Packages { get; set; }
     }
 }

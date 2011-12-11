@@ -8,7 +8,7 @@ namespace NuGetFeed.Infrastructure.Rss
 {
     public class SyndicationHelper
     {
-        public SyndicationItem CreateNuGetPackageSyndicationItem(PublishedPackage package)
+        public SyndicationItem CreateNuGetPackageSyndicationItem(V2FeedPackage package)
         {
             var title = package.Title + " " + package.Version;
             var link = "http://nugetfeed.org/list/packages/" + package.Id.ToLower() + "/details?utm_source=ngf&utm_medium=rss&utm_campaign=rss_feeds";

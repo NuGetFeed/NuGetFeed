@@ -19,11 +19,11 @@ namespace NuGetFeed.Tests.Infrastructure.PackageSources
                 .Setup(x => x.AllPackages)
                 .Returns(new[]
                     {
-                        new PublishedPackage { Authors = author }, // Author equals
-                        new PublishedPackage { Authors = A<string>() + "," + author + "," + A<string>() }, // Author contained
-                        new PublishedPackage { Authors = author + "," + A<string>() }, // Author first
-                        new PublishedPackage { Authors = A<string>() + "," + author }, // Author last
-                        new PublishedPackage { Authors = A<string>() }, // Author not contained
+                        new V2FeedPackage { Authors = author }, // Author equals
+                        new V2FeedPackage { Authors = A<string>() + "," + author + "," + A<string>() }, // Author contained
+                        new V2FeedPackage { Authors = author + "," + A<string>() }, // Author first
+                        new V2FeedPackage { Authors = A<string>() + "," + author }, // Author last
+                        new V2FeedPackage { Authors = A<string>() }, // Author not contained
                     }.AsQueryable());
 
             var nuGetOrgFeed = new NuGetOrgFeed(mock.Object);

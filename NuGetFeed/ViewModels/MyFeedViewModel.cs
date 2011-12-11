@@ -7,6 +7,6 @@ namespace NuGetFeed.ViewModels
     {
         public string FeedId { get; set; }
 
-        public IList<PublishedPackage> Packages { get; set; }
+        public IList<V2FeedPackage> Packages { get; set; }
     }
 }

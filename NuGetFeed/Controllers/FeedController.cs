@@ -48,7 +48,7 @@ namespace NuGetFeed.Controllers
             var currentUser = _userRepository.GetByUsername(User.Identity.Name);
             var feed = _feedRepository.GetByUser(currentUser);
 
-            var packages = new List<PublishedPackage>();
+            var packages = new List<V2FeedPackage>();
             if (feed != null)
             {
                 foreach (var package in feed.Packages)

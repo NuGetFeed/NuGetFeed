@@ -41,21 +41,6 @@
             </ul>
         </div>
 
-        @if (Model.Screenshots != null && Model.Screenshots.Count > 0)
-        {
-            <div class="page-header">
-                <h2>Screenshots</h2>
-            </div>
-            <div>
-                @foreach (var shot in Model.Screenshots)
-                {
-                    <p>
-                        <img src="@(shot.ScreenshotUri.StartsWith("http") ? shot.ScreenshotUri : "http://nuget.org" + shot.ScreenshotUri)" class="screenshot" />
-                    </p>
-                }
-            </div>
-        }
-        
         <div class="page-header">
             <h2>Comments</h2>
         </div>

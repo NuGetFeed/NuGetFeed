@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="a75a2b55-e467-4466-8c21-31d10d86a937" xmlns="urn:schemas-microsoft-com:xml-dataservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="51106f52-b2a0-4ceb-87fc-e9e1d80cd1df" xmlns="urn:schemas-microsoft-com:xml-dataservicemap">
   <MetadataSources>
-    <MetadataSource Address="http://packages.nuget.org/v1/FeedService.svc/" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://nuget.org/api/v2" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.edmx" MetadataType="Edmx" ID="e4cea2ac-c257-4b7b-bad8-1d96abdc2f53" SourceId="1" SourceUrl="http://packages.nuget.org/v1/FeedService.svc/" />
+    <MetadataFile FileName="service.edmx" MetadataType="Edmx" ID="1564db2d-8bc8-4293-bccf-c88fc0732e30" SourceId="1" SourceUrl="http://nuget.org/api/v2" />
   </Metadata>
   <Extensions />
 </ReferenceGroup>
