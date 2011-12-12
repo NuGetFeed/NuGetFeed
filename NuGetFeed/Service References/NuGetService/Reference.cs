@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 // Original file name:
-// Generation date: 11-12-2011 13:14:31
+// Generation date: 12-12-2011 08:53:41
 namespace NuGetFeed.NuGetService
 {
     
@@ -62,68 +62,76 @@ namespace NuGetFeed.NuGetService
         /// There are no comments for Packages in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Data.Services.Client.DataServiceQuery<V2FeedPackage> Packages
+        public global::System.Data.Services.Client.DataServiceQuery<V1FeedPackage> Packages
         {
             get
             {
                 if ((this._Packages == null))
                 {
-                    this._Packages = base.CreateQuery<V2FeedPackage>("Packages");
+                    this._Packages = base.CreateQuery<V1FeedPackage>("Packages");
                 }
                 return this._Packages;
             }
         }
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Data.Services.Client.DataServiceQuery<V2FeedPackage> _Packages;
+        private global::System.Data.Services.Client.DataServiceQuery<V1FeedPackage> _Packages;
         /// <summary>
         /// There are no comments for Packages in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public void AddToPackages(V2FeedPackage v2FeedPackage)
+        public void AddToPackages(V1FeedPackage v1FeedPackage)
         {
-            base.AddObject("Packages", v2FeedPackage);
+            base.AddObject("Packages", v1FeedPackage);
         }
     }
     /// <summary>
-    /// There are no comments for NuGetGallery.V2FeedPackage in the schema.
+    /// There are no comments for NuGetGallery.V1FeedPackage in the schema.
     /// </summary>
     /// <KeyProperties>
     /// Id
     /// Version
     /// </KeyProperties>
     [global::System.Data.Services.Common.DataServiceKeyAttribute("Id", "Version")]
-    public partial class V2FeedPackage
+    public partial class V1FeedPackage
     {
         /// <summary>
-        /// Create a new V2FeedPackage object.
+        /// Create a new V1FeedPackage object.
         /// </summary>
         /// <param name="ID">Initial value of Id.</param>
         /// <param name="version">Initial value of Version.</param>
         /// <param name="created">Initial value of Created.</param>
         /// <param name="downloadCount">Initial value of DownloadCount.</param>
         /// <param name="isLatestVersion">Initial value of IsLatestVersion.</param>
-        /// <param name="isAbsoluteLatestVersion">Initial value of IsAbsoluteLatestVersion.</param>
         /// <param name="lastUpdated">Initial value of LastUpdated.</param>
-        /// <param name="published">Initial value of Published.</param>
         /// <param name="packageSize">Initial value of PackageSize.</param>
         /// <param name="requireLicenseAcceptance">Initial value of RequireLicenseAcceptance.</param>
         /// <param name="versionDownloadCount">Initial value of VersionDownloadCount.</param>
+        /// <param name="ratingsCount">Initial value of RatingsCount.</param>
+        /// <param name="versionRatingsCount">Initial value of VersionRatingsCount.</param>
+        /// <param name="rating">Initial value of Rating.</param>
+        /// <param name="versionRating">Initial value of VersionRating.</param>
+        /// <param name="price">Initial value of Price.</param>
+        /// <param name="prerelease">Initial value of Prerelease.</param>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static V2FeedPackage CreateV2FeedPackage(string ID, string version, global::System.DateTime created, int downloadCount, bool isLatestVersion, bool isAbsoluteLatestVersion, global::System.DateTime lastUpdated, global::System.DateTime published, long packageSize, bool requireLicenseAcceptance, int versionDownloadCount)
+        public static V1FeedPackage CreateV1FeedPackage(string ID, string version, global::System.DateTime created, int downloadCount, bool isLatestVersion, global::System.DateTime lastUpdated, long packageSize, bool requireLicenseAcceptance, int versionDownloadCount, int ratingsCount, int versionRatingsCount, double rating, double versionRating, decimal price, bool prerelease)
         {
-            V2FeedPackage v2FeedPackage = new V2FeedPackage();
-            v2FeedPackage.Id = ID;
-            v2FeedPackage.Version = version;
-            v2FeedPackage.Created = created;
-            v2FeedPackage.DownloadCount = downloadCount;
-            v2FeedPackage.IsLatestVersion = isLatestVersion;
-            v2FeedPackage.IsAbsoluteLatestVersion = isAbsoluteLatestVersion;
-            v2FeedPackage.LastUpdated = lastUpdated;
-            v2FeedPackage.Published = published;
-            v2FeedPackage.PackageSize = packageSize;
-            v2FeedPackage.RequireLicenseAcceptance = requireLicenseAcceptance;
-            v2FeedPackage.VersionDownloadCount = versionDownloadCount;
-            return v2FeedPackage;
+            V1FeedPackage v1FeedPackage = new V1FeedPackage();
+            v1FeedPackage.Id = ID;
+            v1FeedPackage.Version = version;
+            v1FeedPackage.Created = created;
+            v1FeedPackage.DownloadCount = downloadCount;
+            v1FeedPackage.IsLatestVersion = isLatestVersion;
+            v1FeedPackage.LastUpdated = lastUpdated;
+            v1FeedPackage.PackageSize = packageSize;
+            v1FeedPackage.RequireLicenseAcceptance = requireLicenseAcceptance;
+            v1FeedPackage.VersionDownloadCount = versionDownloadCount;
+            v1FeedPackage.RatingsCount = ratingsCount;
+            v1FeedPackage.VersionRatingsCount = versionRatingsCount;
+            v1FeedPackage.Rating = rating;
+            v1FeedPackage.VersionRating = versionRating;
+            v1FeedPackage.Price = price;
+            v1FeedPackage.Prerelease = prerelease;
+            return v1FeedPackage;
         }
         /// <summary>
         /// There are no comments for Property Id in the schema.
@@ -294,6 +302,27 @@ namespace NuGetFeed.NuGetService
         partial void OnDownloadCountChanging(int value);
         partial void OnDownloadCountChanged();
         /// <summary>
+        /// There are no comments for Property ExternalPackageUrl in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string ExternalPackageUrl
+        {
+            get
+            {
+                return this._ExternalPackageUrl;
+            }
+            set
+            {
+                this.OnExternalPackageUrlChanging(value);
+                this._ExternalPackageUrl = value;
+                this.OnExternalPackageUrlChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _ExternalPackageUrl;
+        partial void OnExternalPackageUrlChanging(string value);
+        partial void OnExternalPackageUrlChanged();
+        /// <summary>
         /// There are no comments for Property GalleryDetailsUrl in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
@@ -357,27 +386,6 @@ namespace NuGetFeed.NuGetService
         partial void OnIsLatestVersionChanging(bool value);
         partial void OnIsLatestVersionChanged();
         /// <summary>
-        /// There are no comments for Property IsAbsoluteLatestVersion in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public bool IsAbsoluteLatestVersion
-        {
-            get
-            {
-                return this._IsAbsoluteLatestVersion;
-            }
-            set
-            {
-                this.OnIsAbsoluteLatestVersionChanging(value);
-                this._IsAbsoluteLatestVersion = value;
-                this.OnIsAbsoluteLatestVersionChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private bool _IsAbsoluteLatestVersion;
-        partial void OnIsAbsoluteLatestVersionChanging(bool value);
-        partial void OnIsAbsoluteLatestVersionChanged();
-        /// <summary>
         /// There are no comments for Property LastUpdated in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
@@ -398,48 +406,6 @@ namespace NuGetFeed.NuGetService
         private global::System.DateTime _LastUpdated;
         partial void OnLastUpdatedChanging(global::System.DateTime value);
         partial void OnLastUpdatedChanged();
-        /// <summary>
-        /// There are no comments for Property Published in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.DateTime Published
-        {
-            get
-            {
-                return this._Published;
-            }
-            set
-            {
-                this.OnPublishedChanging(value);
-                this._Published = value;
-                this.OnPublishedChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.DateTime _Published;
-        partial void OnPublishedChanging(global::System.DateTime value);
-        partial void OnPublishedChanged();
-        /// <summary>
-        /// There are no comments for Property Language in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string Language
-        {
-            get
-            {
-                return this._Language;
-            }
-            set
-            {
-                this.OnLanguageChanging(value);
-                this._Language = value;
-                this.OnLanguageChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _Language;
-        partial void OnLanguageChanging(string value);
-        partial void OnLanguageChanged();
         /// <summary>
         /// There are no comments for Property LicenseUrl in the schema.
         /// </summary>
@@ -546,6 +512,27 @@ namespace NuGetFeed.NuGetService
         partial void OnProjectUrlChanging(string value);
         partial void OnProjectUrlChanged();
         /// <summary>
+        /// There are no comments for Property Published in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<global::System.DateTime> Published
+        {
+            get
+            {
+                return this._Published;
+            }
+            set
+            {
+                this.OnPublishedChanging(value);
+                this._Published = value;
+                this.OnPublishedChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<global::System.DateTime> _Published;
+        partial void OnPublishedChanging(global::System.Nullable<global::System.DateTime> value);
+        partial void OnPublishedChanged();
+        /// <summary>
         /// There are no comments for Property ReportAbuseUrl in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
@@ -567,27 +554,6 @@ namespace NuGetFeed.NuGetService
         partial void OnReportAbuseUrlChanging(string value);
         partial void OnReportAbuseUrlChanged();
         /// <summary>
-        /// There are no comments for Property ReleaseNotes in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string ReleaseNotes
-        {
-            get
-            {
-                return this._ReleaseNotes;
-            }
-            set
-            {
-                this.OnReleaseNotesChanging(value);
-                this._ReleaseNotes = value;
-                this.OnReleaseNotesChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _ReleaseNotes;
-        partial void OnReleaseNotesChanging(string value);
-        partial void OnReleaseNotesChanged();
-        /// <summary>
         /// There are no comments for Property RequireLicenseAcceptance in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
@@ -608,6 +574,27 @@ namespace NuGetFeed.NuGetService
         private bool _RequireLicenseAcceptance;
         partial void OnRequireLicenseAcceptanceChanging(bool value);
         partial void OnRequireLicenseAcceptanceChanged();
+        /// <summary>
+        /// There are no comments for Property ReleaseNotes in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string ReleaseNotes
+        {
+            get
+            {
+                return this._ReleaseNotes;
+            }
+            set
+            {
+                this.OnReleaseNotesChanging(value);
+                this._ReleaseNotes = value;
+                this.OnReleaseNotesChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _ReleaseNotes;
+        partial void OnReleaseNotesChanging(string value);
+        partial void OnReleaseNotesChanged();
         /// <summary>
         /// There are no comments for Property Summary in the schema.
         /// </summary>
@@ -692,5 +679,194 @@ namespace NuGetFeed.NuGetService
         private int _VersionDownloadCount;
         partial void OnVersionDownloadCountChanging(int value);
         partial void OnVersionDownloadCountChanged();
+        /// <summary>
+        /// There are no comments for Property RatingsCount in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public int RatingsCount
+        {
+            get
+            {
+                return this._RatingsCount;
+            }
+            set
+            {
+                this.OnRatingsCountChanging(value);
+                this._RatingsCount = value;
+                this.OnRatingsCountChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private int _RatingsCount;
+        partial void OnRatingsCountChanging(int value);
+        partial void OnRatingsCountChanged();
+        /// <summary>
+        /// There are no comments for Property VersionRatingsCount in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public int VersionRatingsCount
+        {
+            get
+            {
+                return this._VersionRatingsCount;
+            }
+            set
+            {
+                this.OnVersionRatingsCountChanging(value);
+                this._VersionRatingsCount = value;
+                this.OnVersionRatingsCountChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private int _VersionRatingsCount;
+        partial void OnVersionRatingsCountChanging(int value);
+        partial void OnVersionRatingsCountChanged();
+        /// <summary>
+        /// There are no comments for Property Rating in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public double Rating
+        {
+            get
+            {
+                return this._Rating;
+            }
+            set
+            {
+                this.OnRatingChanging(value);
+                this._Rating = value;
+                this.OnRatingChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private double _Rating;
+        partial void OnRatingChanging(double value);
+        partial void OnRatingChanged();
+        /// <summary>
+        /// There are no comments for Property VersionRating in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public double VersionRating
+        {
+            get
+            {
+                return this._VersionRating;
+            }
+            set
+            {
+                this.OnVersionRatingChanging(value);
+                this._VersionRating = value;
+                this.OnVersionRatingChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private double _VersionRating;
+        partial void OnVersionRatingChanging(double value);
+        partial void OnVersionRatingChanged();
+        /// <summary>
+        /// There are no comments for Property Categories in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string Categories
+        {
+            get
+            {
+                return this._Categories;
+            }
+            set
+            {
+                this.OnCategoriesChanging(value);
+                this._Categories = value;
+                this.OnCategoriesChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _Categories;
+        partial void OnCategoriesChanging(string value);
+        partial void OnCategoriesChanged();
+        /// <summary>
+        /// There are no comments for Property Language in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string Language
+        {
+            get
+            {
+                return this._Language;
+            }
+            set
+            {
+                this.OnLanguageChanging(value);
+                this._Language = value;
+                this.OnLanguageChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _Language;
+        partial void OnLanguageChanging(string value);
+        partial void OnLanguageChanged();
+        /// <summary>
+        /// There are no comments for Property PackageType in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PackageType
+        {
+            get
+            {
+                return this._PackageType;
+            }
+            set
+            {
+                this.OnPackageTypeChanging(value);
+                this._PackageType = value;
+                this.OnPackageTypeChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PackageType;
+        partial void OnPackageTypeChanging(string value);
+        partial void OnPackageTypeChanged();
+        /// <summary>
+        /// There are no comments for Property Price in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal Price
+        {
+            get
+            {
+                return this._Price;
+            }
+            set
+            {
+                this.OnPriceChanging(value);
+                this._Price = value;
+                this.OnPriceChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _Price;
+        partial void OnPriceChanging(decimal value);
+        partial void OnPriceChanged();
+        /// <summary>
+        /// There are no comments for Property Prerelease in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public bool Prerelease
+        {
+            get
+            {
+                return this._Prerelease;
+            }
+            set
+            {
+                this.OnPrereleaseChanging(value);
+                this._Prerelease = value;
+                this.OnPrereleaseChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private bool _Prerelease;
+        partial void OnPrereleaseChanging(bool value);
+        partial void OnPrereleaseChanged();
     }
 }

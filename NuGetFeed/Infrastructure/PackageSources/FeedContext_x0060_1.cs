@@ -6,7 +6,7 @@ namespace NuGetFeed.NuGetService
 {
     public partial class FeedContext_x0060_1 : IGalleryFeedContext
     {
-        public IQueryable<V2FeedPackage> AllPackages
+        public IQueryable<V1FeedPackage> AllPackages
         {
             get
             {

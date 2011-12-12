@@ -16,13 +16,13 @@ namespace NuGetFeed.Infrastructure.PackageSources
             _context = context;
         }
 
-        public V2FeedPackage GetLatestVersion(string packageId)
+        public V1FeedPackage GetLatestVersion(string packageId)
         {
             var package = _context.AllPackages.Where(p => p.Id == packageId && p.IsLatestVersion).SingleOrDefault();
             return package;
         }
 
-        public IEnumerable<V2FeedPackage> GetListOfPackageVersions(string packageId, int size)
+        public IEnumerable<V1FeedPackage> GetListOfPackageVersions(string packageId, int size)
         {
             var packages = (from p in _context.AllPackages
                             where p.Id == packageId
@@ -31,7 +31,7 @@ namespace NuGetFeed.Infrastructure.PackageSources
             return packages;
         }
 
-        public IEnumerable<V2FeedPackage> Search(string query, int startFrom, int pageSize, out int numberOfResults)
+        public IEnumerable<V1FeedPackage> Search(string query, int startFrom, int pageSize, out int numberOfResults)
         {
             var packages = _context.AllPackages.Where(p => (p.Id.Contains(query)
                                           || p.Description.Contains(query)
@@ -43,7 +43,7 @@ namespace NuGetFeed.Infrastructure.PackageSources
             return packages.OrderByDescending(x => x.DownloadCount).Skip(startFrom).Take(pageSize);
         }
 
-        public IEnumerable<V2FeedPackage> GetAllByDescendingPublishDate()
+        public IEnumerable<V1FeedPackage> GetAllByDescendingPublishDate()
         {
             var packages = _context.AllPackages
                 .Where(p => p.Id != "SymbolSource.TestPackage")
@@ -51,7 +51,7 @@ namespace NuGetFeed.Infrastructure.PackageSources
             return packages;
         }
 
-        public IEnumerable<V2FeedPackage> GetByAuthor(string author)
+        public IEnumerable<V1FeedPackage> GetByAuthor(string author)
         {
             var packages =
                 _context
@@ -80,7 +80,7 @@ namespace NuGetFeed.Infrastructure.PackageSources
         /// <summary>
         /// Optimized method for getting all PublishedPackages for a list of id's.
         /// </summary>
-        public List<V2FeedPackage> GetPackagesFromList(List<string> packages)
+        public List<V1FeedPackage> GetPackagesFromList(List<string> packages)
         {
             var query = string.Empty;
             for (int i = 0; i < packages.Count; i++)
@@ -92,7 +92,7 @@ namespace NuGetFeed.Infrastructure.PackageSources
                 }
             }
 
-            var request = _context.Execute<V2FeedPackage>(new Uri(
+            var request = _context.Execute<V1FeedPackage>(new Uri(
                                                           "Packages()?$filter=" + query +
                                                           "&$orderby=LastUpdated desc",
                                                           UriKind.RelativeOrAbsolute));

@@ -51,7 +51,7 @@ namespace NuGetFeed.Controllers
             return PartialView(list);
         }
 
-        [OutputCache(Duration = 3600)]
+        //[OutputCache(Duration = 3600)]
         public PartialViewResult FrontpageNewReleases()
         {
             var releases = _nuGetOrgFeed.GetAllByDescendingPublishDate().Take(10).ToList();

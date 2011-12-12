@@ -70,7 +70,7 @@ namespace NuGetFeed.App_Start
             kernel
                 .Bind<IGalleryFeedContext>()
                 .To<FeedContext_x0060_1>()
-                .WithConstructorArgument("serviceRoot", new Uri("http://nuget.org/api/v2/"));
+                .WithConstructorArgument("serviceRoot", new Uri("http://nuget.org/api/v1/"));
             kernel.Bind<NuGetOrgFeed>().ToSelf().InRequestScope();
 
             // Register helpers
