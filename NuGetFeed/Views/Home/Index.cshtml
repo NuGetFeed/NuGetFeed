@@ -20,17 +20,17 @@
 </div>
 
 <div class="row">
-    <div class="span-one-third">
+    <div class="span4">
         <div class="well">
             @Html.Action("FrontpageMostFollowed")
         </div>
     </div>
-    <div class="span-one-third">
+    <div class="span4">
         <div class="well">
             @Html.Action("FrontpageNewReleases")
         </div>
     </div>
-    <div class="span-one-third">
+    <div class="span4">
         <div class="well">
             <script>
                 new TWTR.Widget({
@@ -74,32 +74,32 @@
 </div>
 
 <div class="row">
-    <div class="span3"><img src="@("/Content/Images/scr_search.png")" width="160" height="100" alt="Search NuGet packages" /></div>
-    <div class="span5">
+    <div class="span2"><img src="@("/Content/Images/scr_search.png")" width="160" height="100" alt="Search NuGet packages" /></div>
+    <div class="span4">
         <h3>Search NuGet Packages</h3>
         <p>On NuGetFeed.org you can search NuGet package feeds directly. You will be able to see all the info from the official NuGet site, without ever leaving NuGetFeed.org.</p>
     </div>
-    <div class="span3"><img src="@("/Content/Images/scr_myfeed.png")" width="160" height="100" alt="Personalized feed" /></div>
-    <div class="span5">
+    <div class="span2"><img src="@("/Content/Images/scr_myfeed.png")" width="160" height="100" alt="Personalized feed" /></div>
+    <div class="span4">
         <h3>Personalized Feed</h3>
         <p>Create your personalized feed containing your favorite packages. Login using your prefered OpenID provider to get started.</p>
     </div>
 </div>
 <div class="row">
-    <div class="span3"><img src="@("/Content/Images/scr_public.png")" width="160" height="100" alt="Public feeds" /></div>
-    <div class="span5">
+    <div class="span2"><img src="@("/Content/Images/scr_public.png")" width="160" height="100" alt="Public feeds" /></div>
+    <div class="span4">
         <h3>Public Feeds</h3>
         <p>In this section, you can follow one ore more public feeds. How about following all new releases of any NuGet package. Or what about following feeds from a specific developer only?</p>
     </div>
-    <div class="span3"><img src="@("/Content/Images/scr_studio.png")" width="160" height="100" alt="Visual Studio integration" /></div>
-    <div class="span5">
+    <div class="span2"><img src="@("/Content/Images/scr_studio.png")" width="160" height="100" alt="Visual Studio integration" /></div>
+    <div class="span4">
         <h3><a href="http://visualstudiogallery.msdn.microsoft.com/10a7dc16-7a74-4435-9b85-989e12ceac9c" target="_blank" onclick="recordOutboundLink(this, 'Outbound Links', 'Visual Studio add-in'); return false;">Visual Studio Add-in</a></h3>
         <p>With NuGet Feed for Visual Studio, you will be able to export all your referenced NuGet packages to NuGetFeed.org. Simply right-click the References folder and export directly to NuGetFeed.org.</p>
     </div>
 </div>
 <div class="row">
-    <div class="span3"><img src="@("/Content/Images/scr_chrome.png")" width="160" height="100" alt="Chrome plugin" /></div>
-    <div class="span5">
+    <div class="span2"><img src="@("/Content/Images/scr_chrome.png")" width="160" height="100" alt="Chrome plugin" /></div>
+    <div class="span4">
         <h3><a href="https://chrome.google.com/webstore/detail/ofkfoioalklahgiocnejhkpbdkmccgae" target="_blank" onclick="recordOutboundLink(this, 'Outbound Links', 'Chrome Extension'); return false;">Google Chrome Extension</a></h3>
         <p>Install the NuGet Feed extension in Google Chrome to add RSS links on NuGet.org. The NuGet Feed Chrome Extension also works with your favorite Chrome feed extension, by adding an alternate URL to all package pages on NuGet.org.</p>
     </div>

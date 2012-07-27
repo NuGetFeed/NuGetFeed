@@ -6,7 +6,7 @@
 }
 
 <div class="row">
-    <div class="span2 columns">
+    <div class="span2">
         @if (!string.IsNullOrWhiteSpace(Model.IconUrl))
         {
             <img src="@(Model.IconUrl.StartsWith("http") ? Model.IconUrl : "http://nuget.org" + Model.IconUrl)" class="vip-image" />
@@ -16,7 +16,7 @@
             <img src="http://nuget.org/Themes/OrchardGallery/Content/Images/packagesDefaultIcon.png" class="vip-image" />
         }
     </div>
-    <div class="span14 columns">
+    <div class="span10">
         <div class="page-header">
             <h1>@Model.Title</h1>
             <p>By @Model.Authors</p>
