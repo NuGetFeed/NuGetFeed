@@ -217,6 +217,9 @@
     <Content Include="Content\Images\star.png" />
     <Content Include="Content\Images\twitter.png" />
     <Content Include="Content\Scripts\bootstrap.js" />
+    <Content Include="Content\Scripts\jquery-1.7.2-vsdoc.js" />
+    <Content Include="Content\Scripts\jquery-1.7.2.js" />
+    <Content Include="Content\Scripts\jquery-1.7.2.min.js" />
     <Content Include="Content\Scripts\jquery-ui-1.8.16.custom.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -228,9 +231,6 @@
     <Content Include="Content\Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Content\Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="google89fa24293f966991.html" />
-    <Content Include="Content\Scripts\jquery-1.6.4-vsdoc.js" />
-    <Content Include="Content\Scripts\jquery-1.6.4.js" />
-    <Content Include="Content\Scripts\jquery-1.6.4.min.js" />
     <Content Include="robots.txt" />
     <None Include="Service References\NuGetService\Reference.datasvcmap">
       <Generator>DataServiceClientGenerator</Generator>

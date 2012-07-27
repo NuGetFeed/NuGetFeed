@@ -139,7 +139,7 @@ namespace NuGetFeed.Controllers
             _feedRepository.InsertPackagesIntoFeed(currentUser, id);
             if (Request.IsAjaxRequest())
             {
-                return Content("<span class=\"label notice\">Added</span>");
+                return Content("<span class=\"label label-success\">Added</span>");
             }
 
             TempData["Message"] = id + " successfully added";
