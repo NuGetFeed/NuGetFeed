@@ -18,6 +18,15 @@
     </div>
     <div class="span10">
         <div class="page-header">
+            <div style="float: right;">
+                <a href="@Url.Action("Packages", "List", new { id = Model.Id })" target="_blank" title="NuGet Feed" class="btn btn-success btn-large">Subscribe</a>            
+            </div>
+            @if (Request.IsAuthenticated)
+            {
+                <div style="float: right; margin-right: 10px;" id="addLi">
+                    @Ajax.ActionLink("Add to My Feed", "AddToMyFeed", "Feed", new { id = Model.Id }, new AjaxOptions { HttpMethod = "get", UpdateTargetId = "addLi" }, new { @class = "btn btn-success btn-large" })
+                </div>
+            }
             <h1>@Model.Title</h1>
             <p>By @Model.Authors</p>
         </div>
@@ -29,15 +38,6 @@
                     <li><a href="@Model.ProjectUrl">Project site</a></li>
                 }
                 <li><a href="http://nuget.org/List/Packages/@Model.Id" target="_blank" title="Visit the projects NuGet site">NuGet site</a></li>
-                <li><a href="@Url.Action("Packages", "List", new { id = Model.Id })" target="_blank" title="NuGet Feed">Subscribe</a></li>
-                @if (Request.IsAuthenticated)
-                {
-                    <li id="addLi">@Ajax.ActionLink("Add to My Feed", "AddToMyFeed", "Feed", new { id = Model.Id }, new AjaxOptions { HttpMethod = "get", UpdateTargetId = "addLi" })</li>
-                }
-                else
-                {
-                    <li><a href="@Url.Action("Login", "Account")?returnurl=@Request.Path">Log in to add to My Feed</a></li>
-                }
             </ul>
         </div>
 
