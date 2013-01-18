@@ -30,7 +30,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Where(x => x.Package != null)) {
     <tr>
         <td>
             <a href="@Url.Action("Details", "Packages", new { id = item.Package.Id })">@Html.DisplayFor(modelItem => item.Package.Title)</a>
