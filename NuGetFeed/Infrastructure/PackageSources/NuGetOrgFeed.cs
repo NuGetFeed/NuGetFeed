@@ -94,7 +94,7 @@ namespace NuGetFeed.Infrastructure.PackageSources
 
             var request = _context.Execute<V1FeedPackage>(new Uri(
                                                           "Packages()?$filter=" + query +
-                                                          "&$orderby=LastUpdated desc",
+                                                          "&$orderby=Published desc",
                                                           UriKind.RelativeOrAbsolute));
 
             return request.ToList();
