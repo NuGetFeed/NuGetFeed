@@ -26,7 +26,7 @@ namespace NuGetFeed.Infrastructure.PackageSources
         {
             var packages = (from p in _context.AllPackages
                             where p.Id == packageId
-                            orderby p.LastUpdated descending
+                            orderby p.Published descending
                             select p).Take(size);
             return packages;
         }

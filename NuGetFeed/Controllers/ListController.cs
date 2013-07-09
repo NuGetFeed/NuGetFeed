@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Syndication;
+using System.Text;
 using System.Web.Mvc;
 using NuGetFeed.Infrastructure.ActionResults;
 using NuGetFeed.Infrastructure.PackageSources;
@@ -40,10 +41,19 @@ namespace NuGetFeed.Controllers
 
             foreach (var p in packages)
             {
+                var content = new StringBuilder();
+                content.AppendLine(p.Description);
+                if (!string.IsNullOrWhiteSpace(p.ReleaseNotes))
+                {
+                    content.AppendLine();
+                    content.Append("Release notes:");
+                    content.AppendLine(p.ReleaseNotes);
+                }
+
                 var item = new SyndicationItem(p.Title + " " + p.Version, string.Empty, new Uri(p.GalleryDetailsUrl), p.Id + p.Version, p.LastUpdated)
                                {
-                                   Content = new TextSyndicationContent("Release notes: " + p.ReleaseNotes),
-                                   PublishDate = p.LastUpdated
+                                   Content = new TextSyndicationContent(content.ToString()),
+                                   PublishDate = p.Published.HasValue ? p.Published.Value : p.LastUpdated,
                                };
 
                 yield return item;
