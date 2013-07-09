@@ -26,7 +26,7 @@ namespace NuGetFeed.Infrastructure.Rss
 
             var item = new SyndicationItem(title, htmlContent, new Uri(link), id, updated)
                            {
-                               PublishDate = package.LastUpdated,
+                               PublishDate = package.Published.HasValue ? package.Published.Value : package.LastUpdated,
                            };
 
             return item;
