@@ -1,4 +1,4 @@
-﻿NuGetFeed.org
+NuGetFeed.org
 -------------
 NuGetFeed.org allows you to follow any NuGet package via your RSS reader. You can sign in with OpenId, and keep a favorite lists of your used packages. There's also our public feeds, which are great for following new releases.
 
