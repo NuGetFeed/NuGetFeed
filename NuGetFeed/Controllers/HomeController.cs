@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web.Mvc;
 using NuGetFeed.Infrastructure.PackageSources;
 using NuGetFeed.Infrastructure.Repositories;
-using NuGetFeed.NuGetService;
 using NuGetFeed.ViewModels;
 
 namespace NuGetFeed.Controllers
@@ -42,7 +41,7 @@ namespace NuGetFeed.Controllers
             return View(listOfPackages);
         }
 
-        [OutputCache(Duration = 43200)]
+        [OutputCache(Duration = 3600)]
         public PartialViewResult FrontpageMostFollowed()
         {
             var popular = _feedRepository.MostFollowed(10).ToList();
@@ -51,7 +50,7 @@ namespace NuGetFeed.Controllers
             return PartialView(list);
         }
 
-        //[OutputCache(Duration = 3600)]
+        [OutputCache(Duration = 540)]
         public PartialViewResult FrontpageNewReleases()
         {
             var releases = _nuGetOrgFeed.GetAllByDescendingPublishDate().Take(10).ToList();
