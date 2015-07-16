@@ -7,4 +7,5 @@
     <MetadataFile FileName="service.edmx" MetadataType="Edmx" ID="071b2481-126c-429c-8c21-ae7b8f057910" SourceId="1" SourceUrl="http://nuget.org/api/v1" />
   </Metadata>
   <Extensions />
+  <Parameters />
 </ReferenceGroup>

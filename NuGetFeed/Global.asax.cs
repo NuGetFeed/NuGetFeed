@@ -1,7 +1,11 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Configuration;
+using System.Web.Mvc;
 using System.Web.Routing;
 using Canonicalize;
+using DotNetOpenAuth.GoogleOAuth2;
 using LowercaseRoutesMVC;
+using Microsoft.Web.WebPages.OAuth;
 
 namespace NuGetFeed
 {
@@ -38,6 +42,15 @@ namespace NuGetFeed
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+            ConfigureAuth();
+        }
+
+        private void ConfigureAuth()
+        {
+            var googleClient = new GoogleOAuth2Client(ConfigurationManager.AppSettings["Google.ClientId"], 
+                ConfigurationManager.AppSettings["Google.ClientSecret"]);
+            var extradata = new Dictionary<string, object>();
+            OAuthWebSecurity.RegisterClient(googleClient, "Google", extradata);
         }
     }
 }
