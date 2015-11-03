@@ -1,9 +1,12 @@
 ﻿using System.Web.Mvc;
 using System.Web.Security;
+using DotNetOpenAuth.AspNet;
+using DotNetOpenAuth.GoogleOAuth2;
 using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OpenId;
 using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using DotNetOpenAuth.OpenId.RelyingParty;
+using Microsoft.Web.WebPages.OAuth;
 using NuGetFeed.Infrastructure.Repositories;
 using NuGetFeed.Models;
 
@@ -66,6 +69,15 @@ namespace NuGetFeed.Controllers
             }
         }
 
+        //
+        // GET: /Account/ExternalLoginFailure
+
+        [AllowAnonymous]
+        public ActionResult ExternalLoginFailure()
+        {
+            return View();
+        }
+
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
@@ -96,5 +108,62 @@ namespace NuGetFeed.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult ExternalLogin(string provider, string returnUrl)
+        {
+            return new ExternalLoginResult(provider, Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
+        }
+
+
+        //
+        // GET: /Account/ExternalLoginCallback
+
+        [AllowAnonymous]
+        public ActionResult ExternalLoginCallback(string returnUrl)
+        {
+            GoogleOAuth2Client.RewriteRequest();
+            AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
+            if (!result.IsSuccessful)
+            {
+                return RedirectToAction("ExternalLoginFailure");
+            }
+
+            return CreateUser(result.UserName, result.ExtraData["given_name"], result.ExtraData["family_name"],
+                result.ExtraData["email"]);
+        }
+
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
     }
+
+    internal class ExternalLoginResult : ActionResult
+    {
+        public ExternalLoginResult(string provider, string returnUrl)
+        {
+            Provider = provider;
+            ReturnUrl = returnUrl;
+        }
+
+        public string Provider { get; private set; }
+        public string ReturnUrl { get; private set; }
+
+        public override void ExecuteResult(ControllerContext context)
+        {
+            OAuthWebSecurity.RequestAuthentication(Provider, ReturnUrl);
+        }
+    }
+
 }

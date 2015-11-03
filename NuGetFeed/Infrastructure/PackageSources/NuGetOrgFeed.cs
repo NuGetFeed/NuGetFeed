@@ -43,7 +43,7 @@ namespace NuGetFeed.Infrastructure.PackageSources
             return packages.OrderByDescending(x => x.DownloadCount).Skip(startFrom).Take(pageSize);
         }
 
-        public IEnumerable<V1FeedPackage> GetAllByDescendingPublishDate()
+        public IQueryable<V1FeedPackage> GetAllByDescendingPublishDate()
         {
             var packages = _context.AllPackages
                 .Where(p => p.Id != "SymbolSource.TestPackage")

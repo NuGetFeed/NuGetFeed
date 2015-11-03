@@ -9,7 +9,7 @@
 <div class="well">
     <h4>Sign in with any of these sites</h4>
     <p>Select your preferred OpenID provider:</p>
-    <p>
+    <div>
         <form id="openid-form" method="POST" action="@Url.Action("OpenId", "Account")">
             <div id="openid-providers">
                 <ul class="large">
@@ -18,22 +18,16 @@
                     @*<li id="facebook"><img src="/Content/Images/Auth/large/facebook.gif" /></li>*@
                     <li id="myopenid"><img src="/Content/Images/Auth/large/myopenid.gif" /></li>
                 </ul>
-            @*                    <ul class="small">
-                    <li id="openid"><img src="/Content/Images/Auth/small/openid.ico.png" /></li>
-                    <li id="twitter"><img src="/Content/Images/Auth/small/twitter.ico.png" /></li>
-                    <li id="linkedin"><img src="/Content/Images/Auth/small/linkedin.ico.png" /></li>
-                    <li id="winliveid"><img src="/Content/Images/Auth/small/winliveid.ico.png" /></li>
-                    <li id="aol"><img src="/Content/Images/Auth/small/aol.ico.png" /></li>
-                    <li id="blogger"><img src="/Content/Images/Auth/small/blogger.ico.png" /></li>
-                </ul>*@
             </div>
             <div id="other">
                 <p>Alternatively, you can manually enter your OpenID provider:</p>
                 <input name="openIdUrl" id="openIdUrl" class="xlarge" type="text" />
                 <a id="signin" class="btn primary">Log in »</a>
+                <input type="hidden" id="provider" name="provider"/>
+                @Html.AntiForgeryToken()
             </div>
         </form>
-    </p>
+    </div>
 
     <h4>Create new account</h4>
     <p>Just sign in with one of the above sites, and we will create an account for you.</p>
@@ -45,7 +39,7 @@
 
         var providers = {
             myopenid: { action: '@Url.Action("OpenId", "Account")@(ViewBag.ReturnUrl != null ? "?returnurl=" + ViewBag.ReturnUrl : string.Empty)', url: 'http://myopenid.com' },
-            google: { action: '@Url.Action("OpenId", "Account")@(ViewBag.ReturnUrl != null ? "?returnurl=" + ViewBag.ReturnUrl : string.Empty)', url: 'http://www.google.com/accounts/o8/id' },
+            google: { action: '@Url.Action("ExternalLogin", "Account")@(ViewBag.ReturnUrl != null ? "?returnurl=" + ViewBag.ReturnUrl : string.Empty)', url: 'http://www.google.com/accounts/o8/id' },
             yahoo: { action: '@Url.Action("OpenId", "Account")@(ViewBag.ReturnUrl != null ? "?returnurl=" + ViewBag.ReturnUrl : string.Empty)', url: 'http://yahoo.com' }
         };
 
@@ -62,6 +56,7 @@
             if (provider.url != undefined) {
                 $("#openIdUrl").val(provider.url);
             }
+            $("#provider").val(id);
             $("#openid-form").submit();
         });
     });
